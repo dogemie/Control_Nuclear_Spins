@@ -75,28 +75,28 @@ def todensity (a,b):
 #ideal한 target state(중첩상태를 final로 둘 경우)
 #Not Used
 ideal = np.matrix([[1/sqrt(2)],[1/sqrt(2)]])
-
+'''
 #위의 target state의 density matrix
-idden = np.matrix([[1/2,1/2],
-                    [1/2,1/2]])
-'''
+idden = np.matrix([[1/8,1/2],
+                    [1/2,7/8]])
 
-'''
+
+
 #랜덤한 target state를 생성하여 density matrix까지 구하는 함수 
-while 1 :
-        U=rand_unitary(2) #qutip 라이브러리에 있는 랜덤한 qubit state를 생성해주는 함수
-        a=U[0,0]
-        b=U[1,0]
-        UU=np.array([[a],[b]])
-        TU = UU.T                                              # Transpose, 전치 배열
-        CU = TU.conjugate()                                    # conjugate = conj <= 복소수?
-        idden = UU*CU
-        if np.abs(idden[1,1]) != 0:
-            break
-'''
+# while 1 :
+#         U=rand_unitary(2) #qutip 라이브러리에 있는 랜덤한 qubit state를 생성해주는 함수
+#         a=U[0,0]
+#         b=U[1,0]
+#         UU=np.array([[a],[b]])
+#         TU = UU.T                                              # Transpose, 전치 배열
+#         CU = TU.conjugate()                                    # conjugate = conj <= 복소수?
+#         idden = UU*CU
+#         if np.abs(idden[1,1]) != 0:
+#             break
 
-idden = np.matrix([[1/2,1/2],
-                    [1/2,1/2]])
+
+# idden = np.matrix([[0.333,0.942],
+#                     [0.942,0.333]])
 
 ###5 실행
 
@@ -114,6 +114,7 @@ def problem(deg):
     y_id = np.trace(idden*Sy())                                 # target state의 Sigma Y projection
     z_id = np.trace(idden*Sz())                                 # target state의 Sigma Z projection
     cost = np.abs(x_m-x_id)+np.abs(y_m-y_id)+np.abs(z_m-z_id)   # 실험값과 이론값의 비교 costfunction 반환
+    #cost = ((float(np.abs(x_m-x_id)))**2+(float(np.abs(y_m-y_id)))**2+(float(np.abs(z_m-z_id)))**2)**(1/2)
     return cost
 
 bounds = [(0, pi),(0,2*pi)]                                     #theta와 phi의 범위
@@ -123,6 +124,40 @@ deg = [(np.pi/180)*random.uniform(0,180),(np.pi/180)*random.uniform(0,360)] #초
 ###6 결과 출력
 #https://docs.scipy.org/doc/scipy/reference/optimize.html
 ###아래는 3가지의 옵티마이저를 사용하여 탐색 가능###
+
+output = []
+
+xx = 0.1
+ff = 0.1
+for x in range(1, 20): #최적화 정도를 확인하기 위한 반복 작업
+    result = scipy.optimize.minimize(problem,deg,bounds=bounds,method='Powell',options={'xtol': xx,'ftol': ff})
+    output.append(result)
+    xx = xx * 0.3
+    ff = ff * 0.3
+    print("result" + str(x) + " clear") 
+
+
+
+fin = pd.DataFrame(output)
+print(idden)
+fin.to_csv('result.csv', index=false)
+
+###7 결과 분석
+
+#direc = 출발 지점에서의 방향
+#fun = x 위치에서의 함수의 값 -> 최적화 정도라고 생각
+#message = 메시지 문자열
+#nfev = 목적 함수 호출 횟수
+#njev = 자코비안 계산 횟수
+#nit = x 이동 횟수
+#status = 종료 상태, 0이면 최적화 성공
+#x = 최적화 해
+#xtol = x의 허용 오차
+#ftol = func(xopt)에서 허용되는 상대 오류의 수
+#https://www.desmos.com/scientific?lang=ko
+#https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html
+
+# %%
 '''
 result1 = scipy.optimize.differential_evolution(problem,bounds,atol=0.00001)
 print("result1:")
@@ -139,55 +174,60 @@ print("result2:")
 print(result2) #결과 출력
 print("/////////////////////////////////////////////////////////////////")
 '''
+
+# %%
+'''
+result0 = scipy.optimize.minimize(problem,deg,bounds=bounds,method='Powell',options={'xtol':0.01,'ftol':0.01})
+print("result0:")
+print(result0) #결과 출력
+output.append(result0)
+print("/////////////////////////////////////////////////////////////////")
+
+result1 = scipy.optimize.minimize(problem,deg,bounds=bounds,method='Powell',options={'xtol':0.001,'ftol':0.001})
+print("result1:")
+print(result1) #결과 출력
+output.append(result1)
+print("/////////////////////////////////////////////////////////////////")
+
 result2 = scipy.optimize.minimize(problem,deg,bounds=bounds,method='Powell',options={'xtol':0.001,'ftol':0.001})
 print("result2:")
 print(result2) #결과 출력
+output.append(result2)
 print("/////////////////////////////////////////////////////////////////")
 
 result3 = scipy.optimize.minimize(problem,deg,bounds=bounds,method='Powell',options={'xtol':0.0001,'ftol':0.0001})
 print("result3:")
 print(result3) #결과 출력
+output.append(result3)
 print("/////////////////////////////////////////////////////////////////")
 
 result4 = scipy.optimize.minimize(problem,deg,bounds=bounds,method='Powell',options={'xtol':0.00001,'ftol':0.00001})
 print("result4:")
 print(result4) #결과 출력
+output.append(result4)
 print("/////////////////////////////////////////////////////////////////")
 
 result5 = scipy.optimize.minimize(problem,deg,bounds=bounds,method='Powell',options={'xtol':0.000001,'ftol':0.000001})
 print("result5:")
 print(result5) #결과 출력
+output.append(result5)
 print("/////////////////////////////////////////////////////////////////")
 
 result6 = scipy.optimize.minimize(problem,deg,bounds=bounds,method='Powell',options={'xtol':0.0000001,'ftol':0.0000001})
 print("result6:")
 print(result6) #결과 출력
+output.append(result6)
 print("/////////////////////////////////////////////////////////////////")
 
 result7 = scipy.optimize.minimize(problem,deg,bounds=bounds,method='Powell',options={'xtol':0.00000001,'ftol':0.00000001})
 print("result7:")
 print(result7) #결과 출력
+output.append(result7)
 print("/////////////////////////////////////////////////////////////////")
 
 result8 = scipy.optimize.minimize(problem,deg,bounds=bounds,method='Powell',options={'xtol':0.000000001,'ftol':0.000000001})
 print("result8:")
 print(result8) #결과 출력
+output.append(result8)
 print("/////////////////////////////////////////////////////////////////")
-
-
-###7 결과 분석
-
-#direc = 출발 지점에서의 방향
-#fun = x 위치에서의 함수의 값
-#message = 메시지 문자열
-#nfev = 목적 함수 호출 횟수
-#njev = 자코비안 계산 횟수
-#nit = x 이동 횟수
-#status = 종료 상태, 0이면 최적화 성공
-#x = 최적화 해
-#xtol = x의 허용 오차
-#ftol = func(xopt)에서 허용되는 상대 오류의 수
-#https://www.desmos.com/scientific?lang=ko
-#https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html
-
-# %%
+'''
