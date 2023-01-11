@@ -127,14 +127,40 @@ deg = [(np.pi/180)*random.uniform(0,180),(np.pi/180)*random.uniform(0,360)] #초
 
 output = []
 
-xx = 0.1
-ff = 0.1
-for x in range(1, 20): #최적화 정도를 확인하기 위한 반복 작업
+# xx = 0.1
+# ff = 0.1
+# for x in range(1, 60): #최적화 정도를 확인하기 위한 반복 작업
+#     result = scipy.optimize.minimize(problem,deg,bounds=bounds,method='Powell',options={'xtol': xx,'ftol': ff})
+#     output.append(result)
+#     xx = xx * 0.3
+#     ff = ff * 0.3
+#     print("result" + str(x) + " clear") 
+
+xx = 1
+ff = 1
+count = 1
+bbb = 100                                   #이전의 cost function값을 저장하기 위한 변수
+ccc = 100                                   #이전의 이전의 cost function값을 저장하기 위한 변수
+while true:
     result = scipy.optimize.minimize(problem,deg,bounds=bounds,method='Powell',options={'xtol': xx,'ftol': ff})
     output.append(result)
-    xx = xx * 0.3
-    ff = ff * 0.3
-    print("result" + str(x) + " clear") 
+    aaa = output[count - 1]['fun']          #Temp Memory to compate output 'fun' value
+    if(float(aaa) >= float(bbb) and float(aaa) >= float(ccc)):
+        print("minimize clear")
+        break
+    ccc = bbb
+    bbb = aaa
+    if(count == 1):
+        xx = xx * 0.5
+        ff = ff * 0.5
+        print("result" + str(count) + " clear") 
+        count = count + 1
+    else:
+        xx = xx * 0.25
+        ff = ff * 0.25
+        print("result" + str(count) + " clear")
+        count = count + 1
+    
 
 
 
@@ -143,7 +169,8 @@ print(idden)
 date = dt.now()
 printdate = date.strftime('%Y%m%d_%H%M%S')
 print(date)
-fin.to_csv('Powell_result_' + printdate + '.csv', index=false)
+fin.to_csv("C:/Users/Administrator/2023.01.01/KIST_intern/Task1/Control_Nuclear_Spins/NVspin/Powell/Powell_result_" + printdate + '.csv', index=false)
+#fin.to_csv('Powell_result_' + printdate + '.csv', index=false)
 
 ###7 결과 분석
 

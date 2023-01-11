@@ -1,0 +1,13 @@
+fun,direc,nit,nfev,status,success,message,x
+0.9233500297183225,"[[1. 0.]
+ [0. 1.]]",1,10,0,True,Optimization terminated successfully.,[2.73329657 1.48325885]
+1.015782510817894,"[[ 0.          1.        ]
+ [-0.59229763 -1.64329988]]",2,36,0,True,Optimization terminated successfully.,[2.43914534 4.6629848 ]
+0.9815091155412253,"[[ 0.          1.        ]
+ [-0.03382456 -0.0915334 ]]",2,45,0,True,Optimization terminated successfully.,[2.46830913 3.14297414]
+0.5754873920682922,"[[0.         1.        ]
+ [0.00727329 0.01942743]]",2,55,0,True,Optimization terminated successfully.,[3.14143283 4.80474803]
+0.57531447797277,"[[ 0.00000000e+00  1.00000000e+00]
+ [-6.23080795e-05 -2.58230847e-04]]",3,118,0,True,Optimization terminated successfully.,[3.1415917  4.71428947]
+1.017338940725237,"[[ 0.          1.        ]
+ [-1.20228565 -3.1375426 ]]",2,56,0,True,Optimization terminated successfully.,[1.9351246  4.72815112]

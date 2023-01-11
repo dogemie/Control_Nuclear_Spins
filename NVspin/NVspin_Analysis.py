@@ -143,7 +143,7 @@ print(idden)
 date = dt.now()
 printdate = date.strftime('%Y%m%d_%H%M%S')
 print(date)
-fin.to_csv('Powell_result_' + printdate + '.csv', index=false)
+fin.to_csv('result_' + printdate + '.csv', index=false)
 
 ###7 결과 분석
 

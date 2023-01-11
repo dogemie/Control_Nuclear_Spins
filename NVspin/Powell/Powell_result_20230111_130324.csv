@@ -1,0 +1,5 @@
+fun,direc,nit,nfev,status,success,message,x
+0.8985238669448155,"[[1. 0.]
+ [0. 1.]]",1,10,0,True,Optimization terminated successfully.,[2.73329656 4.79992646]
+0.7349776069169833,"[[1. 0.]
+ [0. 1.]]",1,13,0,True,Optimization terminated successfully.,[2.9529128  4.63072372]
