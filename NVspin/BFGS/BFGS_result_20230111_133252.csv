@@ -1,0 +1,13 @@
+fun,jac,hess_inv,nfev,njev,status,success,message,x,nit
+1.344114538867506,[1. 0. 0. 0.],"[[1 0 0 0]
+ [0 1 0 0]
+ [0 0 1 0]
+ [0 0 0 1]]",502,98,2,False,Desired error not necessarily achieved due to precision loss.,[0.         3.14159265 0.         6.28318531],0
+1.344114538867506,[1. 0. 0. 0.],"[[1 0 0 0]
+ [0 1 0 0]
+ [0 0 1 0]
+ [0 0 0 1]]",502,98,2,False,Desired error not necessarily achieved due to precision loss.,[0.         3.14159265 0.         6.28318531],0
+1.344114538867506,[1. 0. 0. 0.],"[[1 0 0 0]
+ [0 1 0 0]
+ [0 0 1 0]
+ [0 0 0 1]]",502,98,2,False,Desired error not necessarily achieved due to precision loss.,[0.         3.14159265 0.         6.28318531],0

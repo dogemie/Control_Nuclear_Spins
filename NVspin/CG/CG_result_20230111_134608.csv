@@ -1,0 +1,4 @@
+fun,jac,nfev,njev,status,success,message,x,nit
+2.1189242463851587,[0.08301669 0.269739  ],170,53,2,False,Desired error not necessarily achieved due to precision loss.,[0.72666272 6.2831853 ],2
+2.1189242463851587,[0.08301669 0.269739  ],170,53,2,False,Desired error not necessarily achieved due to precision loss.,[0.72666272 6.2831853 ],2
+2.1189242463851587,[0.08301669 0.269739  ],170,53,2,False,Desired error not necessarily achieved due to precision loss.,[0.72666272 6.2831853 ],2

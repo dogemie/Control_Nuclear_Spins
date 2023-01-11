@@ -104,6 +104,7 @@ ideal = np.matrix([[1/sqrt(2)],[1/sqrt(2)]])
 idden = np.matrix([[1/2,1/2],
                     [1/2,1/2]])
 
+
 ###5 실행
 
 #problem(cost function)
@@ -142,13 +143,15 @@ output = []
 #     ff = ff * 0.3
 #     print("result" + str(x) + " clear") 
 
+
+#최적화된 값의 변화가 없을 때 까지 작업을 반복한다.
 xx = 1
 ff = 1
 count = 1
 bbb = 100                                   #이전의 cost function값을 저장하기 위한 변수
 ccc = 100                                   #이전의 이전의 cost function값을 저장하기 위한 변수
 while true:
-    result = scipy.optimize.minimize(problem,deg,bounds=bounds,method='Powell',options={'xtol': xx,'ftol': ff})
+    result = scipy.optimize.minimize(problem,deg,bounds=bounds,method="Nelder-Mead", options={'xatol': xx,'fatol': ff})
     output.append(result)
     aaa = output[count - 1]['fun']          #Temp Memory to compate output 'fun' value
     if(float(aaa) >= float(bbb) and float(aaa) >= float(ccc)):
@@ -175,7 +178,7 @@ print(idden)
 date = dt.now()
 printdate = date.strftime('%Y%m%d_%H%M%S')
 print(date)
-fin.to_csv("C:/Users/Administrator/2023.01.01/KIST_intern/Task1/Control_Nuclear_Spins/NVspin/Powell/Powell_result_" + printdate + '.csv', index=false)
+fin.to_csv("C:/Users/Administrator/2023.01.01/KIST_intern/Task1/Control_Nuclear_Spins/NVspin/Nelder_Mead/Nelder_Mead_result_" + printdate + '.csv', index=false)
 #fin.to_csv('Powell_result_' + printdate + '.csv', index=false)
 
 ###7 결과 분석

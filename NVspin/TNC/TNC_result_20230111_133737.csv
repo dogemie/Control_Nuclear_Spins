@@ -1,0 +1,4 @@
+x,fun,jac,nfev,nit,status,message,success
+[3.14159265 3.35352507],1.2190058350590909,[-1.18797573  0.        ],9,1,0,Local minimum reached (|pg| ~= 0),True
+[3.14159265 3.35352507],1.2190058350590909,[-1.18797573  0.        ],9,1,0,Local minimum reached (|pg| ~= 0),True
+[3.14159265 3.35352507],1.2190058350590909,[-1.18797573  0.        ],9,1,0,Local minimum reached (|pg| ~= 0),True

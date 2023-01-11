@@ -1,0 +1,13 @@
+fun,jac,hess_inv,nfev,njev,status,success,message,x,nit
+1.096648635793385,[0.80329004 0.20737021],"[[1 0]
+ [0 1]]",3,1,0,True,Optimization terminated successfully.,[0.41409402 1.98317236],0
+1.0488137764965568,[ 0.24392599 -0.37538484],"[[1 0]
+ [0 1]]",9,3,0,True,Optimization terminated successfully.,[0.29288482 1.95188207],1
+1.0021726655253576,[-0.09640376 -0.09218752],"[[ 1.20129701 -0.82540353]
+ [-0.82540353  0.74563719]]",153,51,0,True,Optimization terminated successfully.,[0.20427569 2.02905004],3
+0.951251965549948,[-1.59221142 -0.04156515],"[[ 7.03753751e-09 -5.71357322e-07]
+ [-5.71357322e-07  3.15406740e+00]]",614,203,2,False,Desired error not necessarily achieved due to precision loss.,[0.22834771 2.2259899 ],12
+0.951251965549948,[-1.59221142 -0.04156515],"[[ 7.03753751e-09 -5.71357322e-07]
+ [-5.71357322e-07  3.15406740e+00]]",614,203,2,False,Desired error not necessarily achieved due to precision loss.,[0.22834771 2.2259899 ],12
+0.951251965549948,[-1.59221142 -0.04156515],"[[ 7.03753751e-09 -5.71357322e-07]
+ [-5.71357322e-07  3.15406740e+00]]",614,203,2,False,Desired error not necessarily achieved due to precision loss.,[0.22834771 2.2259899 ],12

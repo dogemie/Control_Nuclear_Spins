@@ -96,13 +96,7 @@ ideal = np.matrix([[1/sqrt(2)],[1/sqrt(2)]])
 
 
 #qutip 라이브러리에 있는 랜덤한 density matrix를 생성해주는 함수
-#idden = rand_dm(2, density=1)
-
-
-
-#matrix 지정
-idden = np.matrix([[1/2,1/2],
-                    [1/2,1/2]])
+idden = rand_dm(2, density=1)
 
 ###5 실행
 
@@ -148,7 +142,7 @@ count = 1
 bbb = 100                                   #이전의 cost function값을 저장하기 위한 변수
 ccc = 100                                   #이전의 이전의 cost function값을 저장하기 위한 변수
 while true:
-    result = scipy.optimize.minimize(problem,deg,bounds=bounds,method='Powell',options={'xtol': xx,'ftol': ff})
+    result = scipy.optimize.minimize(problem, bounds, method='BFGS')
     output.append(result)
     aaa = output[count - 1]['fun']          #Temp Memory to compate output 'fun' value
     if(float(aaa) >= float(bbb) and float(aaa) >= float(ccc)):
@@ -175,7 +169,7 @@ print(idden)
 date = dt.now()
 printdate = date.strftime('%Y%m%d_%H%M%S')
 print(date)
-fin.to_csv("C:/Users/Administrator/2023.01.01/KIST_intern/Task1/Control_Nuclear_Spins/NVspin/Powell/Powell_result_" + printdate + '.csv', index=false)
+fin.to_csv("C:/Users/Administrator/2023.01.01/KIST_intern/Task1/Control_Nuclear_Spins/NVspin/BFGS/BFGS_result_" + printdate + '.csv', index=false)
 #fin.to_csv('Powell_result_' + printdate + '.csv', index=false)
 
 ###7 결과 분석
