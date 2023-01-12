@@ -182,66 +182,36 @@ output4 = []
 #pip = [["Density Matrix", nan], [nan, "Matrix"]]
 #최적화된 값의 변화가 없을 때 까지 작업을 반복한다.
 
+standard = 0.1
+
 for x in range(10):
     idden = rand_dm(2, density=1)
-    # data = []
-    # data = idden.data
     start = time.time()
-    result1 = scipy.optimize.minimize(problem,deg,bounds=bounds,method="Nelder-Mead")
-    end = time.time()
-    final = end - start
-    deft = degree(result1['x'][0], result1['x'][1]) #최적화된 값으로 density matrix를 구한다.
-    # print(idden[0][0])
-    # print(deft[0][0])
-    
-    # deft1 = deft[0][0].tolist()
-    # deft2 = deft[0][1].tolist()
-    # deft3 = deft[1][0].tolist()
-    # deft4 = deft[1][1].tolist()
-    #find the distance between the target state(idden) and the result state(deft)
-    # print(deft1)
-    # print(deft2)
-    # print(deft3)
-    # print(deft4)
-    # car = ((deft[0, 0])**2 + (deft[0, 1])**2 + (deft[1, 0])**2 + (deft[1, 1])**2)**(1/2)
-    # car2 = ((idden[0][0])**2 + (idden[0][1])**2 + (idden[1][0])**2 + (idden[1][1])**2)**(1/2)
+    result1 = scipy.optimize.minimize(problem,deg,bounds=bounds,method="Powell")
+    deft = degree(result1['x'][0], result1['x'][1])
     car = ((idden.data[0, 0] - deft[0, 0])**2 + (idden.data[0, 1] - deft[0, 1])**2 + (idden.data[1, 1] - deft[1, 1])**2)**(1/2)
-    #print(car)
-    output1.append([result1['x'], final, deft, car])
+    if(car <= standard):
+        end = time.time()
+        final = end - start
+        output1.append(["Case" + str(x + 1), "Powell-first", result1['x'], final, deft, car, idden.data])
+    else:
+        result3 = scipy.optimize.differential_evolution(problem,bounds=bounds)
+        deft = degree(result3['x'][0], result3['x'][1])
+        car2 = ((idden.data[0, 0] - deft[0, 0])**2 + (idden.data[0, 1] - deft[0, 1])**2 + (idden.data[1, 1] - deft[1, 1])**2)**(1/2)
+        end = time.time()
+        if(car <= car2):
+            final = end - start
+            output1.append(["Case" + str(x + 1), "Powell-second", result1['x'], final, deft, car, idden.data])
+        else:
+            final = end - start
+            output1.append(["Case" + str(x + 1), "differential_evolution", result3['x'], final, deft, car2, idden.data])
+    print("Case" + str(x + 1) + " clear")
+        
     
-    start = time.time()
-    result2 = scipy.optimize.minimize(problem,deg,bounds=bounds,method="Powell")
-    end = time.time()
-    final = end - start
-    deft = degree(result2['x'][0], result2['x'][1])
-    car = ((idden.data[0, 0] - deft[0, 0])**2 + (idden.data[0, 1] - deft[0, 1])**2 + (idden.data[1, 1] - deft[1, 1])**2)**(1/2)
-    output2.append([result2['x'], final, deft, car])
-    
-    start = time.time()
-    result3 = scipy.optimize.differential_evolution(problem,bounds=bounds)
-    end = time.time()
-    final = end - start
-    deft = degree(result3['x'][0], result3['x'][1])
-    car = ((idden.data[0, 0] - deft[0, 0])**2 + (idden.data[0, 1] - deft[0, 1])**2 + (idden.data[1, 1] - deft[1, 1])**2)**(1/2)
-    output3.append([result3['x'], final, deft, car])
-    
-    start = time.time()
-    result4 = scipy.optimize.direct(problem,bounds=bounds)
-    end = time.time()
-    final = end - start
-    deft = degree(result4['x'][0], result4['x'][1])
-    car = ((idden.data[0, 0] - deft[0, 0])**2 + (idden.data[0, 1] - deft[0, 1])**2 + (idden.data[1, 1] - deft[1, 1])**2)**(1/2)
-    output4.append([result4['x'], final, deft, car])
-    #print(idden.data)
-    datapack.append(idden.data) 
-    
-    # result = scipy.optimize.minimize(problem,deg,bounds=bounds,method='Powell',options={'xtol':0.0001,'ftol':0.00001})  
-    # output4.append([result['x'], result['fun']])
-    
-    print("Test Case" + str(x + 1) + " clear")
-
-
-
+fin1 = pd.DataFrame(output1)
+fin1.rename(columns={0:"Case", 1:"Used Algorithm", 2:'Nelder-Mead', 3: 'time', 4: 'matrix', 5: "degree", 6: "Density Matrix"}, inplace=True)
+fin1.to_csv("C:/Users/Administrator/2023.01.01/KIST_intern/Task1/Control_Nuclear_Spins/NVspin/UNITE/Test1/Result_" + printdate + '.csv', index=false)
+print(date)
 # finalOutput = []
 # finalOutput = output1 + output2 + output3
 # output1[0][0] = "Nelder-Mead"
@@ -249,26 +219,26 @@ for x in range(10):
 # output3[0][0] = "COBYLA"
 #print(idden)
 
-print(date)
+#print(date)
 
-fin1 = pd.DataFrame(output1)
-fin1.rename(columns={0:'Nelder-Mead', 1: 'time', 2: 'matrix', 3: "degree"}, inplace=True)
-fin1.to_csv("C:/Users/Administrator/2023.01.01/KIST_intern/Task1/Control_Nuclear_Spins/NVspin/UNITE/Local/Nelder_Mead_result_" + printdate + '.csv', index=false)
-fin2 = pd.DataFrame(output2)
-fin2.rename(columns={0:'Powell', 1: 'time', 2: 'matrix', 3: "degree"}, inplace=True)
-fin2.to_csv("C:/Users/Administrator/2023.01.01/KIST_intern/Task1/Control_Nuclear_Spins/NVspin/UNITE/Local/Powell_result_" + printdate + '.csv', index=false)
-fin3 = pd.DataFrame(output3)
-fin3.rename(columns={0:'differential_evolution', 1: 'time', 2: 'matrix', 3: "degree"}, inplace=True)
-fin3.to_csv("C:/Users/Administrator/2023.01.01/KIST_intern/Task1/Control_Nuclear_Spins/NVspin/UNITE/Local/differential_evolution_result_" + printdate + '.csv', index=false)
-fin4 = pd.DataFrame(output4)
-fin4.rename(columns={0:'direct', 1: 'time', 2: 'matrix', 3: "degree"}, inplace=True)
-fin4.to_csv("C:/Users/Administrator/2023.01.01/KIST_intern/Task1/Control_Nuclear_Spins/NVspin/UNITE/Local/dual_annealing_result_" + printdate + '.csv', index=false)
-pack = pd.DataFrame(datapack)
+# fin1 = pd.DataFrame(output1)
+# fin1.rename(columns={0:'Nelder-Mead', 1: 'time', 2: 'matrix', 3: "degree"}, inplace=True)
+# fin1.to_csv("C:/Users/Administrator/2023.01.01/KIST_intern/Task1/Control_Nuclear_Spins/NVspin/UNITE/Local/Nelder_Mead_result_" + printdate + '.csv', index=false)
+# fin2 = pd.DataFrame(output2)
+# fin2.rename(columns={0:'Powell', 1: 'time', 2: 'matrix', 3: "degree"}, inplace=True)
+# fin2.to_csv("C:/Users/Administrator/2023.01.01/KIST_intern/Task1/Control_Nuclear_Spins/NVspin/UNITE/Local/Powell_result_" + printdate + '.csv', index=false)
+# fin3 = pd.DataFrame(output3)
+# fin3.rename(columns={0:'differential_evolution', 1: 'time', 2: 'matrix', 3: "degree"}, inplace=True)
+# fin3.to_csv("C:/Users/Administrator/2023.01.01/KIST_intern/Task1/Control_Nuclear_Spins/NVspin/UNITE/Local/differential_evolution_result_" + printdate + '.csv', index=false)
 # fin4 = pd.DataFrame(output4)
-pack.rename(columns={0:'Density Matrix'}, inplace=True)
+# fin4.rename(columns={0:'dual_annealing', 1: 'time', 2: 'matrix', 3: "degree"}, inplace=True)
+# fin4.to_csv("C:/Users/Administrator/2023.01.01/KIST_intern/Task1/Control_Nuclear_Spins/NVspin/UNITE/Local/dual_annealing_result_" + printdate + '.csv', index=false)
+# pack = pd.DataFrame(datapack)
+# # fin4 = pd.DataFrame(output4)
+# pack.rename(columns={0:'Density Matrix'}, inplace=True)
 
-fin = pd.concat([fin1, fin2, fin3, fin4, pack], axis=1)
-fin.to_csv("C:/Users/Administrator/2023.01.01/KIST_intern/Task1/Control_Nuclear_Spins/NVspin/UNITE/Local/Total_result_" + printdate + '.csv', index=false)
+# fin = pd.concat([fin1, fin2, fin3, fin4, pack], axis=1)
+# fin.to_csv("C:/Users/Administrator/2023.01.01/KIST_intern/Task1/Control_Nuclear_Spins/NVspin/UNITE/Local/Total_result_" + printdate + '.csv', index=false)
 
 #fin.to_csv('Powell_result_' + printdate + '.csv', index=false)
 
@@ -361,4 +331,64 @@ print("result8:")
 print(result8) #결과 출력
 output.append(result8)
 print("/////////////////////////////////////////////////////////////////")
+'''
+
+#%%
+'''
+    idden = rand_dm(2, density=1)
+    # data = []
+    # data = idden.data
+    start = time.time()
+    result1 = scipy.optimize.minimize(problem,deg,bounds=bounds,method="Nelder-Mead")
+    end = time.time()
+    final = end - start
+    deft = degree(result1['x'][0], result1['x'][1]) #최적화된 값으로 density matrix를 구한다.
+    # print(idden[0][0])
+    # print(deft[0][0])
+    
+    # deft1 = deft[0][0].tolist()
+    # deft2 = deft[0][1].tolist()
+    # deft3 = deft[1][0].tolist()
+    # deft4 = deft[1][1].tolist()
+    #find the distance between the target state(idden) and the result state(deft)
+    # print(deft1)
+    # print(deft2)
+    # print(deft3)
+    # print(deft4)
+    # car = ((deft[0, 0])**2 + (deft[0, 1])**2 + (deft[1, 0])**2 + (deft[1, 1])**2)**(1/2)
+    # car2 = ((idden[0][0])**2 + (idden[0][1])**2 + (idden[1][0])**2 + (idden[1][1])**2)**(1/2)
+    car = ((idden.data[0, 0] - deft[0, 0])**2 + (idden.data[0, 1] - deft[0, 1])**2 + (idden.data[1, 1] - deft[1, 1])**2)**(1/2)
+    #print(car)
+    output1.append([result1['x'], final, deft, car])
+    
+    start = time.time()
+    result2 = scipy.optimize.minimize(problem,deg,bounds=bounds,method="Powell")
+    end = time.time()
+    final = end - start
+    deft = degree(result2['x'][0], result2['x'][1])
+    car = ((idden.data[0, 0] - deft[0, 0])**2 + (idden.data[0, 1] - deft[0, 1])**2 + (idden.data[1, 1] - deft[1, 1])**2)**(1/2)
+    output2.append([result2['x'], final, deft, car])
+    
+    start = time.time()
+    result3 = scipy.optimize.differential_evolution(problem,bounds=bounds)
+    end = time.time()
+    final = end - start
+    deft = degree(result3['x'][0], result3['x'][1])
+    car = ((idden.data[0, 0] - deft[0, 0])**2 + (idden.data[0, 1] - deft[0, 1])**2 + (idden.data[1, 1] - deft[1, 1])**2)**(1/2)
+    output3.append([result3['x'], final, deft, car])
+    
+    start = time.time()
+    result4 = scipy.optimize.dual_annealing(problem,bounds=bounds)
+    end = time.time()
+    final = end - start
+    deft = degree(result4['x'][0], result4['x'][1])
+    car = ((idden.data[0, 0] - deft[0, 0])**2 + (idden.data[0, 1] - deft[0, 1])**2 + (idden.data[1, 1] - deft[1, 1])**2)**(1/2)
+    output4.append([result4['x'], final, deft, car])
+    #print(idden.data)
+    datapack.append(idden.data) 
+    
+    # result = scipy.optimize.minimize(problem,deg,bounds=bounds,method='Powell',options={'xtol':0.0001,'ftol':0.00001})  
+    # output4.append([result['x'], result['fun']])
+    
+    print("test case" + str(x + 1) + " clear")
 '''
