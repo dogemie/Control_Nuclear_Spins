@@ -1,0 +1,73 @@
+0
+COBYLA
+Time
+"[ message: Optimization terminated successfully.
+ success: True
+  status: 1
+     fun: 0.45642010860615584
+       x: [-1.290e-04  2.765e+00]
+    nfev: 39
+   maxcv: 0.0, 0.011932373046875]"
+"[ message: Optimization terminated successfully.
+ success: True
+  status: 1
+     fun: 0.40800080480577267
+       x: [-1.212e-04  2.791e+00]
+    nfev: 35
+   maxcv: 0.0, 0.013962984085083008]"
+"[ message: Optimization terminated successfully.
+ success: True
+  status: 1
+     fun: 1.1582278913437702
+       x: [ 2.986e+00  4.085e+00]
+    nfev: 35
+   maxcv: 0.0, 0.008975028991699219]"
+"[ message: Optimization terminated successfully.
+ success: True
+  status: 1
+     fun: 0.57849009415066
+       x: [ 3.142e+00  5.581e-01]
+    nfev: 38
+   maxcv: 0.0, 0.009974479675292969]"
+"[ message: Optimization terminated successfully.
+ success: True
+  status: 1
+     fun: 0.1372447083104016
+       x: [-8.440e-01  4.271e+00]
+    nfev: 43
+   maxcv: 0.0, 0.01197195053100586]"
+"[ message: Optimization terminated successfully.
+ success: True
+  status: 1
+     fun: 0.13981934448639538
+       x: [ 3.142e+00  3.191e+00]
+    nfev: 37
+   maxcv: 0.0, 0.009969234466552734]"
+"[ message: Optimization terminated successfully.
+ success: True
+  status: 1
+     fun: 1.4072629616221743
+       x: [ 3.810e+00  2.949e+00]
+    nfev: 34
+   maxcv: 0.0, 0.009009838104248047]"
+"[ message: Optimization terminated successfully.
+ success: True
+  status: 1
+     fun: 0.6649567973843328
+       x: [-1.319e-04  2.401e+00]
+    nfev: 32
+   maxcv: 0.0, 0.007987260818481445]"
+"[ message: Optimization terminated successfully.
+ success: True
+  status: 1
+     fun: 0.07399584997183269
+       x: [ 3.141e+00  2.683e+00]
+    nfev: 39
+   maxcv: 0.0, 0.009973526000976562]"
+"[ message: Optimization terminated successfully.
+ success: True
+  status: 1
+     fun: 1.3121921031975674
+       x: [ 7.172e-01  3.142e+00]
+    nfev: 34
+   maxcv: 0.0, 0.008977413177490234]"

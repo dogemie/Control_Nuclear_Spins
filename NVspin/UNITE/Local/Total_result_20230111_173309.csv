@@ -1,0 +1,243 @@
+0,0,0
+Nelder-Mead,Powell,COBYLA
+Time,Time,Time
+"[       message: Optimization terminated successfully.
+       success: True
+        status: 0
+           fun: 0.45625276153690575
+             x: [ 0.000e+00  3.146e+00]
+           nit: 39
+          nfev: 84
+ final_simplex: (array([[ 0.000e+00,  3.146e+00],
+                       [ 0.000e+00,  3.147e+00],
+                       [ 0.000e+00,  3.147e+00]]), array([ 4.563e-01,  4.563e-01,  4.563e-01])), 0.03486967086791992]","[ message: Optimization terminated successfully.
+ success: True
+  status: 0
+     fun: 0.868179655666224
+       x: [ 7.284e-01  4.712e+00]
+     nit: 2
+   direc: [[ 0.000e+00  1.000e+00]
+           [ 7.284e-01 -1.571e+00]]
+    nfev: 94, 0.02895975112915039]","[ message: Optimization terminated successfully.
+ success: True
+  status: 1
+     fun: 0.45642010860615584
+       x: [-1.290e-04  2.765e+00]
+    nfev: 39
+   maxcv: 0.0, 0.011932373046875]"
+"[       message: Optimization terminated successfully.
+       success: True
+        status: 0
+           fun: 0.40784540016525783
+             x: [ 0.000e+00  3.146e+00]
+           nit: 39
+          nfev: 84
+ final_simplex: (array([[ 0.000e+00,  3.146e+00],
+                       [ 0.000e+00,  3.147e+00],
+                       [ 0.000e+00,  3.147e+00]]), array([ 4.078e-01,  4.078e-01,  4.078e-01])), 0.027889013290405273]","[ message: Optimization terminated successfully.
+ success: True
+  status: 0
+     fun: 0.819771346788391
+       x: [ 7.284e-01  4.712e+00]
+     nit: 2
+   direc: [[ 0.000e+00  1.000e+00]
+           [ 7.284e-01 -1.571e+00]]
+    nfev: 98, 0.029955387115478516]","[ message: Optimization terminated successfully.
+ success: True
+  status: 1
+     fun: 0.40800080480577267
+       x: [-1.212e-04  2.791e+00]
+    nfev: 35
+   maxcv: 0.0, 0.013962984085083008]"
+"[       message: Optimization terminated successfully.
+       success: True
+        status: 0
+           fun: 1.2286885989730112
+             x: [ 0.000e+00  3.611e+00]
+           nit: 30
+          nfev: 78
+ final_simplex: (array([[ 0.000e+00,  3.611e+00],
+                       [ 0.000e+00,  3.612e+00],
+                       [ 0.000e+00,  3.612e+00]]), array([ 1.229e+00,  1.229e+00,  1.229e+00])), 0.024969816207885742]","[ message: Optimization terminated successfully.
+ success: True
+  status: 0
+     fun: 0.8707561328357523
+       x: [ 1.583e+00  4.804e+00]
+     nit: 2
+   direc: [[ 1.000e+00  0.000e+00]
+           [ 0.000e+00  1.000e+00]]
+    nfev: 72, 0.021941661834716797]","[ message: Optimization terminated successfully.
+ success: True
+  status: 1
+     fun: 1.1582278913437702
+       x: [ 2.986e+00  4.085e+00]
+    nfev: 35
+   maxcv: 0.0, 0.008975028991699219]"
+"[       message: Optimization terminated successfully.
+       success: True
+        status: 0
+           fun: 1.4216818234583315
+             x: [ 0.000e+00  3.146e+00]
+           nit: 39
+          nfev: 84
+ final_simplex: (array([[ 0.000e+00,  3.146e+00],
+                       [ 0.000e+00,  3.147e+00],
+                       [ 0.000e+00,  3.147e+00]]), array([ 1.422e+00,  1.422e+00,  1.422e+00])), 0.02892303466796875]","[ message: Optimization terminated successfully.
+ success: True
+  status: 0
+     fun: 0.5783181784475272
+       x: [ 3.142e+00  4.712e+00]
+     nit: 4
+   direc: [[ 0.000e+00  1.000e+00]
+           [ 4.493e-05  1.571e+00]]
+    nfev: 254, 0.0747992992401123]","[ message: Optimization terminated successfully.
+ success: True
+  status: 1
+     fun: 0.57849009415066
+       x: [ 3.142e+00  5.581e-01]
+    nfev: 38
+   maxcv: 0.0, 0.009974479675292969]"
+"[       message: Optimization terminated successfully.
+       success: True
+        status: 0
+           fun: 0.12714296773295947
+             x: [ 9.482e-01  1.167e+00]
+           nit: 54
+          nfev: 103
+ final_simplex: (array([[ 9.482e-01,  1.167e+00],
+                       [ 9.481e-01,  1.167e+00],
+                       [ 9.481e-01,  1.167e+00]]), array([ 1.271e-01,  1.272e-01,  1.272e-01])), 0.03586769104003906]","[ message: Optimization terminated successfully.
+ success: True
+  status: 0
+     fun: 0.13367294868806323
+       x: [ 7.716e-01  1.095e+00]
+     nit: 6
+   direc: [[ 3.639e-01  9.687e-01]
+           [ 1.780e-04  9.454e-05]]
+    nfev: 312, 0.09478259086608887]","[ message: Optimization terminated successfully.
+ success: True
+  status: 1
+     fun: 0.1372447083104016
+       x: [-8.440e-01  4.271e+00]
+    nfev: 43
+   maxcv: 0.0, 0.01197195053100586]"
+"[       message: Optimization terminated successfully.
+       success: True
+        status: 0
+           fun: 1.860312857778775
+             x: [ 0.000e+00  3.145e+00]
+           nit: 36
+          nfev: 77
+ final_simplex: (array([[ 0.000e+00,  3.145e+00],
+                       [ 0.000e+00,  3.145e+00],
+                       [ 0.000e+00,  3.145e+00]]), array([ 1.860e+00,  1.860e+00,  1.860e+00])), 0.026927947998046875]","[ message: Optimization terminated successfully.
+ success: True
+  status: 0
+     fun: 0.13968714222134004
+       x: [ 3.142e+00  4.712e+00]
+     nit: 3
+   direc: [[ 0.000e+00  1.000e+00]
+           [ 3.252e-09  7.569e-09]]
+    nfev: 246, 0.07580113410949707]","[ message: Optimization terminated successfully.
+ success: True
+  status: 1
+     fun: 0.13981934448639538
+       x: [ 3.142e+00  3.191e+00]
+    nfev: 37
+   maxcv: 0.0, 0.009969234466552734]"
+"[       message: Optimization terminated successfully.
+       success: True
+        status: 0
+           fun: 1.1477929237247257
+             x: [ 0.000e+00  3.474e+00]
+           nit: 30
+          nfev: 78
+ final_simplex: (array([[ 0.000e+00,  3.474e+00],
+                       [ 0.000e+00,  3.474e+00],
+                       [ 0.000e+00,  3.474e+00]]), array([ 1.148e+00,  1.148e+00,  1.148e+00])), 0.026927709579467773]","[ message: Optimization terminated successfully.
+ success: True
+  status: 0
+     fun: 0.8809124893809535
+       x: [ 1.578e+00  4.691e+00]
+     nit: 2
+   direc: [[ 1.000e+00  0.000e+00]
+           [ 0.000e+00  1.000e+00]]
+    nfev: 67, 0.02090930938720703]","[ message: Optimization terminated successfully.
+ success: True
+  status: 1
+     fun: 1.4072629616221743
+       x: [ 3.810e+00  2.949e+00]
+    nfev: 34
+   maxcv: 0.0, 0.009009838104248047]"
+"[       message: Optimization terminated successfully.
+       success: True
+        status: 0
+           fun: 0.6647704819879269
+             x: [ 0.000e+00  3.146e+00]
+           nit: 39
+          nfev: 84
+ final_simplex: (array([[ 0.000e+00,  3.146e+00],
+                       [ 0.000e+00,  3.147e+00],
+                       [ 0.000e+00,  3.147e+00]]), array([ 6.648e-01,  6.648e-01,  6.648e-01])), 0.028921842575073242]","[ message: Optimization terminated successfully.
+ success: True
+  status: 0
+     fun: 0.9421464259045111
+       x: [ 1.229e+00  4.712e+00]
+     nit: 2
+   direc: [[ 1.000e+00  0.000e+00]
+           [ 0.000e+00  1.000e+00]]
+    nfev: 79, 0.024925708770751953]","[ message: Optimization terminated successfully.
+ success: True
+  status: 1
+     fun: 0.6649567973843328
+       x: [-1.319e-04  2.401e+00]
+    nfev: 32
+   maxcv: 0.0, 0.007987260818481445]"
+"[       message: Optimization terminated successfully.
+       success: True
+        status: 0
+           fun: 1.9261691340232039
+             x: [ 0.000e+00  3.146e+00]
+           nit: 39
+          nfev: 84
+ final_simplex: (array([[ 0.000e+00,  3.146e+00],
+                       [ 0.000e+00,  3.147e+00],
+                       [ 0.000e+00,  3.147e+00]]), array([ 1.926e+00,  1.926e+00,  1.926e+00])), 0.02988457679748535]","[ message: Optimization terminated successfully.
+ success: True
+  status: 0
+     fun: 0.07383086597694101
+       x: [ 3.142e+00  4.712e+00]
+     nit: 3
+   direc: [[ 0.000e+00  1.000e+00]
+           [ 3.047e-09  6.427e-09]]
+    nfev: 246, 0.07084441184997559]","[ message: Optimization terminated successfully.
+ success: True
+  status: 1
+     fun: 0.07399584997183269
+       x: [ 3.141e+00  2.683e+00]
+    nfev: 39
+   maxcv: 0.0, 0.009973526000976562]"
+"[       message: Optimization terminated successfully.
+       success: True
+        status: 0
+           fun: 0.9012209314317565
+             x: [ 0.000e+00  3.146e+00]
+           nit: 39
+          nfev: 84
+ final_simplex: (array([[ 0.000e+00,  3.146e+00],
+                       [ 0.000e+00,  3.147e+00],
+                       [ 0.000e+00,  3.147e+00]]), array([ 9.012e-01,  9.012e-01,  9.012e-01])), 0.027924060821533203]","[ message: Optimization terminated successfully.
+ success: True
+  status: 0
+     fun: 0.9951170932626865
+       x: [ 1.472e+00  4.712e+00]
+     nit: 2
+   direc: [[ 1.000e+00  0.000e+00]
+           [ 0.000e+00  1.000e+00]]
+    nfev: 74, 0.02393627166748047]","[ message: Optimization terminated successfully.
+ success: True
+  status: 1
+     fun: 1.3121921031975674
+       x: [ 7.172e-01  3.142e+00]
+    nfev: 34
+   maxcv: 0.0, 0.008977413177490234]"

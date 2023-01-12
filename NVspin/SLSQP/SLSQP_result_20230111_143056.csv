@@ -1,0 +1,7 @@
+x,fun,jac,nit,nfev,njev,status,message,success
+[0.5883297  5.24558355],2.5918894072450787,[-0.20509266 -0.18457754],1,3,1,0,Optimization terminated successfully,True
+[0.5883297  5.24558355],2.5918894072450787,[0.17045966 0.00171153],1,3,1,0,Optimization terminated successfully,True
+[0.1049626  5.09768255],2.1309613975112813,[1.11688978 0.04904513],2,6,2,0,Optimization terminated successfully,True
+[0.         5.04650939],2.0,[1.25680662 0.        ],3,9,3,0,Optimization terminated successfully,True
+[2.06969858e-14 5.04722794e+00],2.000000000000026,[1.26916114e+00 5.68434189e-14],3,9,3,0,Optimization terminated successfully,True
+[3.34185804e-14 5.04746743e+00],2.0000000000000426,[1.2722504 0.       ],3,9,3,0,Optimization terminated successfully,True

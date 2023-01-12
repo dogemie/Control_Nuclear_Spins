@@ -16,6 +16,10 @@ import sympy as sp
 from numpy import ndarray
 import pandas as pd
 from datetime import datetime as dt                         # 시간을 출력하기 위한 라이브러리  
+import math
+import time
+
+start = time.time()
 
 ###1 Pauli Matrices(2X2 matrices)               
 
@@ -101,8 +105,8 @@ ideal = np.matrix([[1/sqrt(2)],[1/sqrt(2)]])
 
 
 #matrix 지정
-idden = np.matrix([[1/2,1/2],
-                    [1/2,1/2]])
+idden = np.matrix([[ 1/2,         1/2],
+ [1/2,  1/2]])
 
 ###5 실행
 
@@ -148,11 +152,14 @@ count = 1
 bbb = 100                                   #이전의 cost function값을 저장하기 위한 변수
 ccc = 100                                   #이전의 이전의 cost function값을 저장하기 위한 변수
 while true:
-    result = scipy.optimize.minimize(problem,deg,bounds=bounds,method='Powell',options={'xtol': xx,'ftol': ff})
+    result = scipy.optimize.minimize(problem,deg,bounds=bounds,method='Powell')
     output.append(result)
     aaa = output[count - 1]['fun']          #Temp Memory to compate output 'fun' value
     if(float(aaa) >= float(bbb) and float(aaa) >= float(ccc)):
         print("minimize clear")
+        break
+    if(count >= 100):
+        print("minimize fail")
         break
     ccc = bbb
     bbb = aaa
@@ -192,6 +199,10 @@ fin.to_csv("C:/Users/Administrator/2023.01.01/KIST_intern/Task1/Control_Nuclear_
 #ftol = func(xopt)에서 허용되는 상대 오류의 수
 #https://www.desmos.com/scientific?lang=ko
 #https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html
+
+end = time.time()
+final = end - start
+print("running time: " + str(final))
 
 # %%
 '''

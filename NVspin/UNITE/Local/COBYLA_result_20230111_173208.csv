@@ -1,0 +1,71 @@
+0,1
+" message: Optimization terminated successfully.
+ success: True
+  status: 1
+     fun: 0.593438702208237
+       x: [ 3.142e+00  2.687e+00]
+    nfev: 31
+   maxcv: 0.0",0.02190232276916504
+" message: Optimization terminated successfully.
+ success: True
+  status: 1
+     fun: 0.3709667103081367
+       x: [-9.653e-05  2.589e+00]
+    nfev: 31
+   maxcv: 0.0",0.007978439331054688
+" message: Optimization terminated successfully.
+ success: True
+  status: 1
+     fun: 0.20537046847029256
+       x: [ 3.141e+00  2.636e+00]
+    nfev: 36
+   maxcv: 0.0",0.010970115661621094
+" message: Optimization terminated successfully.
+ success: True
+  status: 1
+     fun: 0.012558596287947922
+       x: [ 3.141e+00  2.601e+00]
+    nfev: 36
+   maxcv: 0.0",0.008976459503173828
+" message: Optimization terminated successfully.
+ success: True
+  status: 1
+     fun: 0.10050010740884613
+       x: [ 7.517e-01  8.222e-01]
+    nfev: 38
+   maxcv: 0.0",0.014959573745727539
+" message: Optimization terminated successfully.
+ success: True
+  status: 1
+     fun: 0.4090653353734041
+       x: [-5.560e-02  2.675e+00]
+    nfev: 37
+   maxcv: 0.0",0.01101064682006836
+" message: Optimization terminated successfully.
+ success: True
+  status: 1
+     fun: 0.8550533483272773
+       x: [ 3.792e-01  5.159e+00]
+    nfev: 50
+   maxcv: 0.0",0.013974905014038086
+" message: Optimization terminated successfully.
+ success: True
+  status: 1
+     fun: 0.6494020726178157
+       x: [-9.956e-05  3.696e+00]
+    nfev: 36
+   maxcv: 0.0",0.009970426559448242
+" message: Optimization terminated successfully.
+ success: True
+  status: 1
+     fun: 0.11593772427849583
+       x: [ 2.247e+00  2.914e+00]
+    nfev: 44
+   maxcv: 0.0",0.012964487075805664
+" message: Optimization terminated successfully.
+ success: True
+  status: 1
+     fun: 0.12120122437884016
+       x: [ 3.141e+00  2.628e+00]
+    nfev: 33
+   maxcv: 0.0",0.008937358856201172

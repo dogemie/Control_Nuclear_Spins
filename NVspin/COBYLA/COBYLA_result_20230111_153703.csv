@@ -1,0 +1,30 @@
+x,status,success,message,nfev,fun,maxcv
+[5.49482349 4.56995147],1,True,Optimization terminated successfully.,7,2.0869436315234733,0.0
+[5.35468274 6.99583367],1,True,Optimization terminated successfully.,12,0.7592672367344069,0.0
+[5.07386106 6.74656163],1,True,Optimization terminated successfully.,15,0.6393126405227274,0.0
+[4.95202814 6.63409773],1,True,Optimization terminated successfully.,19,0.5143425919405269,0.0
+[4.90067086 6.59707657],1,True,Optimization terminated successfully.,27,0.4712210289061809,0.0
+[4.9070731  6.59874471],1,True,Optimization terminated successfully.,33,0.4644503182861355,0.0
+[4.90808004 6.59730017],1,True,Optimization terminated successfully.,41,0.46230769383356857,0.0
+[4.90855541 6.5970239 ],1,True,Optimization terminated successfully.,48,0.4616105716653136,0.0
+[4.90862757 6.5971074 ],1,True,Optimization terminated successfully.,54,0.4615552888022911,0.0
+[4.9086025  6.59706279],1,True,Optimization terminated successfully.,59,0.4615175283482428,0.0
+[4.90860573 6.59706329],1,True,Optimization terminated successfully.,67,0.4615138773518498,0.0
+[4.90860736 6.59706348],1,True,Optimization terminated successfully.,71,0.4615127598215826,0.0
+[4.90860689 6.59706293],1,True,Optimization terminated successfully.,78,0.46151222137738707,0.0
+[4.90860695 6.59706289],1,True,Optimization terminated successfully.,86,0.46151213106927863,0.0
+[4.90860697 6.5970629 ],1,True,Optimization terminated successfully.,91,0.46151211695111855,0.0
+[4.90860697 6.59706291],1,True,Optimization terminated successfully.,94,0.46151211532540204,0.0
+[4.90860697 6.59706291],1,True,Optimization terminated successfully.,98,0.46151211355309535,0.0
+[4.90860697 6.59706291],1,True,Optimization terminated successfully.,104,0.46151211344229,0.0
+[4.90860697 6.59706291],1,True,Optimization terminated successfully.,109,0.4615121134013975,0.0
+[4.90860697 6.59706291],1,True,Optimization terminated successfully.,116,0.46151211338933745,0.0
+[4.90860697 6.59706291],1,True,Optimization terminated successfully.,128,0.46151211336790765,0.0
+[4.90860697 6.59706291],1,True,Optimization terminated successfully.,135,0.46151211336584747,0.0
+[4.90860697 6.59706291],1,True,Optimization terminated successfully.,145,0.46151211336498227,0.0
+[4.90860697 6.59706291],1,True,Optimization terminated successfully.,163,0.46151211336454434,0.0
+[4.90860697 6.59706291],1,True,Optimization terminated successfully.,169,0.4615121133645208,0.0
+[4.90860697 6.59706291],1,True,Optimization terminated successfully.,181,0.46151211336451137,0.0
+[4.90860697 6.59706291],1,True,Optimization terminated successfully.,189,0.46151211336450876,0.0
+[4.90860697 6.59706291],1,True,Optimization terminated successfully.,191,0.46151211336450876,0.0
+[4.90860697 6.59706291],1,True,Optimization terminated successfully.,192,0.46151211336450876,0.0

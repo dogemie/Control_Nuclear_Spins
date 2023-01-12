@@ -1,0 +1,103 @@
+0
+Nelder-Mead
+Time
+"[       message: Optimization terminated successfully.
+       success: True
+        status: 0
+           fun: 0.45625276153690575
+             x: [ 0.000e+00  3.146e+00]
+           nit: 39
+          nfev: 84
+ final_simplex: (array([[ 0.000e+00,  3.146e+00],
+                       [ 0.000e+00,  3.147e+00],
+                       [ 0.000e+00,  3.147e+00]]), array([ 4.563e-01,  4.563e-01,  4.563e-01])), 0.03486967086791992]"
+"[       message: Optimization terminated successfully.
+       success: True
+        status: 0
+           fun: 0.40784540016525783
+             x: [ 0.000e+00  3.146e+00]
+           nit: 39
+          nfev: 84
+ final_simplex: (array([[ 0.000e+00,  3.146e+00],
+                       [ 0.000e+00,  3.147e+00],
+                       [ 0.000e+00,  3.147e+00]]), array([ 4.078e-01,  4.078e-01,  4.078e-01])), 0.027889013290405273]"
+"[       message: Optimization terminated successfully.
+       success: True
+        status: 0
+           fun: 1.2286885989730112
+             x: [ 0.000e+00  3.611e+00]
+           nit: 30
+          nfev: 78
+ final_simplex: (array([[ 0.000e+00,  3.611e+00],
+                       [ 0.000e+00,  3.612e+00],
+                       [ 0.000e+00,  3.612e+00]]), array([ 1.229e+00,  1.229e+00,  1.229e+00])), 0.024969816207885742]"
+"[       message: Optimization terminated successfully.
+       success: True
+        status: 0
+           fun: 1.4216818234583315
+             x: [ 0.000e+00  3.146e+00]
+           nit: 39
+          nfev: 84
+ final_simplex: (array([[ 0.000e+00,  3.146e+00],
+                       [ 0.000e+00,  3.147e+00],
+                       [ 0.000e+00,  3.147e+00]]), array([ 1.422e+00,  1.422e+00,  1.422e+00])), 0.02892303466796875]"
+"[       message: Optimization terminated successfully.
+       success: True
+        status: 0
+           fun: 0.12714296773295947
+             x: [ 9.482e-01  1.167e+00]
+           nit: 54
+          nfev: 103
+ final_simplex: (array([[ 9.482e-01,  1.167e+00],
+                       [ 9.481e-01,  1.167e+00],
+                       [ 9.481e-01,  1.167e+00]]), array([ 1.271e-01,  1.272e-01,  1.272e-01])), 0.03586769104003906]"
+"[       message: Optimization terminated successfully.
+       success: True
+        status: 0
+           fun: 1.860312857778775
+             x: [ 0.000e+00  3.145e+00]
+           nit: 36
+          nfev: 77
+ final_simplex: (array([[ 0.000e+00,  3.145e+00],
+                       [ 0.000e+00,  3.145e+00],
+                       [ 0.000e+00,  3.145e+00]]), array([ 1.860e+00,  1.860e+00,  1.860e+00])), 0.026927947998046875]"
+"[       message: Optimization terminated successfully.
+       success: True
+        status: 0
+           fun: 1.1477929237247257
+             x: [ 0.000e+00  3.474e+00]
+           nit: 30
+          nfev: 78
+ final_simplex: (array([[ 0.000e+00,  3.474e+00],
+                       [ 0.000e+00,  3.474e+00],
+                       [ 0.000e+00,  3.474e+00]]), array([ 1.148e+00,  1.148e+00,  1.148e+00])), 0.026927709579467773]"
+"[       message: Optimization terminated successfully.
+       success: True
+        status: 0
+           fun: 0.6647704819879269
+             x: [ 0.000e+00  3.146e+00]
+           nit: 39
+          nfev: 84
+ final_simplex: (array([[ 0.000e+00,  3.146e+00],
+                       [ 0.000e+00,  3.147e+00],
+                       [ 0.000e+00,  3.147e+00]]), array([ 6.648e-01,  6.648e-01,  6.648e-01])), 0.028921842575073242]"
+"[       message: Optimization terminated successfully.
+       success: True
+        status: 0
+           fun: 1.9261691340232039
+             x: [ 0.000e+00  3.146e+00]
+           nit: 39
+          nfev: 84
+ final_simplex: (array([[ 0.000e+00,  3.146e+00],
+                       [ 0.000e+00,  3.147e+00],
+                       [ 0.000e+00,  3.147e+00]]), array([ 1.926e+00,  1.926e+00,  1.926e+00])), 0.02988457679748535]"
+"[       message: Optimization terminated successfully.
+       success: True
+        status: 0
+           fun: 0.9012209314317565
+             x: [ 0.000e+00  3.146e+00]
+           nit: 39
+          nfev: 84
+ final_simplex: (array([[ 0.000e+00,  3.146e+00],
+                       [ 0.000e+00,  3.147e+00],
+                       [ 0.000e+00,  3.147e+00]]), array([ 9.012e-01,  9.012e-01,  9.012e-01])), 0.027924060821533203]"

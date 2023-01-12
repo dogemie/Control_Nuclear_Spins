@@ -148,6 +148,9 @@ while true:
     if(float(aaa) >= float(bbb) and float(aaa) >= float(ccc)):
         print("minimize clear")
         break
+    if(count >= 100):
+        print("minimize fail")
+        break
     ccc = bbb
     bbb = aaa
     if(count == 1):

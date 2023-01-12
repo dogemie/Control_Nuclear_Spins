@@ -1,0 +1,93 @@
+0,1
+Powell,
+Time,
+" message: Optimization terminated successfully.
+ success: True
+  status: 0
+     fun: 0.4299190857022827
+       x: [ 1.382e+00  6.250e+00]
+     nit: 3
+   direc: [[ 1.000e+00  0.000e+00]
+           [ 4.389e-06  5.518e-07]]
+    nfev: 213",0.06981396675109863
+" message: Optimization terminated successfully.
+ success: True
+  status: 0
+     fun: 0.41863714515323974
+       x: [ 1.784e+00  6.052e+00]
+     nit: 2
+   direc: [[ 1.000e+00  0.000e+00]
+           [ 5.807e-06  3.366e-05]]
+    nfev: 120",0.03789639472961426
+" message: Optimization terminated successfully.
+ success: True
+  status: 0
+     fun: 5.161262747422998e-05
+       x: [ 3.142e+00  4.712e+00]
+     nit: 3
+   direc: [[ 0.000e+00  1.000e+00]
+           [ 2.831e-09  9.134e-09]]
+    nfev: 244",0.07679390907287598
+" message: Optimization terminated successfully.
+ success: True
+  status: 0
+     fun: 0.6798084656213412
+       x: [ 1.496e+00  4.950e+00]
+     nit: 2
+   direc: [[ 1.000e+00  0.000e+00]
+           [-1.872e-06 -1.401e-05]]
+    nfev: 119",0.03789877891540527
+" message: Optimization terminated successfully.
+ success: True
+  status: 0
+     fun: 0.9489989044792397
+       x: [ 7.931e-01  4.712e+00]
+     nit: 2
+   direc: [[ 0.000e+00  1.000e+00]
+           [ 7.930e-01 -1.571e+00]]
+    nfev: 92",0.02990555763244629
+" message: Optimization terminated successfully.
+ success: True
+  status: 0
+     fun: 0.323961470862012
+       x: [ 3.142e+00  4.712e+00]
+     nit: 3
+   direc: [[ 0.000e+00  1.000e+00]
+           [-3.632e-10 -1.057e-09]]
+    nfev: 250",0.08473777770996094
+" message: Optimization terminated successfully.
+ success: True
+  status: 0
+     fun: 0.3266915206219454
+       x: [ 1.867e+00  4.945e+00]
+     nit: 2
+   direc: [[ 1.000e+00  0.000e+00]
+           [-1.418e-06 -5.048e-06]]
+    nfev: 140",0.043880462646484375
+" message: Optimization terminated successfully.
+ success: True
+  status: 0
+     fun: 0.9919469421770033
+       x: [ 1.698e+00  4.712e+00]
+     nit: 2
+   direc: [[ 1.000e+00  0.000e+00]
+           [ 0.000e+00  1.000e+00]]
+    nfev: 77",0.026926755905151367
+" message: Optimization terminated successfully.
+ success: True
+  status: 0
+     fun: 0.5600095953659596
+       x: [ 1.714e+00  3.292e-01]
+     nit: 2
+   direc: [[ 1.000e+00  0.000e+00]
+           [-1.208e-05  4.540e-05]]
+    nfev: 128",0.03992033004760742
+" message: Optimization terminated successfully.
+ success: True
+  status: 0
+     fun: 0.4897202558836071
+       x: [ 1.720e+00  3.231e+00]
+     nit: 2
+   direc: [[ 1.000e+00  0.000e+00]
+           [ 0.000e+00  1.000e+00]]
+    nfev: 76",0.025971651077270508

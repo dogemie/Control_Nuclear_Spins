@@ -16,7 +16,9 @@ import sympy as sp
 from numpy import ndarray
 import pandas as pd
 from datetime import datetime as dt                         # 시간을 출력하기 위한 라이브러리  
-
+import math
+import time
+start = time.time()
 ###1 Pauli Matrices(2X2 matrices)               
 
 def I():
@@ -96,7 +98,14 @@ ideal = np.matrix([[1/sqrt(2)],[1/sqrt(2)]])
 
 
 #qutip 라이브러리에 있는 랜덤한 density matrix를 생성해주는 함수
-idden = rand_dm(2, density=1)
+#idden = rand_dm(2, density=1)
+
+
+
+#matrix 지정
+idden = np.matrix([[1/2,0],
+                    [0,1/2]])
+
 
 ###5 실행
 
@@ -136,17 +145,22 @@ output = []
 #     ff = ff * 0.3
 #     print("result" + str(x) + " clear") 
 
+
+#최적화된 값의 변화가 없을 때 까지 작업을 반복한다.
 xx = 1
 ff = 1
 count = 1
 bbb = 100                                   #이전의 cost function값을 저장하기 위한 변수
 ccc = 100                                   #이전의 이전의 cost function값을 저장하기 위한 변수
 while true:
-    result = scipy.optimize.minimize(problem,deg,bounds=bounds,method='Powell',options={'xtol': xx,'ftol': ff})
+    result = scipy.optimize.minimize(problem,deg,bounds=bounds,method="Nelder-Mead", options={'xatol': xx,'fatol': ff})
     output.append(result)
     aaa = output[count - 1]['fun']          #Temp Memory to compate output 'fun' value
     if(float(aaa) >= float(bbb) and float(aaa) >= float(ccc)):
         print("minimize clear")
+        break
+    if(count >= 100):
+        print("minimize fail")
         break
     ccc = bbb
     bbb = aaa
@@ -169,7 +183,7 @@ print(idden)
 date = dt.now()
 printdate = date.strftime('%Y%m%d_%H%M%S')
 print(date)
-fin.to_csv("C:/Users/Administrator/2023.01.01/KIST_intern/Task1/Control_Nuclear_Spins/NVspin/Powell/Powell_result_" + printdate + '.csv', index=false)
+fin.to_csv("C:/Users/Administrator/2023.01.01/KIST_intern/Task1/Control_Nuclear_Spins/NVspin/Nelder_Mead/Nelder_Mead_result_" + printdate + '.csv', index=false)
 #fin.to_csv('Powell_result_' + printdate + '.csv', index=false)
 
 ###7 결과 분석
@@ -186,6 +200,10 @@ fin.to_csv("C:/Users/Administrator/2023.01.01/KIST_intern/Task1/Control_Nuclear_
 #ftol = func(xopt)에서 허용되는 상대 오류의 수
 #https://www.desmos.com/scientific?lang=ko
 #https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html
+
+end = time.time()
+final = end - start
+print("running time: " + str(final))
 
 # %%
 '''
