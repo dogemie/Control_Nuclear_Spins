@@ -184,34 +184,53 @@ output4 = []
 
 standard = 0.1
 
-for x in range(10):
+for x in range(30):
     idden = rand_dm(2, density=1)
-    start = time.time()
-    result1 = scipy.optimize.minimize(problem,deg,bounds=bounds,method="Powell")
-    deft = degree(result1['x'][0], result1['x'][1])
-    car = ((idden.data[0, 0] - deft[0, 0])**2 + (idden.data[0, 1] - deft[0, 1])**2 + (idden.data[1, 1] - deft[1, 1])**2)**(1/2)
-    if(car <= standard):
-        end = time.time()
-        final = end - start
-        output1.append(["Case" + str(x + 1), "Powell-first", result1['x'], final, deft, car, idden.data])
-    else:
-        result3 = scipy.optimize.differential_evolution(problem,bounds=bounds)
-        deft = degree(result3['x'][0], result3['x'][1])
-        car2 = ((idden.data[0, 0] - deft[0, 0])**2 + (idden.data[0, 1] - deft[0, 1])**2 + (idden.data[1, 1] - deft[1, 1])**2)**(1/2)
-        end = time.time()
-        if(car <= car2):
+    for y in range(1):
+        start = time.time()
+        result1 = scipy.optimize.minimize(problem,deg,bounds=bounds,method="Powell")
+        deft = degree(result1['x'][0], result1['x'][1])
+        car = ((idden.data[0, 0] - deft[0, 0])**2 + (idden.data[0, 1] - deft[0, 1])**2 + (idden.data[1, 1] - deft[1, 1])**2)**(1/2)
+        if(car <= standard):
+            end = time.time()
             final = end - start
-            output1.append(["Case" + str(x + 1), "Powell-second", result1['x'], final, deft, car, idden.data])
+            output1.append(["Case" + str(x + 1), "Powell", result1['x'], final, deft, car, idden.data])
         else:
-            final = end - start
-            output1.append(["Case" + str(x + 1), "differential_evolution", result3['x'], final, deft, car2, idden.data])
+            result4 = scipy.optimize.minimize(problem,deg,bounds=bounds,method="Nelder-Mead")
+            deft = degree(result4['x'][0], result4['x'][1])
+            car3 = ((idden.data[0, 0] - deft[0, 0])**2 + (idden.data[0, 1] - deft[0, 1])**2 + (idden.data[1, 1] - deft[1, 1])**2)**(1/2)
+            if(car3 <= standard):
+                end = time.time()
+                final = end - start
+                output1.append(["Case" + str(x + 1), "Nelder-Mead", result4['x'], final, deft, car3, idden.data])
+            else:
+                result3 = scipy.optimize.differential_evolution(problem,bounds=bounds)
+                deft = degree(result3['x'][0], result3['x'][1])
+                car2 = ((idden.data[0, 0] - deft[0, 0])**2 + (idden.data[0, 1] - deft[0, 1])**2 + (idden.data[1, 1] - deft[1, 1])**2)**(1/2)
+                if(car2 <= standard):
+                    end = time.time()
+                    final = end - start
+                    output1.append(["Case" + str(x + 1), "differential_evolution", result3['x'], final, deft, car2, idden.data])
+                elif(car2 <= car and car2 <= car3):
+                    end = time.time()
+                    final = end - start
+                    output1.append(["Case" + str(x + 1), "differential_evolution", result3['x'], final, deft, car2, idden.data])
+                elif(car <= car2 and car <= car3):
+                    end = time.time()
+                    final = end - start
+                    output1.append(["Case" + str(x + 1), "Powell", result1['x'], final, deft, car, idden.data])
+                else:
+                    end = time.time()
+                    final = end - start
+                    output1.append(["Case" + str(x + 1), "Nelder-Mead", result4['x'], final, deft, car3, idden.data])
     print("Case" + str(x + 1) + " clear")
         
     
 fin1 = pd.DataFrame(output1)
-fin1.rename(columns={0:"Case", 1:"Used Algorithm", 2:'Nelder-Mead', 3: 'time', 4: 'matrix', 5: "degree", 6: "Density Matrix"}, inplace=True)
+fin1.rename(columns={0:"Case", 1:"Used Algorithm", 2:'Theta, Phi', 3: 'time', 4: 'matrix', 5: "degree", 6: "Density Matrix"}, inplace=True)
 fin1.to_csv("C:/Users/Administrator/2023.01.01/KIST_intern/Task1/Control_Nuclear_Spins/NVspin/UNITE/Test1/Result_" + printdate + '.csv', index=false)
 print(date)
+
 # finalOutput = []
 # finalOutput = output1 + output2 + output3
 # output1[0][0] = "Nelder-Mead"

@@ -18,6 +18,7 @@ import pandas as pd
 from datetime import datetime as dt                         # 시간을 출력하기 위한 라이브러리  
 import math
 import time
+import matplotlib.pyplot as plt
 start = time.time()
 ###1 Pauli Matrices(2X2 matrices)               
 
@@ -43,13 +44,15 @@ def Sz():
 
 #X-gate는 Rx(theta)로 표현하고 Z-gate는 Rz(phi)로 표현합니다.
 def Rx(theta):
-    return np.matrix([[cos(theta/2),     -1j*sin(theta/2)],
-                    [-1j*sin(theta/2),     cos(theta/2)]])
-#혹시라도 에러가 나면 사용(허수계산이라 날수도 있음)
+    return np.matrix([[cos(theta/2), -1j*sin(theta/2)],
+                     [-1j*sin(theta/2), cos(theta/2)]])
+
 
 def Rz(phi):
-    return np.matrix([[cos(phi/2)-1j*sin(phi/2),       0],
-                     [0,                          cos(phi/2)+1j*sin(phi/2)]])
+    return np.matrix([[cos(phi/2)-1j*sin(phi/2), 0],
+                     [0, cos(phi/2)+1j*sin(phi/2)]])
+    
+#혹시라도 에러가 나면 사용(허수계산이라 날수도 있음)
 '''                     
 def Rz(phi):
     return np.matrix([[e**(-1j*phi/2),       0],
@@ -125,9 +128,10 @@ def problem(deg):
     y_id = np.trace(idden*Sy())                                 # target state의 Sigma Y projection
     z_id = np.trace(idden*Sz())                                 # target state의 Sigma Z projection
     cost = np.abs(x_m-x_id)+np.abs(y_m-y_id)+np.abs(z_m-z_id)   # 실험값과 이론값의 비교 costfunction 반환
+    return cost
+
     #cost2 = ((float(np.abs(x_m-x_id)))**2+(float(np.abs(y_m-y_id)))**2+(float(np.abs(z_m-z_id)))**2)**(1/2)
     #print(rho_measure)
-    return cost
 
 bounds = [(0, pi),(0,2*pi)]                                     #theta와 phi의 범위
 deg = [(np.pi/180)*random.uniform(0,180),(np.pi/180)*random.uniform(0,360)] #초기값을 넣는 랜덤변수
@@ -141,6 +145,8 @@ def degree(theta, phi):
     func = fx *fz
     mc = init()*init().T
     out = func*mc*func.getH()
+    return out
+
     # print("func")
     # print(func)
     # print("func[0]")
@@ -156,7 +162,6 @@ def degree(theta, phi):
     # print("out[0][0]")
     # print(out[0][0])
     
-    return out
 
 ###6 결과 출력
 #https://docs.scipy.org/doc/scipy/reference/optimize.html
@@ -182,7 +187,18 @@ output4 = []
 #pip = [["Density Matrix", nan], [nan, "Matrix"]]
 #최적화된 값의 변화가 없을 때 까지 작업을 반복한다.
 
-for x in range(10):
+count = 10 #최적화 정도를 확인하기 위한 반복 작업 횟수
+temp1 = np.zeros(count)
+temp2 = np.zeros(count)
+temp3 = np.zeros(count)
+temp4 = np.zeros(count)
+temp5 = np.zeros(count)
+temp6 = np.zeros(count)
+temp7 = np.zeros(count)
+temp8 = np.zeros(count)
+
+
+for x in range(count):
     idden = rand_dm(2, density=1)
     # data = []
     # data = idden.data
@@ -208,15 +224,20 @@ for x in range(10):
     car = ((idden.data[0, 0] - deft[0, 0])**2 + (idden.data[0, 1] - deft[0, 1])**2 + (idden.data[1, 1] - deft[1, 1])**2)**(1/2)
     #print(car)
     output1.append([result1['x'], final, deft, car])
-    
+    temp1[x] = final
+    temp5[x] = car
     start = time.time()
-    result2 = scipy.optimize.minimize(problem,deg,bounds=bounds,method="Powell")
+    result2 = scipy.optimize.minimize(problem,deg,bounds=bounds,
+                                      method="Powell")
     end = time.time()
     final = end - start
     deft = degree(result2['x'][0], result2['x'][1])
-    car = ((idden.data[0, 0] - deft[0, 0])**2 + (idden.data[0, 1] - deft[0, 1])**2 + (idden.data[1, 1] - deft[1, 1])**2)**(1/2)
+    car = ((idden.data[0, 0] - deft[0, 0])**2 + 
+           (idden.data[0, 1] - deft[0, 1])**2 + 
+           (idden.data[1, 1] - deft[1, 1])**2)**(1/2)
     output2.append([result2['x'], final, deft, car])
-    
+    temp2[x] = final
+    temp6[x] = car
     start = time.time()
     result3 = scipy.optimize.differential_evolution(problem,bounds=bounds)
     end = time.time()
@@ -224,14 +245,17 @@ for x in range(10):
     deft = degree(result3['x'][0], result3['x'][1])
     car = ((idden.data[0, 0] - deft[0, 0])**2 + (idden.data[0, 1] - deft[0, 1])**2 + (idden.data[1, 1] - deft[1, 1])**2)**(1/2)
     output3.append([result3['x'], final, deft, car])
-    
+    temp3[x] = final
+    temp7[x] = car
     start = time.time()
-    result4 = scipy.optimize.direct(problem,bounds=bounds)
+    result4 = scipy.optimize.dual_annealing(problem,bounds=bounds)
     end = time.time()
     final = end - start
     deft = degree(result4['x'][0], result4['x'][1])
     car = ((idden.data[0, 0] - deft[0, 0])**2 + (idden.data[0, 1] - deft[0, 1])**2 + (idden.data[1, 1] - deft[1, 1])**2)**(1/2)
     output4.append([result4['x'], final, deft, car])
+    temp4[x] = final
+    temp8[x] = car
     #print(idden.data)
     datapack.append(idden.data) 
     
@@ -240,6 +264,29 @@ for x in range(10):
     
     print("Test Case" + str(x + 1) + " clear")
 
+temp = np.arange(1, count + 1, 1)
+
+plt.plot(temp, temp1, color='red', marker='o', label='Nelder-Mead', linestyle='dashed', linewidth=2, markersize=12)
+plt.plot(temp, temp2, color='blue', marker='o', label='Powell', linestyle='dashed', linewidth=2, markersize=12)
+plt.plot(temp, temp3, color='green', marker='o', label='differential_evolution', linestyle='dashed', linewidth=2, markersize=12)
+plt.plot(temp, temp4, color='black', marker='o', label='dual_annealing', linestyle='dashed', linewidth=2, markersize=12)
+
+plt.title("Algorithm Time Comparison")
+plt.xlabel("number of test case")
+plt.ylabel("time (s)")
+plt.legend()
+plt.show()
+
+plt.plot(temp, temp5, color='red', marker='o', label='Nelder-Mead', linestyle='dashed', linewidth=2, markersize=12)
+plt.plot(temp, temp6, color='blue', marker='o', label='Powell', linestyle='dashed', linewidth=2, markersize=12)
+plt.plot(temp, temp7, color='green', marker='o', label='differential_evolution', linestyle='dashed', linewidth=2, markersize=12)
+plt.plot(temp, temp8, color='black', marker='o', label='dual_annealing', linestyle='dashed', linewidth=2, markersize=12)
+
+plt.title("Algorithm Error Comparison")
+plt.xlabel("number of test case")
+plt.ylabel("degree of error")
+plt.legend()
+plt.show()
 
 
 # finalOutput = []
@@ -261,7 +308,7 @@ fin3 = pd.DataFrame(output3)
 fin3.rename(columns={0:'differential_evolution', 1: 'time', 2: 'matrix', 3: "degree"}, inplace=True)
 fin3.to_csv("C:/Users/Administrator/2023.01.01/KIST_intern/Task1/Control_Nuclear_Spins/NVspin/UNITE/Local/differential_evolution_result_" + printdate + '.csv', index=false)
 fin4 = pd.DataFrame(output4)
-fin4.rename(columns={0:'direct', 1: 'time', 2: 'matrix', 3: "degree"}, inplace=True)
+fin4.rename(columns={0:'dual_annealing', 1: 'time', 2: 'matrix', 3: "degree"}, inplace=True)
 fin4.to_csv("C:/Users/Administrator/2023.01.01/KIST_intern/Task1/Control_Nuclear_Spins/NVspin/UNITE/Local/dual_annealing_result_" + printdate + '.csv', index=false)
 pack = pd.DataFrame(datapack)
 # fin4 = pd.DataFrame(output4)
