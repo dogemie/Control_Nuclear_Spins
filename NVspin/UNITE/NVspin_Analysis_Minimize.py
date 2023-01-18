@@ -120,32 +120,13 @@ def problem(deg):
     x_m = np.trace(rho_measure*Sx())                            # Sigma X projection
     y_m = np.trace(rho_measure*Sy())                            # Sigma Y projection
     z_m = np.trace(rho_measure*Sz())                            # Sigma Z projection
+    i_m = np.trace(rho_measure*I())                          # Identity projection
     #x_id,y_id,z_id는 주어진 target state를 계산해낸 값(이론값)
     x_id = np.trace(idden*Sx())                                 # target state의 Sigma X projection
     y_id = np.trace(idden*Sy())                                 # target state의 Sigma Y projection
     z_id = np.trace(idden*Sz())                                 # target state의 Sigma Z projection
-    x_j = ((x_m-x_id).imag)**2
-    y_j = ((y_m-y_id).imag)**2
-    z_j = ((z_m-z_id).imag)**2
-    if(x_j < 0):
-        x_j = x_j * -1
-    if(y_j < 0):
-        y_j = y_j * -1
-    if(z_j < 0):
-        z_j = z_j * -1
-        
-    print("x_m : " + str(x_m))
-    print("y_m : " + str(y_m))
-    print("z_m : " + str(z_m))
-    print("x_id : " + str(x_id))
-    print("y_id : " + str(y_id))
-    print("z_id : " + str(z_id))
-    
-    print("x_j : " + str(x_j))
-    print("y_j : " + str(y_j))
-    print("z_j : " + str(z_j))
-    im = x_j**2 + y_j**2 + z_j**2
-    cost = ((np.abs(x_m-x_id).real)**2 + (np.abs(y_m-y_id).real)**2 + (np.abs(z_m-z_id).real)**2)**(1/2) + im**(1/2)   # 실험값과 이론값의 비교 costfunction 반환
+    i_id = np.trace(idden*I())                               # target state의 Identity projection
+    cost = np.abs(x_m - x_id) + np.abs(y_m - y_id) + np.abs(z_m - z_id) + np.abs(i_m - i_id)        # cost function
     return cost
 
 def problem2(deg):
@@ -156,11 +137,13 @@ def problem2(deg):
     x_m = np.trace(rho_measure*Sx())                            # Sigma X projection
     y_m = np.trace(rho_measure*Sy())                            # Sigma Y projection
     z_m = np.trace(rho_measure*Sz())                            # Sigma Z projection
+    i_m = np.trace(rho_measure*I())                          # Identity projection
     #x_id,y_id,z_id는 주어진 target state를 계산해낸 값(이론값)
     x_id = np.trace(idden*Sx())                                 # target state의 Sigma X projection
     y_id = np.trace(idden*Sy())                                 # target state의 Sigma Y projection
     z_id = np.trace(idden*Sz())                                 # target state의 Sigma Z projection
-    cost = ((np.abs(x_m-x_id)) * (np.abs(y_m-y_id)) * (np.abs(z_m-z_id)))   # 실험값과 이론값의 비교 costfunction 반환
+    i_id = np.trace(idden*I())                               # target state의 Identity projection
+    cost = ((np.abs(x_m-x_id)) * (np.abs(y_m-y_id)) * (np.abs(z_m-z_id)) * np.abs(i_m - i_id) )   # 실험값과 이론값의 비교 costfunction 반환
     #cost2 = ((float(np.abs(x_m-x_id)))**2+(float(np.abs(y_m-y_id)))**2+(float(np.abs(z_m-z_id)))**2)**(1/2)
     #print(rho_measure)
     return cost
@@ -173,11 +156,13 @@ def problem3(deg):
     x_m = np.trace(rho_measure*Sx())                            # Sigma X projection
     y_m = np.trace(rho_measure*Sy())                            # Sigma Y projection
     z_m = np.trace(rho_measure*Sz())                            # Sigma Z projection
+    i_m = np.trace(rho_measure*I())                          # Identity projection
     #x_id,y_id,z_id는 주어진 target state를 계산해낸 값(이론값)
     x_id = np.trace(idden*Sx())                                 # target state의 Sigma X projection
     y_id = np.trace(idden*Sy())                                 # target state의 Sigma Y projection
     z_id = np.trace(idden*Sz())                                 # target state의 Sigma Z projection
-    cost = ((np.abs(x_m-x_id)) * (np.abs(y_m-y_id))) + ((np.abs(y_m-y_id)) * (np.abs(z_m-z_id))) + ((np.abs(z_m-z_id)) * (np.abs(x_m-x_id)))   # 실험값과 이론값의 비교 costfunction 반환
+    i_id = np.trace(idden*I())                               # target state의 Identity projection
+    cost = ((np.abs(x_m-x_id))**2 + (np.abs(y_m-y_id))**2 + (np.abs(z_m-z_id))**2 + (np.abs(i_m - i_id))**2 )**(1/2)    # 실험값과 이론값의 비교 costfunction 반환
     #cost2 = ((float(np.abs(x_m-x_id)))**2+(float(np.abs(y_m-y_id)))**2+(float(np.abs(z_m-z_id)))**2)**(1/2)
     #print(rho_measure)
     return cost
@@ -193,7 +178,7 @@ deg = [(np.pi/180)*random.uniform(0,180),(np.pi/180)*random.uniform(0,360)] #초
 def degree(theta, phi):
     fx = Rx(theta)
     fz = Rz(phi)
-    func = fx *fz
+    func = fz * fx
     mc = init()*init().T
     out = func*mc*func.getH()
     # print("func")
@@ -242,7 +227,7 @@ output4 = []
 #pip = [["Density Matrix", nan], [nan, "Matrix"]]
 #최적화된 값의 변화가 없을 때 까지 작업을 반복한다.
 
-standard = 0.1                                              #최적화 정도의 기준 설정
+
 
 
 fail = 0                                                    #최적화 실패 횟수
@@ -304,6 +289,8 @@ print("Fail : " + str(fail) + " times")                                         
 #%%
 ### x, y, z projection 저장
 
+standard = 0.2                                              #최적화 정도의 기준 설정
+min_stad = 1*e-10                                           #최적화 정도의 최소값 설정
 
 for x in range(10):                                         #반복 횟수 지정
     idden = rand_dm(2, density=1)
@@ -316,42 +303,42 @@ for x in range(10):                                         #반복 횟수 지�
         deftl1 = [np.trace(deft1*Sx()),np.trace(deft1*Sy()),np.trace(deft1*Sz())] #최적화된 density matrix의 x,y,z projection을 저장
         car1 = ((idden.data[0, 0] - deft1[0, 0])**2 + (idden.data[0, 1] - deft1[0, 1])**2 + (idden.data[1, 1] - deft1[1, 1])**2)**(1/2) #최적화 정도 측정
         var1 = ((ideal[0] - deftl1[0])**2 + (ideal[1] - deftl1[1])**2 + (ideal[2] - deftl1[2])**2)**(1/2)
-        # if(car1 <= standard):
-        end = time.time()
-        final = end - start                             #시간 측정 종료
-        output1.append(["Case" + str(x + 1), "Powell1", result1['x'], final, deft1, car1, idden.data, ideal, deftl1, var1])                             #측정 값 저장
-        # else:
-        #     result4 = scipy.optimize.minimize(problem2,deg,bounds=bounds,method="Powell")               #Standard를 넘어가면 Nelder-Mead 최적화
-        #     deft2 = degree(result4['x'][0], result4['x'][1])
-        #     deftl2 = [np.trace(deft2*Sx()),np.trace(deft2*Sy()),np.trace(deft2*Sz())] #최적화된 density matrix의 x,y,z projection을 저장
-        #     var2 = ((ideal[0] - deftl2[0])**2 + (ideal[1] - deftl2[1])**2 + (ideal[2] - deftl2[2])**2)**(1/2)
-        #     car2 = ((idden.data[0, 0] - deft2[0, 0])**2 + (idden.data[0, 1] - deft2[0, 1])**2 + (idden.data[1, 1] - deft2[1, 1])**2)**(1/2)
-        #     if(car2 <= standard):
-        #         end = time.time()
-        #         final = end - start
-        #         output1.append(["Case" + str(x + 1), "Powell2", result4['x'], final, deft2, car2, idden.data, ideal, deftl2, var2])
-        #     else:
-        #         result3 = scipy.optimize.minimize(problem3,deg,bounds=bounds,method="Powell")       #Standard를 넘어가면 differential_evolution 최적화
-        #         deft3 = degree(result3['x'][0], result3['x'][1])
-        #         deftl3 = [np.trace(deft3*Sx()),np.trace(deft3*Sy()),np.trace(deft3*Sz())] #최적화된 density matrix의 x,y,z projection을 저장
-        #         var3 = ((ideal[0] - deftl3[0])**2 + (ideal[1] - deftl3[1])**2 + (ideal[2] - deftl3[2])**2)**(1/2)
-        #         car3 = ((idden.data[0, 0] - deft3[0, 0])**2 + (idden.data[0, 1] - deft3[0, 1])**2 + (idden.data[1, 1] - deft3[1, 1])**2)**(1/2)
-        #         if(car3 <= standard):
-        #             end = time.time()
-        #             final = end - start
-        #             output1.append(["Case" + str(x + 1), "Powell3", result3['x'], final, deft3, car3, idden.data, ideal, deftl3, var3])
-        #         elif(car3 <= car1 and car3 <= car2):                                #Standard를 넘어가면 세 알고리즘 중 가장 최적화 정도가 좋은 알고리즘 선택
-        #             end = time.time()
-        #             final = end - start
-        #             output1.append(["Case" + str(x + 1), "Powell3", result3['x'], final, deft3, car3, idden.data, ideal, deftl3, var3])
-        #         elif(car1 <= car3 and car1 <= car2):
-        #             end = time.time()
-        #             final = end - start
-        #             output1.append(["Case" + str(x + 1), "Powell1", result1['x'], final, deft1, car1, idden.data, ideal, deftl1, var1])
-        #         else:
-        #             end = time.time()
-        #             final = end - start
-        #             output1.append(["Case" + str(x + 1), "Powell2", result4['x'], final, deft2, car2, idden.data, ideal, deftl2, var2])
+        if(car1 <= standard and car1 >= min_stad):
+            end = time.time()
+            final = end - start                             #시간 측정 종료
+            output1.append(["Case" + str(x + 1), "Powell1", result1['x'], final, deft1, car1, idden.data, ideal, deftl1, var1])                             #측정 값 저장
+        else:
+            result4 = scipy.optimize.minimize(problem,deg,bounds=bounds,method="Nelder-Mead")               #Standard를 넘어가면 Nelder-Mead 최적화
+            deft2 = degree(result4['x'][0], result4['x'][1])
+            deftl2 = [np.trace(deft2*Sx()),np.trace(deft2*Sy()),np.trace(deft2*Sz())] #최적화된 density matrix의 x,y,z projection을 저장
+            var2 = ((ideal[0] - deftl2[0])**2 + (ideal[1] - deftl2[1])**2 + (ideal[2] - deftl2[2])**2)**(1/2)
+            car2 = ((idden.data[0, 0] - deft2[0, 0])**2 + (idden.data[0, 1] - deft2[0, 1])**2 + (idden.data[1, 1] - deft2[1, 1])**2)**(1/2)
+            if(car2 <= standard and car2 >=min_stad):
+                end = time.time()
+                final = end - start
+                output1.append(["Case" + str(x + 1), "Powell2", result4['x'], final, deft2, car2, idden.data, ideal, deftl2, var2])
+            else:
+                result3 = scipy.optimize.differential_evolution(problem, bounds=bounds)      #Standard를 넘어가면 differential_evolution 최적화
+                deft3 = degree(result3['x'][0], result3['x'][1])
+                deftl3 = [np.trace(deft3*Sx()),np.trace(deft3*Sy()),np.trace(deft3*Sz())] #최적화된 density matrix의 x,y,z projection을 저장
+                var3 = ((ideal[0] - deftl3[0])**2 + (ideal[1] - deftl3[1])**2 + (ideal[2] - deftl3[2])**2)**(1/2)
+                car3 = ((idden.data[0, 0] - deft3[0, 0])**2 + (idden.data[0, 1] - deft3[0, 1])**2 + (idden.data[1, 1] - deft3[1, 1])**2)**(1/2)
+                if(car3 <= standard and car3 >= min_stad):
+                    end = time.time()
+                    final = end - start
+                    output1.append(["Case" + str(x + 1), "Powell3", result3['x'], final, deft3, car3, idden.data, ideal, deftl3, var3])
+                elif(car3 <= car1 and car3 <= car2):                                #Standard를 넘어가면 세 알고리즘 중 가장 최적화 정도가 좋은 알고리즘 선택
+                    end = time.time()
+                    final = end - start
+                    output1.append(["Case" + str(x + 1), "Powell3", result3['x'], final, deft3, car3, idden.data, ideal, deftl3, var3])
+                elif(car1 <= car3 and car1 <= car2):
+                    end = time.time()
+                    final = end - start
+                    output1.append(["Case" + str(x + 1), "Powell1", result1['x'], final, deft1, car1, idden.data, ideal, deftl1, var1])
+                else:
+                    end = time.time()
+                    final = end - start
+                    output1.append(["Case" + str(x + 1), "Powell2", result4['x'], final, deft2, car2, idden.data, ideal, deftl2, var2])
     print("Case" + str(x + 1) + " clear")                                               #측정이 끝난 경우 출력
         
     

@@ -123,11 +123,13 @@ def problem(deg):
     x_m = np.trace(rho_measure*Sx())                            # Sigma X projection
     y_m = np.trace(rho_measure*Sy())                            # Sigma Y projection
     z_m = np.trace(rho_measure*Sz())                            # Sigma Z projection
+    i_m = np.trace(rho_measure*I())                          # Identity projection
     #x_id,y_id,z_id는 주어진 target state를 계산해낸 값(이론값)
     x_id = np.trace(idden*Sx())                                 # target state의 Sigma X projection
     y_id = np.trace(idden*Sy())                                 # target state의 Sigma Y projection
     z_id = np.trace(idden*Sz())                                 # target state의 Sigma Z projection
-    cost = np.abs(x_m-x_id)+np.abs(y_m-y_id)+np.abs(z_m-z_id)   # 실험값과 이론값의 비교 costfunction 반환
+    i_id = np.trace(idden*I())                               # target state의 Identity projection
+    cost = np.abs(x_m-x_id)+np.abs(y_m-y_id)+np.abs(z_m-z_id)+np.abs(i_m-i_id)   # 실험값과 이론값의 비교 costfunction 반환
     return cost
 
     #cost2 = ((float(np.abs(x_m-x_id)))**2+(float(np.abs(y_m-y_id)))**2+(float(np.abs(z_m-z_id)))**2)**(1/2)
@@ -141,12 +143,14 @@ def problem2(deg):
     x_m = np.trace(rho_measure*Sx())                            # Sigma X projection
     y_m = np.trace(rho_measure*Sy())                            # Sigma Y projection
     z_m = np.trace(rho_measure*Sz())                            # Sigma Z projection
+    i_m = np.trace(rho_measure*I())                          # Identity projection
     #x_id,y_id,z_id는 주어진 target state를 계산해낸 값(이론값)
     x_id = np.trace(idden*Sx())                                 # target state의 Sigma X projection
     y_id = np.trace(idden*Sy())                                 # target state의 Sigma Y projection
     z_id = np.trace(idden*Sz())                                 # target state의 Sigma Z projection
+    i_id = np.trace(idden*I())                               # target state의 Identity projection
     #cost = np.abs(x_m-x_id)+np.abs(y_m-y_id)+np.abs(z_m-z_id)   # 실험값과 이론값의 비교 costfunction 반환
-    cost2 = ((np.abs(x_m-x_id)) * (np.abs(y_m-y_id)) * (np.abs(z_m-z_id)))
+    cost2 = ((np.abs(x_m-x_id)) * (np.abs(y_m-y_id)) * (np.abs(z_m-z_id)) * np.abs(i_m-i_id))
     return cost2
 
 
@@ -158,12 +162,14 @@ def problem3(deg):
     x_m = np.trace(rho_measure*Sx())                            # Sigma X projection
     y_m = np.trace(rho_measure*Sy())                            # Sigma Y projection
     z_m = np.trace(rho_measure*Sz())                            # Sigma Z projection
+    i_m = np.trace(rho_measure*I())                          # Identity projection
     #x_id,y_id,z_id는 주어진 target state를 계산해낸 값(이론값)
     x_id = np.trace(idden*Sx())                                 # target state의 Sigma X projection
     y_id = np.trace(idden*Sy())                                 # target state의 Sigma Y projection
     z_id = np.trace(idden*Sz())                                 # target state의 Sigma Z projection
+    i_id = np.trace(idden*I())                               # target state의 Identity projection
     #cost = np.abs(x_m-x_id)+np.abs(y_m-y_id)+np.abs(z_m-z_id)   # 실험값과 이론값의 비교 costfunction 반환
-    cost2 = (((np.abs(x_m-x_id))**2) * ((np.abs(y_m-y_id))**2) * ((np.abs(z_m-z_id)))**2)
+    cost2 = (((np.abs(x_m-x_id))**2) * ((np.abs(y_m-y_id))**2) * ((np.abs(z_m-z_id)))**2 * (np.abs(i_m-i_id))**2)**(1/2)
     return cost2
 
     #
@@ -172,15 +178,16 @@ def problem3(deg):
 def problem4(deg):
     mc = init()*init().T                                        # |vector><vector|
     gates = np.inner(Rz(deg[1]),Rx(deg[0]))                     # Universal Gate
-    #rho_measure는 계산값(측정값)
     rho_measure = gates*mc*gates.getH()                         # Gate|vector><vector|Gate
     x_m = np.trace(rho_measure*Sx())                            # Sigma X projection
     y_m = np.trace(rho_measure*Sy())                            # Sigma Y projection
     z_m = np.trace(rho_measure*Sz())                            # Sigma Z projection
+    i_m = np.trace(rho_measure*I())                          # Identity projection
     #x_id,y_id,z_id는 주어진 target state를 계산해낸 값(이론값)
     x_id = np.trace(idden*Sx())                                 # target state의 Sigma X projection
     y_id = np.trace(idden*Sy())                                 # target state의 Sigma Y projection
     z_id = np.trace(idden*Sz())                                 # target state의 Sigma Z projection
+    i_id = np.trace(idden*I())                               # target state의 Identity projection                                # target state의 Sigma Z projection
     #cost = np.abs(x_m-x_id)+np.abs(y_m-y_id)+np.abs(z_m-z_id)   # 실험값과 이론값의 비교 costfunction 반환
     cost2 = ((np.abs(x_m-x_id)) * (np.abs(y_m-y_id))) + ((np.abs(y_m-y_id)) * (np.abs(z_m-z_id))) + ((np.abs(z_m-z_id)) * (np.abs(x_m-x_id)))
     return cost2
@@ -193,20 +200,12 @@ def problem5(deg):
     x_m = np.trace(rho_measure*Sx())                            # Sigma X projection
     y_m = np.trace(rho_measure*Sy())                            # Sigma Y projection
     z_m = np.trace(rho_measure*Sz())                            # Sigma Z projection
+    i_m = np.trace(rho_measure*I())                          # Identity projection
     #x_id,y_id,z_id는 주어진 target state를 계산해낸 값(이론값)
     x_id = np.trace(idden*Sx())                                 # target state의 Sigma X projection
     y_id = np.trace(idden*Sy())                                 # target state의 Sigma Y projection
     z_id = np.trace(idden*Sz())                                 # target state의 Sigma Z projection
-    x_j = (np.abs(x_m-x_id).imag)**2
-    y_j = (np.abs(y_m-y_id).imag)**2
-    z_j = (np.abs(z_m-z_id).imag)**2
-    if(x_j < 0):
-        x_j = x_j * -1
-    if(y_j < 0):
-        y_j = y_j * -1
-    if(z_j < 0):
-        z_j = z_j * -1
-    im = x_j + y_j + z_j
+    i_id = np.trace(idden*I())                               # target state의 Identity projection
     cost = ((np.abs(x_m-x_id).real)**2 + (np.abs(y_m-y_id).real)**2 + (np.abs(z_m-z_id).real)**2)**(1/2) + im**(1/2)   # 실험값과 이론값의 비교 costfunction 반환
     return cost
     #
@@ -220,11 +219,12 @@ def problem6(deg):
     x_m = np.trace(rho_measure*Sx())                            # Sigma X projection
     y_m = np.trace(rho_measure*Sy())                            # Sigma Y projection
     z_m = np.trace(rho_measure*Sz())                            # Sigma Z projection
+    i_m = np.trace(rho_measure*I())                          # Identity projection
     #x_id,y_id,z_id는 주어진 target state를 계산해낸 값(이론값)
     x_id = np.trace(idden*Sx())                                 # target state의 Sigma X projection
     y_id = np.trace(idden*Sy())                                 # target state의 Sigma Y projection
     z_id = np.trace(idden*Sz())                                 # target state의 Sigma Z projection
-    #cost = np.abs(x_m-x_id)+np.abs(y_m-y_id)+np.abs(z_m-z_id)   # 실험값과 이론값의 비교 costfunction 반환
+    i_id = np.trace(idden*I())                               # target state의 Identity projection
     cost2 = float(np.abs(x_m-x_id).real + np.abs(y_m-y_id).real + np.abs(z_m-z_id).real + -1j * (np.abs(x_m-x_id).imag + np.abs(y_m-y_id).imag + np.abs(z_m-z_id).imag))
     return cost2
     #
@@ -239,7 +239,7 @@ deg = [(np.pi/180)*random.uniform(0,180),(np.pi/180)*random.uniform(0,360)] #초
 def degree(theta, phi):
     fx = Rx(theta)
     fz = Rz(phi)
-    func = fx *fz
+    func = fz * fx
     mc = init()*init().T
     out = func*mc*func.getH()
     return out
@@ -314,6 +314,8 @@ ac2 = 0
 ac3 = 0
 ac4 = 0
 
+standard = 0.23
+smin = -1
 
 for x in range(count):
     idden = rand_dm(2, density=1)
@@ -380,7 +382,7 @@ for x in range(count):
     datapack.append(idden.data) 
     
     start = time.time()
-    result5 = scipy.optimize.minimize(problem5,deg,bounds=bounds,method="Powell")
+    result5 = scipy.optimize.minimize(problem,deg,bounds=bounds,method="Nelder-Mead")
     end = time.time()
     final = end - start
     deft = degree(result5['x'][0], result5['x'][1])
@@ -390,7 +392,7 @@ for x in range(count):
     datapack.append(idden.data) 
     
     start = time.time()
-    result6 = scipy.optimize.minimize(problem6,deg,bounds=bounds,method="Powell")
+    result6 = scipy.optimize.minimize(problem2,deg,bounds=bounds,method="Powell")
     end = time.time()
     final = end - start
     deft = degree(result6['x'][0], result6['x'][1])
@@ -408,7 +410,7 @@ for x in range(count):
     temp11[x] = car
     
     start = time.time()
-    result8 = scipy.optimize.minimize(problem,deg,bounds=bounds,method="Nelder-Mead")
+    result8 = scipy.optimize.minimize(problem3,deg,bounds=bounds,method="Nelder-Mead")
     end = time.time()
     final = end - start
     deft = degree(result8['x'][0], result8['x'][1])
@@ -421,32 +423,32 @@ for x in range(count):
     # result = scipy.optimize.minimize(problem,deg,bounds=bounds,method='Powell',options={'xtol':0.0001,'ftol':0.00001})  
     # output4.append([result['x'], result['fun']])
     # result4 = scipy.optimize.dual_annealing(problem2,bounds = bounds)
-    if(temp5[x] <= 0.1 or temp6[x] <= 0.1 or temp7[x] <= 0.1 or temp8[x] <= 0.1 or temp9[x] <= 0.1 or temp10[x] <= 0.1 or temp11[x] <= 0.1 or temp12[x] <= 0.1):
+    if((temp5[x] <= standard and temp5[x] >= smin) or (temp6[x] <= standard and temp6[x] >= smin) or (temp7[x] <= standard and temp7[x] >= smin) or (temp8[x] <= standard and temp8[x] >= smin) or (temp9[x] <= standard and temp9[x] >= smin) or (temp10[x] <= standard and temp10[x] >= smin) or (temp11[x] <= standard and temp11[x] >= smin) or (temp12[x] <= standard and temp12[x] >= smin)):
         check = check + 1
-    if(temp5[x] <= 0.1):
+    if(temp5[x] <= standard):
         check1 = check1 + 1
-        if(temp6[x] > 0.1 and temp7[x] > 0.1 and temp8[x] > 0.1 and temp9[x] > 0.1 and temp10[x] > 0.1 and temp11[x] > 0.1 and temp12[x] > 0.1):
-            ac1 = ac1 + 1
-    if(temp6[x] <= 0.1):
+        # if(temp6[x] > 0.1 and temp7[x] > 0.1 and temp8[x] > 0.1 and temp9[x] > 0.1 and temp10[x] > 0.1 and temp11[x] > 0.1 and temp12[x] > 0.1):
+        #     ac1 = ac1 + 1
+    if(temp6[x] <= standard):
         check2 = check2 + 1
-    if(temp7[x] <= 0.1):
+    if(temp7[x] <= standard):
         check3 = check3 + 1
-    if(temp8[x] <= 0.1):
+    if(temp8[x] <= standard):
         check4 = check4 + 1
-    if(temp9[x] <= 0.1):
+    if(temp9[x] <= standard):
         check5 = check5 + 1
-    if(temp10[x] <= 0.1):
+    if(temp10[x] <= standard):
         check6 = check6 + 1
-        if(temp5[x] > 0.1 and temp6[x] > 0.1 and temp7[x] > 0.1 and temp8[x] > 0.1 and temp9[x] > 0.1 and temp11[x] > 0.1 and temp12[x] > 0.1):
-            ac2 = ac2 + 1
-    if(temp11[x] <= 0.1):
+        # if(temp5[x] > 0.1 and temp6[x] > 0.1 and temp7[x] > 0.1 and temp8[x] > 0.1 and temp9[x] > 0.1 and temp11[x] > 0.1 and temp12[x] > 0.1):
+        #     ac2 = ac2 + 1
+    if(temp11[x] <= standard):
         check7 = check7 + 1
-        if(temp5[x]> 0.1 and temp6[x] > 0.1 and temp7[x] > 0.1 and temp8[x] > 0.1 and temp9[x] > 0.1 and temp10[x] > 0.1 and temp12[x] > 0.1):
-            ac3 = ac3 + 1
-    if(temp12[x] <= 0.1):
+        # if(temp5[x]> standard and temp6[x] > 0.1 and temp7[x] > 0.1 and temp8[x] > 0.1 and temp9[x] > 0.1 and temp10[x] > 0.1 and temp12[x] > 0.1):
+        #     ac3 = ac3 + 1
+    if(temp12[x] <= standard):
         check8 = check8 + 1
-        if(temp5[x] > 0.1 and temp6[x] > 0.1 and temp7[x] > 0.1 and temp8[x] > 0.1 and temp9[x] > 0.1 and temp10[x] > 0.1 and temp11[x] > 0.1):
-            ac4 = ac4 + 1
+        # if(temp5[x] > standard and temp6[x] > 0.1 and temp7[x] > 0.1 and temp8[x] > 0.1 and temp9[x] > 0.1 and temp10[x] > 0.1 and temp11[x] > 0.1):
+        #     ac4 = ac4 + 1
     print("Test Case" + str(x + 1) + " clear")
 
 temp = np.arange(1, count + 1, 1)
@@ -460,10 +462,10 @@ print("Check6 : " + str(check6) + " / " + str(count))
 print("Check7 : " + str(check7) + " / " + str(count))
 print("Check8 : " + str(check8) + " / " + str(count))
 
-print("about Check1 : " + str(ac1) + " / " + str(count))
-print("about Check6 : " + str(ac2) + " / " + str(count))
-print("about Check7 : " + str(ac3) + " / " + str(count))
-print("about Check8 : " + str(ac4) + " / " + str(count))
+# print("about Check1 : " + str(ac1) + " / " + str(count))
+# print("about Check6 : " + str(ac2) + " / " + str(count))
+# print("about Check7 : " + str(ac3) + " / " + str(count))
+# print("about Check8 : " + str(ac4) + " / " + str(count))
 
 # plt.plot(temp, temp1, color='red', marker='o', label='Test1', linestyle='dashed', linewidth=2, markersize=12)
 # plt.plot(temp, temp2, color='blue', marker='o', label='Test2', linestyle='dashed', linewidth=2, markersize=12)
@@ -507,12 +509,15 @@ pack.rename(columns={0:'Density Matrix'}, inplace=True)
 fin = pd.concat([fin1, fin2, fin3, fin4, pack], axis=1)
 fin.to_csv("C:/Users/Administrator/2023.01.01/KIST_intern/Task1/Control_Nuclear_Spins/NVspin/UNITE/Local/Total_result_" + printdate + '.csv', index=false)
 
-#plt.plot(temp, temp5, color='red', marker='o', label='Test1', linestyle='dashed', linewidth=2.5, markersize=12)
+plt.plot(temp, temp5, color='red', marker='o', label='Test1', linestyle='dashed', linewidth=2.5, markersize=12)
 plt.plot(temp, temp6, color='blue', marker='o', label='Test2', linestyle='dashed', linewidth=2.5, markersize=12)
 plt.plot(temp, temp7, color='green', marker='o', label='Test3', linestyle='dashed', linewidth=2, markersize=12)
 plt.plot(temp, temp8, color='yellow', marker='o', label='Test4', linestyle='dashed', linewidth=2, markersize=12)
-# plt.plot(temp, temp9, color='pink', marker='o', label='Test5', linestyle='dashed', linewidth=2, markersize=12)
-# plt.plot(temp, temp10, color='orange', marker='o', label='Test6', linestyle='dashed', linewidth=2, markersize=12)
+plt.plot(temp, temp9, color='pink', marker='o', label='Test5', linestyle='dashed', linewidth=2, markersize=12)
+plt.plot(temp, temp10, color='orange', marker='o', label='Test6', linestyle='dashed', linewidth=2, markersize=12)
+plt.plot(temp, temp11, color='purple', marker='o', label='Test7', linestyle='dashed', linewidth=2, markersize=12)
+plt.plot(temp, temp12, color='gray', marker='o', label='Test8', linestyle='dashed', linewidth=2, markersize=12)
+
 plt.title("Algorithm Error Comparison")
 plt.xlabel("number of test case")
 plt.ylabel("degree of error")
