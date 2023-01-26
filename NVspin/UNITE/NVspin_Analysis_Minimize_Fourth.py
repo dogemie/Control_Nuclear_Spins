@@ -79,11 +79,11 @@ def Rx(theta):
 def Rz(phi):
     return np.matrix([[cos(phi/2)-1j*sin(phi/2), 0],
                      [0, cos(phi/2)+1j*sin(phi/2)]])
-'''                     
-def Rz(phi):
+                     
+def Rz2(phi):
     return np.matrix([[e**(-1j*phi/2),       0],
                      [0,                          e**(1j*phi/2)]])
-'''
+
 
 ###3 init & density matrix
 
@@ -106,6 +106,9 @@ idden = []
 
 color = ['r','g','b','y','m','c','k','w']
 colort = random.choice(color)
+
+
+# theta 먼저 구하고 phi 구하는 방법 찾아보기
 
 def problem3(deg):
     mc = init()*init().T                                        # |vector><vector|
@@ -133,9 +136,45 @@ def problem3(deg):
     # plt.pause(0.001)
     return cost
 
+
+def problem4(deg):
+    mc = init()*init().T                                        # |vector><vector|
+    gates = Rz2(deg[1])@Rx(deg[0])                     # Universal Gate
+    #rho_measure는 계산값(측정값)
+    rho_measure = gates@mc@gates.getH()                         # Gate|vector><vector|Gate
+    x_m = np.trace(rho_measure*Sx())                            # Sigma X projection
+    y_m = np.trace(rho_measure*Sy())                            # Sigma Y projection
+    z_m = np.trace(rho_measure*Sz())                            # Sigma Z projection
+    # i_m = np.trace(rho_measure*I())                          # Identity projection
+    #x_id,y_id,z_id는 주어진 target state를 계산해낸 값(이론값)
+    x_id = np.trace(idden*Sx())                                 # target state의 Sigma X projection
+    y_id = np.trace(idden*Sy())                                 # target state의 Sigma Y projection
+    z_id = np.trace(idden*Sz())                                 # target state의 Sigma Z projection
+    # i_id = np.trace(idden*I())                               # target state의 Identity projection
+    print('x_m:',x_m,'y_m:',y_m,'z_m:',z_m)
+    print('x_id:',x_id,'y_id:',y_id,'z_id:',z_id)
+    cost = (float(x_m-x_id)**2 + float(y_m-y_id)**2 + float(z_m-z_id)**2)**(1/2)    # 실험값과 이론값의 비교 costfunction 반환
+    #cost = np.abs(x_m-x_id) + np.abs(y_m-y_id) + np.abs(z_m-z_id)
+    #print(rho_measure)
+    ax.plot(deg[0],deg[1],cost,'ro', color = colort)
+    # ax.tricontour(deg[0],deg[1],cost,c=color[0])
+    plt.pause(0.001)
+    # plt.scatter(deg[1],deg[0])
+    # plt.pause(0.001)
+    return cost
+
 def degree(theta, phi):
     fx = Rx(theta)
     fz = Rz(phi)
+    func = fz@fx
+    mc = init()*init().T
+    out = func@mc@func.getH()
+
+    return out
+
+def degree(theta, phi):
+    fx = Rx(theta)
+    fz = Rz2(phi)
     func = fz@fx
     mc = init()*init().T
     out = func@mc@func.getH()
@@ -183,78 +222,169 @@ constraints = ({'type': 'eq', 'fun': lambda x:  np.array([x[0] + x[1] - np.pi])}
 # b2.make_sphere()
 
 colorset = ['r','g','b','y','c','m','k']
+
 for x in range(count):                                         #반복 횟수 지정
     fig = plt.figure(figsize=(9, 6))
     ax = fig.add_subplot(111, projection='3d')
-    idden = rand_dm(2, density=1)
+    idden = rand_dm_ginibre(2, rank=1)
+    colort = random.choice(colorset)
     ideal = []
     ideal = [np.trace(idden*Sx()),np.trace(idden*Sy()),np.trace(idden*Sz())] #target state의 x,y,z projection을 저장
     xx = 1e-8
     ff = 1e-8
+    minx = 10
+    minz = 10
+    mincost = 10
+    minx2 = 10
+    minz2 = 10
+    mincost2 = 10
     start = time.time()                                 #시간 측정 시작  
-    for y in range(seccount):                                     #측정 횟수 지정 같은 작업을 여러번 진행할 경우를 대비하여 반복문 사용
-        var = 1
-        deg = [(np.pi/180)*random.uniform(0,360), (np.pi/180)*random.uniform(0,180)] #초기값을 넣는 랜덤변수
-        result4 = scipy.optimize.minimize(problem3,deg,bounds=bounds, constraints = constraints, method="Powell", options = {'maxiter' : 10, 'return_all' : True})                        #Powell 최적화
-        colort = random.choice(colorset)
-        #result4 = scipy.optimize.differential_evolution(problem3, bounds, strategy='best1bin', mutation=(0.5, 1), recombination=0.7, init='latinhypercube', atol=0, updating='immediate',workers=1) #differential evolution 최적화
-        #result4 = scipy.optimize.minimize(problem3,deg,bounds=bounds, method="Powell", options = {'maxiter' : 10, 'return_all' : True})                        #Powell 최적화
-        deft4 = degree(result4['x'][0], result4['x'][1])     #최적화된 값으로 density matrix를 생성
-        deftl4 = [np.trace(deft4*Sx()),np.trace(deft4*Sy()),np.trace(deft4*Sz())] #최적화된 density matrix의 x,y,z projection을 저장
-        car4 = ((idden.data[0, 0] - deft4[0, 0])**2 + (idden.data[0, 1] - deft4[0, 1])**2 + (idden.data[1, 1] - deft4[1, 1])**2)**(1/2) #최적화 정도 측정
-        var4 = ((ideal[0] - deftl4[0])**2 + (ideal[1] - deftl4[1])**2 + (ideal[2] - deftl4[2])**2)**(1/2)
-        # print(result4)
-        print("var: " + str(var4))
-        print("deg: " + str(result4['x']))
-        if(var4 < var):
-            theMin = 4
-            result = result4
-            deft = deft4
-            deftl = deftl4
-            car = car4
-            var = var4
-        
-        if(var < vastand):
-            end = time.time()
-            final = end - start
-            success = success + 1
-            output1.append(["Case" + str(x + 1), "Method" + str(theMin), result['x'], final, deft, car, idden.data, ideal, deftl, var])
-            ax.set_xlabel('Theta')
-            ax.set_ylabel('Phi')
-            ax.set_zlabel('Error')
-            ax.set_xlim(0, 2*pi)
-            ax.set_ylim(0, pi)
-            plt.show(block=False)
-            plt.pause(2)
-            fignum = x + 1
-            plt.savefig("C:/Users/Administrator/2023.01.01/KIST_intern/Task1/Control_Nuclear_Spins/NVspin/UNITE/Test1/Figure/Figure_" + printdate + "_" + str(fignum) + '.png')
-            plt.close()
-            print("Case" + str(x + 1) + " Clear   " + str(final))
-
-
-            break
+    for m in range(20):
+        for n in range(40):
+            mc = init()*init().T                                        # |vector><vector|
+            gates = np.matmul(Rz(m * 0.16), Rx(n * 0.16))                     # Universal Gate
+            #rho_measure는 계산값(측정값)
+            rho_measure = gates@mc@gates.getH()                         # Gate|vector><vector|Gate
+            x_m = np.trace(rho_measure*Sx())                            # Sigma X projection
+            y_m = np.trace(rho_measure*Sy())                            # Sigma Y projection
+            z_m = np.trace(rho_measure*Sz())                            # Sigma Z projection
+            # i_m = np.trace(rho_measure*I())                          # Identity projection
+            #x_id,y_id,z_id는 주어진 target state를 계산해낸 값(이론값)
+            x_id = np.trace(idden*Sx())                                 # target state의 Sigma X projection
+            y_id = np.trace(idden*Sy())                                 # target state의 Sigma Y projection
+            z_id = np.trace(idden*Sz())                                 # target state의 Sigma Z projection
+            # i_id = np.trace(idden*I())                               # target state의 Identity projection
+            # print('x_m:',x_m,'y_m:',y_m,'z_m:',z_m)
+            # print('x_id:',x_id,'y_id:',y_id,'z_id:',z_id)
+            # print(rho_measure)
+            cost = (float(x_m-x_id)**2 + float(y_m-y_id)**2 + float(z_m-z_id)**2)**(1/2)    # 실험값과 이론값의 비교 costfunction 반환
+            if(cost < mincost):
+                mincost = cost
+                minx = n * 0.2
+                minz = m * 0.2
+            #cost = np.abs(x_m-x_id) + np.abs(y_m-y_id) + np.abs(z_m-z_id)
+            #print(rho_measure)
+            ax.plot(n * 0.16 ,m * 0.16,cost,'ro', color = colort, markersize=3)
+            # ax.tricontour(deg[0],deg[1],cost,c=color[0])
+            plt.pause(0.001)
+    # ax.set_xlabel('Theta')
+    # ax.set_ylabel('Phi')
+    # ax.set_zlabel('Error')
+    # ax.set_xlim(0, 2*pi)
+    # ax.set_ylim(0, pi)
+    # plt.show(block=False)
+    # plt.pause(2)
+    # fignum = x + 1
+    # plt.savefig("C:/Users/Administrator/2023.01.01/KIST_intern/Task1/Control_Nuclear_Spins/NVspin/UNITE/Test1/Figure/Figure_" + printdate + "_" + str(fignum) + '.png')
+    # plt.close()
+    # for m in range(160):
+    #     for n in range(160):
+    #         mc = init()*init().T                                        # |vector><vector|
+    #         gates = Rz2(m * 0.02)@Rx(n * 0.04)                     # Universal Gate
+    #         #rho_measure는 계산값(측정값)
+    #         rho_measure = gates@mc@gates.getH()                         # Gate|vector><vector|Gate
+    #         x_m = np.trace(rho_measure*Sx())                            # Sigma X projection
+    #         y_m = np.trace(rho_measure*Sy())                            # Sigma Y projection
+    #         z_m = np.trace(rho_measure*Sz())                            # Sigma Z projection
+    #         # i_m = np.trace(rho_measure*I())                          # Identity projection
+    #         #x_id,y_id,z_id는 주어진 target state를 계산해낸 값(이론값)
+    #         x_id = np.trace(idden*Sx())                                 # target state의 Sigma X projection
+    #         y_id = np.trace(idden*Sy())                                 # target state의 Sigma Y projection
+    #         z_id = np.trace(idden*Sz())                                 # target state의 Sigma Z projection
+    #         # i_id = np.trace(idden*I())                               # target state의 Identity projection
+    #         # print('x_m:',x_m,'y_m:',y_m,'z_m:',z_m)
+    #         # print('x_id:',x_id,'y_id:',y_id,'z_id:',z_id)
+    #         cost2 = (float(x_m-x_id)**2 + float(y_m-y_id)**2 + float(z_m-z_id)**2)**(1/2)    # 실험값과 이론값의 비교 costfunction 반환
+    #         if(cost2 < mincost2):
+    #             mincost2 = cost2
+    #             minx2 = n * 0.2
+    #             minz2 = m * 0.2
+    #         #cost = np.abs(x_m-x_id) + np.abs(y_m-y_id) + np.abs(z_m-z_id)
+    #         #print(rho_measure)
+    #         # ax.plot(n * 0.2 ,m * 0.2,cost,'ro', color = colort)
+    #         # # ax.tricontour(deg[0],deg[1],cost,c=color[0])
+    #         # plt.pause(0.001)
     
-        if(y == seccount - 1):
-            colort = random.choice(colorset)
-            # result4 = scipy.optimize.differential_evolution(problem3, bounds, strategy='best1bin', mutation=(0.5, 1), recombination=0.7, init='latinhypercube', atol=0, updating='immediate',workers=1) #differential evolution 최적화
-            end = time.time()
-            final = end - start
-            fail = fail + 1
-            output1.append(["Case" + str(x + 1), "Fail" + str(theMin), result['x'], final, deft, car, idden.data, ideal, deftl, var])
-            ax.set_xlabel('Theta')
-            ax.set_ylabel('Phi')
-            ax.set_zlabel('Error')
-            ax.set_xlim(0, 2*pi)
-            ax.set_ylim(0, pi)
-            plt.show(block=False)
-            plt.pause(2)
-            fignum = x + 1
-            plt.savefig("C:/Users/Administrator/2023.01.01/KIST_intern/Task1/Control_Nuclear_Spins/NVspin/UNITE/Test1/Figure/Figure_" + printdate + "_" + str(fignum) + '.png')
-            plt.close()
-            print("Case" + str(x + 1) + " Clear   " + str(final))
+    # result4 = scipy.optimize.differential_evolution(problem3, bounds, strategy='best1bin', mutation=(0.5, 1), recombination=0.7, init='latinhypercube', atol=0, updating='immediate',workers=1) #differential evolution 최적화
+    end = time.time()
+    final = end - start
+    ax.set_xlabel('Theta')
+    ax.set_ylabel('Phi')
+    ax.set_zlabel('Error')
+    plt.title(idden)
+    plt.show(block=False)
+    plt.pause(2)
+    fignum = x + 1
+    plt.savefig("C:/Users/Administrator/2023.01.01/KIST_intern/Task1/Control_Nuclear_Spins/NVspin/UNITE/Test1/Figure/Figure_" + printdate + "_" + str(fignum) + '.png')
+    plt.close()
+    print("Case" + str(x + 1) + " Clear   " + str(final))
+    print("minx:",minx,"minz:",minz,"mincost:",mincost)
+    # print("minx2:",minx2,"minz2:",minz2,"mincost2:",mincost2)
+    if(mincost < vastand):
+        success = success + 1
+    # for y in range(seccount):                                     #측정 횟수 지정 같은 작업을 여러번 진행할 경우를 대비하여 반복문 사용
+    #     var = 1
+    #     deg = [(np.pi/180)*random.uniform(0,360), (np.pi/180)*random.uniform(0,180)] #초기값을 넣는 랜덤변수
+    #     result4 = scipy.optimize.minimize(problem3,deg,bounds=bounds, constraints = constraints, method="Powell", options = {'maxiter' : 10, 'return_all' : True})                        #Powell 최적화
+    #     colort = random.choice(colorset)
+    #     #result4 = scipy.optimize.differential_evolution(problem3, bounds, strategy='best1bin', mutation=(0.5, 1), recombination=0.7, init='latinhypercube', atol=0, updating='immediate',workers=1) #differential evolution 최적화
+    #     #result4 = scipy.optimize.minimize(problem3,deg,bounds=bounds, method="Powell", options = {'maxiter' : 10, 'return_all' : True})                        #Powell 최적화
+    #     deft4 = degree(result4['x'][0], result4['x'][1])     #최적화된 값으로 density matrix를 생성
+    #     deftl4 = [np.trace(deft4*Sx()),np.trace(deft4*Sy()),np.trace(deft4*Sz())] #최적화된 density matrix의 x,y,z projection을 저장
+    #     car4 = ((idden.data[0, 0] - deft4[0, 0])**2 + (idden.data[0, 1] - deft4[0, 1])**2 + (idden.data[1, 1] - deft4[1, 1])**2)**(1/2) #최적화 정도 측정
+    #     var4 = ((ideal[0] - deftl4[0])**2 + (ideal[1] - deftl4[1])**2 + (ideal[2] - deftl4[2])**2)**(1/2)
+    #     # print(result4)
+    #     print("var: " + str(var4))
+    #     print("deg: " + str(result4['x']))
+    #     if(var4 < var):
+    #         theMin = 4
+    #         result = result4
+    #         deft = deft4
+    #         deftl = deftl4
+    #         car = car4
+    #         var = var4
+        
+    #     if(var < vastand):
+    #         end = time.time()
+    #         final = end - start
+    #         success = success + 1
+    #         output1.append(["Case" + str(x + 1), "Method" + str(theMin), result['x'], final, deft, car, idden.data, ideal, deftl, var])
+    #         ax.set_xlabel('Theta')
+    #         ax.set_ylabel('Phi')
+    #         ax.set_zlabel('Error')
+    #         ax.set_xlim(0, 2*pi)
+    #         ax.set_ylim(0, pi)
+    #         plt.show(block=False)
+    #         plt.pause(2)
+    #         fignum = x + 1
+    #         plt.savefig("C:/Users/Administrator/2023.01.01/KIST_intern/Task1/Control_Nuclear_Spins/NVspin/UNITE/Test1/Figure/Figure_" + printdate + "_" + str(fignum) + '.png')
+    #         plt.close()
+    #         print("Case" + str(x + 1) + " Clear   " + str(final))
 
 
-            break
+    #         break
+    
+    #     if(y == seccount - 1):
+    #         colort = random.choice(colorset)
+    #         # result4 = scipy.optimize.differential_evolution(problem3, bounds, strategy='best1bin', mutation=(0.5, 1), recombination=0.7, init='latinhypercube', atol=0, updating='immediate',workers=1) #differential evolution 최적화
+    #         end = time.time()
+    #         final = end - start
+    #         fail = fail + 1
+    #         output1.append(["Case" + str(x + 1), "Fail" + str(theMin), result['x'], final, deft, car, idden.data, ideal, deftl, var])
+    #         ax.set_xlabel('Theta')
+    #         ax.set_ylabel('Phi')
+    #         ax.set_zlabel('Error')
+    #         ax.set_xlim(0, 2*pi)
+    #         ax.set_ylim(0, pi)
+    #         plt.show(block=False)
+    #         plt.pause(2)
+    #         fignum = x + 1
+    #         plt.savefig("C:/Users/Administrator/2023.01.01/KIST_intern/Task1/Control_Nuclear_Spins/NVspin/UNITE/Test1/Figure/Figure_" + printdate + "_" + str(fignum) + '.png')
+    #         plt.close()
+    #         print("Case" + str(x + 1) + " Clear   " + str(final))
+
+
+    #         break
 
                                                    #측정이 끝난 경우 출력
     
