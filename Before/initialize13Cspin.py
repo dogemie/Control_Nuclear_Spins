@@ -118,6 +118,8 @@ eigvals = np.linalg.eigh(ham)[0] # diagonalizing the Hamiltonian
 eigvecs = -1*np.linalg.eigh(ham)[1]
 E = np.diag(eigvals)             # exponent of eigenvalues
 U_H= eigvecs.conj().T  
+
+
 def problem(vari):
     #for e Ry(pi/2)
     rho1 = np.kron(U090yp,I)@irho@(np.kron(U090yp,I).conj().T)                              # Ry 90도
@@ -158,7 +160,7 @@ def problem(vari):
     yy = (np.trace(Iy@partial_trace(rho8,1))).real
     zz = (np.trace(Iz@partial_trace(rho8,1))).real
     
-    print(xx,yy,zz)
+    # print(xx,yy,zz)
 
     cost = np.abs(0-xx)+np.abs(0-yy)+np.abs(1-zz)
     return cost
@@ -166,28 +168,28 @@ def problem(vari):
 aa= []
 bb= []
 cc= []
-dd = []
-for p in range(1):
+dd= []
+for p in range(2):
     vari=[tau,9,0.1*tau]  #초기값
     bounds = [(0.85*tau,1.15*tau),(1.0,17.0),(0.05*tau,0.8*tau)] #boundary
-    # res1 = optimize.minimize(problem,vari,bounds=bounds,method='Powell',options={'xtol':0.001,'ftol':0.001}) # powell method 
-    # aa.append(res1)
-    # res2 = optimize.differential_evolution(problem,bounds=bounds,atol=0.01) #Differential evolution method
-    # bb.append(res2)
+    res1 = optimize.minimize(problem,vari,bounds=bounds,method='Powell',options={'xtol':0.001,'ftol':0.001}) # powell method 
+    aa.append(res1)
+    res2 = optimize.differential_evolution(problem,bounds=bounds,atol=0.01) #Differential evolution method
+    bb.append(res2)
     res3 = optimize.dual_annealing(problem,bounds=bounds,maxiter=150) #Dual_annealing method
     cc.append(res3)
-    # res4 = optimize.shgo(problem,bounds=bounds,iters=4,options={'xtol':0.001,'ftol':0.001}) #SHGO method
-    # dd.append(res4)
+    res4 = optimize.shgo(problem,bounds=bounds,iters=4,options={'xtol':0.001,'ftol':0.001}) #SHGO method
+    dd.append(res4)
 
 # 결과들을 list에 저장하여 csv파일로 저장
-# df1 = pd.DataFrame(aa)
-# df2 = pd.DataFrame(bb)
+df1 = pd.DataFrame(aa)
+df2 = pd.DataFrame(bb)
 df3 = pd.DataFrame(cc)
-# df4 = pd.DataFrame(dd)
-# df1.to_csv('powell.csv',index=False)
-# df2.to_csv('DE.csv',index=False)
+df4 = pd.DataFrame(dd)
+df1.to_csv('powell.csv',index=False)
+df2.to_csv('DE.csv',index=False)
 df3.to_csv('dual.csv',index=False)
-# df4.to_csv('shgo.csv',index=False)
+df4.to_csv('shgo.csv',index=False)
 print('success')
 
 
