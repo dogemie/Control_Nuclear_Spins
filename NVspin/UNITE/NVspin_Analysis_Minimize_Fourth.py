@@ -129,7 +129,7 @@ def problem3(deg):
     cost = (float(x_m-x_id)**2 + float(y_m-y_id)**2 + float(z_m-z_id)**2)**(1/2)    # 실험값과 이론값의 비교 costfunction 반환
     #cost = np.abs(x_m-x_id) + np.abs(y_m-y_id) + np.abs(z_m-z_id)
     #print(rho_measure)
-    ax.plot(deg[0],deg[1],cost,'ro', color = colort)
+    ax.plot(deg[0],deg[1],cost)
     # ax.tricontour(deg[0],deg[1],cost,c=color[0])
     plt.pause(0.001)
     # plt.scatter(deg[1],deg[0])
@@ -311,6 +311,7 @@ for x in range(count):                                         #반복 횟수 �
     ax.set_xlabel('Theta')
     ax.set_ylabel('Phi')
     ax.set_zlabel('Error')
+    # plt.figure(facecolor='w')
     plt.title(idden)
     plt.show(block=False)
     plt.pause(2)

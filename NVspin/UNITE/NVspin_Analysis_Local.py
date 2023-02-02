@@ -123,35 +123,15 @@ def problem(deg):
     x_m = np.trace(rho_measure*Sx())                            # Sigma X projection
     y_m = np.trace(rho_measure*Sy())                            # Sigma Y projection
     z_m = np.trace(rho_measure*Sz())                            # Sigma Z projection
+    i_m = np.trace(rho_measure*I())                          # Identity projection
     #x_id,y_id,z_id는 주어진 target state를 계산해낸 값(이론값)
     x_id = np.trace(idden*Sx())                                 # target state의 Sigma X projection
     y_id = np.trace(idden*Sy())                                 # target state의 Sigma Y projection
     z_id = np.trace(idden*Sz())                                 # target state의 Sigma Z projection
-    cost = np.abs(x_m-x_id)+np.abs(y_m-y_id)+np.abs(z_m-z_id)   # 실험값과 이론값의 비교 costfunction 반환
+    i_id = np.trace(idden*I())                               # target state의 Identity projection
+    # 실험값과 이론값의 비교 costfunction 반환
+    cost = np.abs(x_m-x_id) + np.abs(y_m-y_id) + np.abs(z_m-z_id) + np.abs(i_m-i_id)
     return cost
-
-    #cost2 = ((float(np.abs(x_m-x_id)))**2+(float(np.abs(y_m-y_id)))**2+(float(np.abs(z_m-z_id)))**2)**(1/2)
-    #print(rho_measure)
-
-def problem2(deg):
-    mc = init()*init().T                                        # |vector><vector|
-    gates = np.inner(Rz(deg[1]),Rx(deg[0]))                     # Universal Gate
-    #rho_measure는 계산값(측정값)
-    rho_measure = gates*mc*gates.getH()                         # Gate|vector><vector|Gate
-    x_m = np.trace(rho_measure*Sx())                            # Sigma X projection
-    y_m = np.trace(rho_measure*Sy())                            # Sigma Y projection
-    z_m = np.trace(rho_measure*Sz())                            # Sigma Z projection
-    #x_id,y_id,z_id는 주어진 target state를 계산해낸 값(이론값)
-    x_id = np.trace(idden*Sx())                                 # target state의 Sigma X projection
-    y_id = np.trace(idden*Sy())                                 # target state의 Sigma Y projection
-    z_id = np.trace(idden*Sz())                                 # target state의 Sigma Z projection
-    #cost = np.abs(x_m-x_id)+np.abs(y_m-y_id)+np.abs(z_m-z_id)   # 실험값과 이론값의 비교 costfunction 반환
-    cost2 = ((float(np.abs(x_m-x_id)))**2+(float(np.abs(y_m-y_id)))**2+(float(np.abs(z_m-z_id)))**2)**(1/2)
-    return cost2
-
-    #
-    #print(rho_measure)
-
 bounds = [(0, pi),(0,2*pi)]                                     #theta와 phi의 범위
 deg = [(np.pi/180)*random.uniform(0,180),(np.pi/180)*random.uniform(0,360)] #초기값을 넣는 랜덤변수
 
@@ -161,7 +141,7 @@ deg = [(np.pi/180)*random.uniform(0,180),(np.pi/180)*random.uniform(0,360)] #초
 def degree(theta, phi):
     fx = Rx(theta)
     fz = Rz(phi)
-    func = fx *fz
+    func = fx * fz
     mc = init()*init().T
     out = func*mc*func.getH()
     return out
@@ -215,53 +195,66 @@ temp5 = np.zeros(count)
 temp6 = np.zeros(count)
 temp7 = np.zeros(count)
 temp8 = np.zeros(count)
-
+tol = 1*e-8
 
 for x in range(count):
-    idden = rand_dm(2, density=1)
+    idden = rand_dm_ginibre(2, rank=1)
     # data = []
     # data = idden.data
+    ideal = []
+    ideal = [np.trace(idden*Sx()),np.trace(idden*Sy()),np.trace(idden*Sz())] #target state의 x,y,z projection을 저장
     start = time.time()
-    result1 = scipy.optimize.minimize(problem,deg,bounds=bounds,method="Nelder-Mead")
+    
+    result1 = scipy.optimize.minimize(problem,deg,bounds=bounds,method="Nelder-Mead", options = {'xatol' : tol, 'fatol' : tol }) #Nelder-Mead 최적화
     end = time.time()
     final = end - start
     deft = degree(result1['x'][0], result1['x'][1]) #최적화된 값으로 density matrix를 구한다.
 
     car = ((idden.data[0, 0] - deft[0, 0])**2 + (idden.data[0, 1] - deft[0, 1])**2 + (idden.data[1, 1] - deft[1, 1])**2)**(1/2)
-    #print(car)
-    output1.append([result1['x'], final, deft, car])
+    deftl1 = [np.trace(deft*Sx()),np.trace(deft*Sy()),np.trace(deft*Sz())]
+                                                                #최적화된 density matrix의 x,y,z projection을 저장
+    var1 = ((ideal[0] - deftl1[0])**2 + (ideal[1] - deftl1[1])**2 + (ideal[2] - deftl1[2])**2)**(1/2)
+    output1.append([result1['x'], final, deft, var1])
     temp1[x] = final
-    temp5[x] = car
+    temp5[x] = var1
     start = time.time()
-    result2 = scipy.optimize.minimize(problem,deg,bounds=bounds,
-                                      method="Powell")
+    result2 = scipy.optimize.minimize(problem,deg,bounds=bounds,method="Powell", options = {'xtol' : tol, 'ftol' : tol })        #Powell 최적화
     end = time.time()
     final = end - start
     deft = degree(result2['x'][0], result2['x'][1])
     car = ((idden.data[0, 0] - deft[0, 0])**2 + 
            (idden.data[0, 1] - deft[0, 1])**2 + 
            (idden.data[1, 1] - deft[1, 1])**2)**(1/2)
-    output2.append([result2['x'], final, deft, car])
+    deftl1 = [np.trace(deft*Sx()),np.trace(deft*Sy()),np.trace(deft*Sz())]
+                                                                #최적화된 density matrix의 x,y,z projection을 저장
+    var1 = ((ideal[0] - deftl1[0])**2 + (ideal[1] - deftl1[1])**2 + (ideal[2] - deftl1[2])**2)**(1/2)
+    output2.append([result2['x'], final, deft, var1])
     temp2[x] = final
-    temp6[x] = car
+    temp6[x] = var1
     start = time.time()
     result3 = scipy.optimize.differential_evolution(problem,bounds=bounds)
     end = time.time()
     final = end - start
     deft = degree(result3['x'][0], result3['x'][1])
+    deftl1 = [np.trace(deft*Sx()),np.trace(deft*Sy()),np.trace(deft*Sz())]
+                                                                #최적화된 density matrix의 x,y,z projection을 저장
+    var1 = ((ideal[0] - deftl1[0])**2 + (ideal[1] - deftl1[1])**2 + (ideal[2] - deftl1[2])**2)**(1/2)
     car = ((idden.data[0, 0] - deft[0, 0])**2 + (idden.data[0, 1] - deft[0, 1])**2 + (idden.data[1, 1] - deft[1, 1])**2)**(1/2)
-    output3.append([result3['x'], final, deft, car])
+    output3.append([result3['x'], final, deft, var1])
     temp3[x] = final
-    temp7[x] = car
+    temp7[x] = var1
     start = time.time()
     result4 = scipy.optimize.dual_annealing(problem,bounds=bounds)
     end = time.time()
     final = end - start
     deft = degree(result4['x'][0], result4['x'][1])
+    deftl1 = [np.trace(deft*Sx()),np.trace(deft*Sy()),np.trace(deft*Sz())]
+                                                                #최적화된 density matrix의 x,y,z projection을 저장
+    var1 = ((ideal[0] - deftl1[0])**2 + (ideal[1] - deftl1[1])**2 + (ideal[2] - deftl1[2])**2)**(1/2)
     car = ((idden.data[0, 0] - deft[0, 0])**2 + (idden.data[0, 1] - deft[0, 1])**2 + (idden.data[1, 1] - deft[1, 1])**2)**(1/2)
-    output4.append([result4['x'], final, deft, car])
+    output4.append([result4['x'], final, deft, var1])
     temp4[x] = final
-    temp8[x] = car
+    temp8[x] = var1
     #print(idden.data)
     datapack.append(idden.data) 
     
