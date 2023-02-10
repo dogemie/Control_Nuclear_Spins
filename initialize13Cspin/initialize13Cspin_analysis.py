@@ -114,6 +114,7 @@ irho = np.kron(irho_p,irho_MIX)
 
 
 tau = 0.52 #본 코드에서는 tau를 찾는 과정을 생략하였습니다. 그러므로 tau를 지정하여 줍니다.
+# tau = random.random()
 
 ham = Al*np.kron(sz,Iz) + Ap*np.kron(sz,Ix) + B*gammaN*np.kron(I,Iz)
 eigvals = np.linalg.eigh(ham)[0] # diagonalizing the Hamiltonian 
@@ -166,6 +167,7 @@ def problem(vari):
 
     cost = np.abs(0-xx)+np.abs(0-yy)+np.abs(1-zz)
     return cost
+
 #결과들을 저장할 list 생성
 aa= []
 bb= []
@@ -174,28 +176,9 @@ dd= []
 
 tol = 1e-8
 
-for p in range(2):
+for p in range(3):
     vari=[tau,9,0.1*tau]  #초기값
     bounds = [(0.85*tau,1.15*tau),(1.0,17.0),(0.05*tau,0.8*tau)] #boundary
-    start = time.time()
-    # res1 = optimize.minimize(problem,vari,bounds=bounds,method='Powell',options={'xtol':tol,'ftol':tol}) # powell method
-    res1 = optimize.minimize(problem,vari,bounds=bounds,method='Nelder-Mead', options={'xatol': tol, 'fatol': tol}) # Nelder-Mead method 
-    aa.append(res1)
-    end = time.time()
-    final = end - start
-    print(final)
-    start = time.time()
-    res2 = optimize.differential_evolution(problem,bounds=bounds,atol=0.01) #Differential evolution method
-    bb.append(res2)
-    end = time.time()
-    final = end - start
-    print(final)
-    start = time.time()
-    res3 = optimize.dual_annealing(problem,bounds=bounds,maxiter=150) #Dual_annealing method
-    cc.append(res3)
-    end = time.time()
-    final = end - start
-    print(final)
     start = time.time()
     res4 = optimize.shgo(problem,bounds=bounds,iters=4,options={'xtol':tol,'ftol':tol}) #SHGO method
     dd.append(res4)
@@ -208,19 +191,10 @@ printdate = date.strftime('%Y%m%d_%H%M%S')
 print(date)
 
 # 결과들을 list에 저장하여 csv파일로 저장
-df1 = pd.DataFrame(aa)
-df2 = pd.DataFrame(bb)
-df3 = pd.DataFrame(cc)
 df4 = pd.DataFrame(dd)
-fin = pd.concat([df1,df2,df3,df4],axis=1)
 
-df1.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/Nelder-Mead' + printdate + '.csv',index=False)
-df2.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/DE' + printdate + '.csv',index=False)
-df3.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/dual' + printdate + '.csv',index=False)
 df4.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/shgo' + printdate + '.csv',index=False)
 print('success')
-
-fin.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/Total_result' + printdate + '.csv',index=False)
 
 # # %%
 # print(U090xp)
