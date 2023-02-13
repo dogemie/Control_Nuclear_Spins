@@ -114,7 +114,7 @@ irho = np.kron(irho_p,irho_MIX)
 
 
 
-tau = 0.52 #본 코드에서는 tau를 찾는 과정을 생략하였습니다. 그러므로 tau를 지정하여 줍니다.
+tau = 1.725 #본 코드에서는 tau를 찾는 과정을 생략하였습니다. 그러므로 tau를 지정하여 줍니다.
 # tau = random.random()
 
 ham = Al*np.kron(sz,Iz) + Ap*np.kron(sz,Ix) + B*gammaN*np.kron(I,Iz)
@@ -181,12 +181,12 @@ dd= []
 tol = 1e-2 #tolerance
 
 for p in range(1):
-    # vari=[tau,9,0.1*tau]  #초기값
-    vari = [0.5,15,0.3]
+    vari=[tau,9,0.1*tau]  #초기값
+    # vari = [0.5,15,0.3]
     bounds = [(0.85*tau,1.15*tau),(1.0,17.0),(0.05*tau,0.8*tau)] #boundary
     start = time.time()
-    # res4 = optimize.shgo(problem,bounds=bounds,iters=4,options={'xtol':tol,'ftol':tol}) #SHGO method
-    res4 = optimize.minimize(problem,vari,method='Nelder-Mead',options={'xtol':tol,'ftol':tol}) #Nelder-Mead method
+    res4 = optimize.shgo(problem,bounds=bounds,iters=4,options={'xtol':tol,'ftol':tol}) #SHGO method
+    # res4 = optimize.minimize(problem,vari,method='Nelder-Mead',options={'xtol':tol,'ftol':tol}) #Nelder-Mead method
     res4['x'][1] = round(res4['x'][1])
     dd.append(res4)
     end = time.time()
@@ -200,7 +200,7 @@ print(date)
 # 결과들을 list에 저장하여 csv파일로 저장
 df4 = pd.DataFrame(dd)
 
-df4.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/file/Nelder-Mead' + printdate + '.csv',index=False)
+df4.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/file/res' + printdate + '.csv',index=False)
 print('success')
 
 # # %%

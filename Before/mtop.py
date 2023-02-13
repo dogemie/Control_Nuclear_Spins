@@ -9,6 +9,8 @@ from sklearn.feature_extraction.text import CountVectorizer
 from scipy import linalg
 from math import *
 import matplotlib.pyplot as plt
+import random
+
 
 #Generating gate function
 def UO(B1,B2,a,D1,D2):
@@ -52,9 +54,17 @@ N = Sweep
 B = 403 #[G] magnetic field
 
 # 13C nuclear spin parameters
+# gammaN = 2*pi*1.071e-3 #[MHz/G]
+# Al    = 2*pi*0.3334155111 #[MHz] # A_|| hyperfine term
+# Ap = 2*pi*1.7777771 #[MHz] # A_per hyperfine term
+
+#al 0.05~0.8
+#ap 0.05~0.2, 0.3
+
+#for making 13C nuclear random dataset
 gammaN = 2*pi*1.071e-3 #[MHz/G]
-Al    = 2*pi*0.1 #[MHz] # A_|| hyperfine term
-Ap = 2*pi*0.1 #[MHz] # A_per hyperfine term
+Al    = 2*pi * random.uniform(0.05, 0.8) #[MHz] # A_|| hyperfine term
+Ap = 2*pi* random.uniform(0.05, 0.3) #[MHz] # A_per hyperfine term
 
 T = 5; # sweep tau [us]
 t = np.linspace(0,T,N)
@@ -122,7 +132,8 @@ plt.subplot(2,1,1)
 plt.plot(t,Sa)
 index = Sa.index(min(Sa))
 tau=t[index]
-print(tau)
+# print(Al, Ap, tau)
+print("Al = ", Al, "Ap = ", Ap, "tau = ", tau)
 
 nn = 32
 nn_r = 2*np.linspace(1,nn,nn)
