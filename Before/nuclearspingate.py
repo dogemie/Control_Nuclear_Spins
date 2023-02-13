@@ -177,7 +177,7 @@ def problem(vari):
 
 totres = [] #임의의 list 생성
 #랜덤한 target state를 생성
-for p in range (100): #100번 시행
+for p in range (1): #100번 시행
     while 1 :
         U=rand_unitary(2)
         a=U[0,0]

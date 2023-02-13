@@ -81,6 +81,7 @@ U090xm = UO(0,1,pi/4,0,0)
 U090xmm = UO(0,1,-pi/4,0,0)
 U180xm = UO(0,1,pi/2,0,0)
 U180xmm = UO(0,1,pi/2,0,0)
+#사용 안됨?
 
 # Define initial state of the system (스핀상태)
 
@@ -122,6 +123,9 @@ eigvecs = -1*np.linalg.eigh(ham)[1]
 E = np.diag(eigvals)             # exponent of eigenvalues
 U_H= eigvecs.conj().T  
 
+xx=0
+yy=0
+zz=0
 
 def problem(vari):
     #for e Ry(pi/2)
@@ -163,7 +167,7 @@ def problem(vari):
     yy = (np.trace(Iy@partial_trace(rho8,1))).real
     zz = (np.trace(Iz@partial_trace(rho8,1))).real
     
-    # print(xx,yy,zz)
+    print(xx,yy,zz)
 
     cost = np.abs(0-xx)+np.abs(0-yy)+np.abs(1-zz)
     return cost
@@ -174,13 +178,16 @@ bb= []
 cc= []
 dd= []
 
-tol = 1e-8
+tol = 1e-2 #tolerance
 
-for p in range(3):
-    vari=[tau,9,0.1*tau]  #초기값
+for p in range(1):
+    # vari=[tau,9,0.1*tau]  #초기값
+    vari = [0.5,15,0.3]
     bounds = [(0.85*tau,1.15*tau),(1.0,17.0),(0.05*tau,0.8*tau)] #boundary
     start = time.time()
-    res4 = optimize.shgo(problem,bounds=bounds,iters=4,options={'xtol':tol,'ftol':tol}) #SHGO method
+    # res4 = optimize.shgo(problem,bounds=bounds,iters=4,options={'xtol':tol,'ftol':tol}) #SHGO method
+    res4 = optimize.minimize(problem,vari,method='Nelder-Mead',options={'xtol':tol,'ftol':tol}) #Nelder-Mead method
+    res4['x'][1] = round(res4['x'][1])
     dd.append(res4)
     end = time.time()
     final = end - start
@@ -193,7 +200,7 @@ print(date)
 # 결과들을 list에 저장하여 csv파일로 저장
 df4 = pd.DataFrame(dd)
 
-df4.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/shgo' + printdate + '.csv',index=False)
+df4.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/file/Nelder-Mead' + printdate + '.csv',index=False)
 print('success')
 
 # # %%
