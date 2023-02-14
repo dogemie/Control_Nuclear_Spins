@@ -109,8 +109,8 @@ irho = np.kron(irho_z,irho_MIX)
 
 
 dd= []
-count = 0
-for ccc in range(1000):
+count = 1
+for ccc in range(50):
     start = time.time()
     #for making 13C nuclear random dataset
     gammaN = 2*pi*1.071e-3 #[MHz/G]
@@ -225,10 +225,12 @@ for ccc in range(1000):
             final = end - start
             print(final)
             print("count : ", count)
+            count = count + 1
         else:
             end = time.time()
             print("fail")
             print("count : ", count)
+            count = count + 1
             break
 
 date = dt.now()
