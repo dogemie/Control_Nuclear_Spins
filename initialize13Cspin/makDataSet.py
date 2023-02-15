@@ -110,7 +110,7 @@ irho = np.kron(irho_z,irho_MIX)
 
 dd= []
 count = 1
-for ccc in range(50):
+for ccc in range(5):
     start = time.time()
     #for making 13C nuclear random dataset
     gammaN = 2*pi*1.071e-3 #[MHz/G]
