@@ -80,5 +80,17 @@ csv37 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task
 
 csv38 = pd.concat([csv36, csv37], axis=0)  #7552
 
-print(csv38)
-csv38.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/file/testdata.csv', index=False)
+csv39 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/file/dataset20230215_171255.csv')
+
+csv40 = pd.concat([csv38, csv39], axis=0)  #7552
+
+csv41 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/file/dataset20230215_173216.csv')
+
+csv42 = pd.concat([csv40, csv41], axis=0)  #7552
+
+csv43 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/file/dataset20230215_173254.csv')
+
+csv44 = pd.concat([csv42, csv43], axis=0)  #7630
+
+print(csv44)
+csv44.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/file/testdata.csv', index=False)
