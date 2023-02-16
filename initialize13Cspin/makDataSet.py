@@ -110,7 +110,7 @@ irho = np.kron(irho_z,irho_MIX)
 
 dd= []
 count = 1
-for ccc in range(50):
+for ccc in range(1250):
     start = time.time()
     #for making 13C nuclear random dataset
     gammaN = 2*pi*1.071e-3 #[MHz/G]
@@ -176,7 +176,7 @@ for ccc in range(50):
         #for e Rx(pi/2)
         rho4 = np.kron(U090xp,I)@rho3@(np.kron(U090xp,I).conj().T)                              # Rx 90도
 
-        #for N Rz(pi/2)
+        #for N Rz(pi/2) //이부분이 Z pulse를 다루고 있다면 N을 따로 분리해야하나?>
         U_e2=(U_H.conj().T)@(linalg.expm(-i*E*vari[2]/2)@U_H)                                   # for tau/2
         U_e=(U_H.conj().T)@(linalg.expm(-i*E*vari[2])@U_H)                                      # for tau/2
         rho5=U_e2@rho4@(U_e2.conj().T)                                                          # first tau/2
