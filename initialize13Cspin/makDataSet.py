@@ -106,11 +106,55 @@ irho_MIX = np.array([[1/2,0,0],[0,0,0],[0,0,1/2]])
 
 irho = np.kron(irho_z,irho_MIX)
 
+def problem(vari):
+        #for e Ry(pi/2)
+        rho1 = np.kron(U090yp,I)@irho@(np.kron(U090yp,I).conj().T)                              # Ry 90도
+
+        #for N Rx(pi/2)
+        U_e2=(U_H.conj().T)@(linalg.expm(-i*E* vari[0]/2)@U_H)                                  # for tau/2
+        U_e=(U_H.conj().T)@(linalg.expm(-i*E* vari[0])@U_H)                                     # for tau
+        rho2=U_e2@rho1@(U_e2.conj().T)                                                          # first tau/2
+        for k in range(1,2*math.trunc(vari[1])):                                                # N과 tau를 N개 생성
+            rho2 = U_e@np.kron(U180xp,I) @ rho2 @ (np.kron(U180xp,I).conj().T) @ (U_e.conj().T) # N & tau
+        rho3 = U_e2 @ np.kron(U180xp,I) @ rho2 @ (np.kron(U180xp,I).conj().T) @ (U_e2.conj().T) # last N & tau/2
+
+        #for e Rx(pi/2)
+        rho4 = np.kron(U090xp,I)@rho3@(np.kron(U090xp,I).conj().T)                              # Rx 90도
+
+        #for N Rz(pi/2) //이부분이 Z pulse를 다루고 있다면 N을 따로 분리해야하나?>
+        U_e2=(U_H.conj().T)@(linalg.expm(-i*E*vari[2]/2)@U_H)                                   # for tau/2
+        U_e=(U_H.conj().T)@(linalg.expm(-i*E*vari[2])@U_H)                                      # for tau/2
+        rho5=U_e2@rho4@(U_e2.conj().T)                                                          # first tau/2
+        for k in range(1,2*math.trunc(vari[1])):                                                # N과 tau를 N개 생성
+            rho5 = U_e@np.kron(U180xp,I) @ rho5 @ (np.kron(U180xp,I).conj().T) @ (U_e.conj().T) # N & tau
+        rho6 = U_e2 @ np.kron(U180xp,I) @ rho5 @ (np.kron(U180xp,I).conj().T) @ (U_e2.conj().T) # last N & tau/2
+
+        #for N Rx(pi/2)
+        U_e2=(U_H.conj().T)@(linalg.expm(-i*E* vari[0]/2)@U_H)                                  # for tau/2
+        U_e=(U_H.conj().T)@(linalg.expm(-i*E* vari[0])@U_H)                                     # for tau
+        rho7=U_e2@rho6@(U_e2.conj().T)                                                          # first tau/2
+        for k in range(1,2*math.trunc(vari[1])):                                                # N과 tau를 N개 생성
+            rho7 = U_e@np.kron(U180xp,I) @ rho7 @ (np.kron(U180xp,I).conj().T) @ (U_e.conj().T) # N & tau
+        rho8 = U_e2 @ np.kron(U180xp,I) @ rho7 @ (np.kron(U180xp,I).conj().T) @ (U_e2.conj().T) # last N & tau/2
+
+        # projection&trace
+        xob = (np.trace(Sxp@partial_trace(rho8,2))).real # for e spin
+        yob = (np.trace(Syp@partial_trace(rho8,2))).real 
+        zob = (np.trace(Szp@partial_trace(rho8,2))).real
+
+        xx = (np.trace(Ix@partial_trace(rho8,1))).real # for N spin
+        yy = (np.trace(Iy@partial_trace(rho8,1))).real
+        zz = (np.trace(Iz@partial_trace(rho8,1))).real
+        
+        # print(xx,yy,zz)
+
+        cost = np.abs(0-xx)+np.abs(0-yy)+np.abs(1-zz)
+        return cost
 
 
 dd= []
 count = 1
-for ccc in range(1250):
+for ccc in range(50):
     start = time.time()
     #for making 13C nuclear random dataset
     gammaN = 2*pi*1.071e-3 #[MHz/G]
@@ -160,51 +204,6 @@ for ccc in range(1250):
     xx=0
     yy=0
     zz=0
-
-    def problem(vari):
-        #for e Ry(pi/2)
-        rho1 = np.kron(U090yp,I)@irho@(np.kron(U090yp,I).conj().T)                              # Ry 90도
-
-        #for N Rx(pi/2)
-        U_e2=(U_H.conj().T)@(linalg.expm(-i*E* vari[0]/2)@U_H)                                  # for tau/2
-        U_e=(U_H.conj().T)@(linalg.expm(-i*E* vari[0])@U_H)                                     # for tau
-        rho2=U_e2@rho1@(U_e2.conj().T)                                                          # first tau/2
-        for k in range(1,2*math.trunc(vari[1])):                                                # N과 tau를 N개 생성
-            rho2 = U_e@np.kron(U180xp,I) @ rho2 @ (np.kron(U180xp,I).conj().T) @ (U_e.conj().T) # N & tau
-        rho3 = U_e2 @ np.kron(U180xp,I) @ rho2 @ (np.kron(U180xp,I).conj().T) @ (U_e2.conj().T) # last N & tau/2
-
-        #for e Rx(pi/2)
-        rho4 = np.kron(U090xp,I)@rho3@(np.kron(U090xp,I).conj().T)                              # Rx 90도
-
-        #for N Rz(pi/2) //이부분이 Z pulse를 다루고 있다면 N을 따로 분리해야하나?>
-        U_e2=(U_H.conj().T)@(linalg.expm(-i*E*vari[2]/2)@U_H)                                   # for tau/2
-        U_e=(U_H.conj().T)@(linalg.expm(-i*E*vari[2])@U_H)                                      # for tau/2
-        rho5=U_e2@rho4@(U_e2.conj().T)                                                          # first tau/2
-        for k in range(1,2*math.trunc(vari[1])):                                                # N과 tau를 N개 생성
-            rho5 = U_e@np.kron(U180xp,I) @ rho5 @ (np.kron(U180xp,I).conj().T) @ (U_e.conj().T) # N & tau
-        rho6 = U_e2 @ np.kron(U180xp,I) @ rho5 @ (np.kron(U180xp,I).conj().T) @ (U_e2.conj().T) # last N & tau/2
-
-        #for N Rx(pi/2)
-        U_e2=(U_H.conj().T)@(linalg.expm(-i*E* vari[0]/2)@U_H)                                  # for tau/2
-        U_e=(U_H.conj().T)@(linalg.expm(-i*E* vari[0])@U_H)                                     # for tau
-        rho7=U_e2@rho6@(U_e2.conj().T)                                                          # first tau/2
-        for k in range(1,2*math.trunc(vari[1])):                                                # N과 tau를 N개 생성
-            rho7 = U_e@np.kron(U180xp,I) @ rho7 @ (np.kron(U180xp,I).conj().T) @ (U_e.conj().T) # N & tau
-        rho8 = U_e2 @ np.kron(U180xp,I) @ rho7 @ (np.kron(U180xp,I).conj().T) @ (U_e2.conj().T) # last N & tau/2
-
-        # projection&trace
-        xob = (np.trace(Sxp@partial_trace(rho8,2))).real # for e spin
-        yob = (np.trace(Syp@partial_trace(rho8,2))).real 
-        zob = (np.trace(Szp@partial_trace(rho8,2))).real
-
-        xx = (np.trace(Ix@partial_trace(rho8,1))).real # for N spin
-        yy = (np.trace(Iy@partial_trace(rho8,1))).real
-        zz = (np.trace(Iz@partial_trace(rho8,1))).real
-        
-        # print(xx,yy,zz)
-
-        cost = np.abs(0-xx)+np.abs(0-yy)+np.abs(1-zz)
-        return cost
 
     #결과들을 저장할 list 생성
     
