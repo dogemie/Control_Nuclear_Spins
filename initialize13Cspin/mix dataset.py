@@ -116,5 +116,53 @@ csv55 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task
 
 csv56 = pd.concat([csv54, csv55], axis=0)  #13322
 
-print(csv56)
-csv56.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/file/testdata.csv', index=False)
+csv57 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/file/dataset20230217_101652.csv')
+
+csv58 = pd.concat([csv56, csv57], axis=0)  #13322
+
+csv59 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/file/dataset20230217_101815.csv')
+
+csv60 = pd.concat([csv58, csv59], axis=0)  #13322
+
+csv61 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/file/dataset20230217_101853.csv')
+
+csv62 = pd.concat([csv60, csv61], axis=0)  #13322
+
+csv63 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/file/dataset20230217_102019.csv')
+
+csv64 = pd.concat([csv62, csv63], axis=0)  #13322
+
+csv65 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/file/dataset20230217_102021.csv')
+
+csv66 = pd.concat([csv64, csv65], axis=0)  #13322
+
+csv67 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/file/dataset20230217_102100.csv')
+
+csv68 = pd.concat([csv66, csv67], axis=0)  #13322
+
+csv69 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/file/dataset20230217_152552.csv')
+
+csv70 = pd.concat([csv68, csv69], axis=0)  #13322
+
+csv71 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/file/dataset20230217_152553.csv')
+
+csv72 = pd.concat([csv70, csv71], axis=0)  #13322
+
+csv73 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/file/dataset20230217_152621.csv')
+
+csv74 = pd.concat([csv72, csv73], axis=0)  #13322
+
+csv75 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/file/dataset20230217_152632.csv')
+
+csv76 = pd.concat([csv74, csv75], axis=0)  #13322
+
+csv77 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/file/dataset20230217_152636.csv')
+
+csv78 = pd.concat([csv76, csv77], axis=0)  #13322
+
+csv79 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/file/dataset20230217_152835.csv')
+
+csv80 = pd.concat([csv78, csv79], axis=0)  #17200
+
+print(csv80)
+csv80.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/file/testdata.csv', index=False)
