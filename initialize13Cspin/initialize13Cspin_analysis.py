@@ -59,8 +59,11 @@ B = 403 #[G] magnetic field
 # 13C nuclear spin parameters
 gammaN = 2*pi*1.071e-3 #[MHz/G]
 
-Al    = 2*math.pi*0.1 #[MHz] # A_|| hyperfine term
-Ap = 2*pi*0.1 #[MHz] # A_per hyperfine term
+# Al    = 2*math.pi*0.1 #[MHz] # A_|| hyperfine term
+# Ap = 2*pi*0.1 #[MHz] # A_per hyperfine term
+
+Al = 2.3830248832294614
+Ap = 1.6009166933435415
 
 T = 5; # sweep tau [us]
 t = np.linspace(0,T,N)
@@ -114,7 +117,7 @@ irho = np.kron(irho_p,irho_MIX)
 
 
 
-tau = 1.725 #본 코드에서는 tau를 찾는 과정을 생략하였습니다. 그러므로 tau를 지정하여 줍니다.
+tau = 4.39 #본 코드에서는 tau를 찾는 과정을 생략하였습니다. 그러므로 tau를 지정하여 줍니다.
 # tau = random.random()
 
 ham = Al*np.kron(sz,Iz) + Ap*np.kron(sz,Ix) + B*gammaN*np.kron(I,Iz)
@@ -168,7 +171,7 @@ def problem(vari):
     zz = (np.trace(Iz@partial_trace(rho8,1))).real
     
     print(xx,yy,zz)
-
+    print(partial_trace(rho8,1))
     cost = np.abs(0-xx)+np.abs(0-yy)+np.abs(1-zz)
     return cost
 

@@ -107,11 +107,7 @@ irho_Z = np.array([[0,0,0],[0,0,0],[0,0,1]])
 irho_MIX = np.array([[1/2,0,0],[0,0,0],[0,0,1/2]])
 
 irho = np.kron(irho_z,irho_MIX)
-trace = [-1, -1, -1, 100]
-
-
-co = 1
-
+trace = []
 def problem(vari):
         #for e Ry(pi/2)
         rho1 = np.kron(U090yp,I)@irho@(np.kron(U090yp,I).conj().T)                              # Ry 90도
@@ -155,29 +151,18 @@ def problem(vari):
         
         # print("rho1 :", partial_trace(rho1,1))
         # print("rho8 :", partial_trace(rho8,1))
-        # print(xx,yy,zz)
-        # ax.plot(xx,yy,zz,'ro')
-        # plt.pause(0.001)
+        print(xx,yy,zz)
+        ax.plot(xx,yy,zz,'ro')
+        plt.pause(0.001)
         cost = ((np.abs(0-xx))**2+(np.abs(0-yy))**2+(np.abs(1-zz))**2)**(1/2)
-        
-        if(xx > trace[0]):
-            trace[0] = xx
-        if(yy > trace[1]):
-            trace[1] = yy
-        if(zz > trace[2]):
-            trace[2] = zz
-        if(cost < trace[3]):
-            trace[3] = cost
-            print(partial_trace(rho8,1))
-        
         return cost
-        
+
 
 dd= []
 count = 1
 for ccc in range(1):
-    # fig = plt.figure(figsize=(9, 6))
-    # ax = fig.add_subplot(111, projection='3d')
+    fig = plt.figure(figsize=(9, 6))
+    ax = fig.add_subplot(111, projection='3d')
     start = time.time()
     #for making 13C nuclear random dataset
     gammaN = 2*pi*1.071e-3 #[MHz/G]
@@ -216,7 +201,7 @@ for ccc in range(1):
     index = Sa.index(min(Sa))
     tau=t[index]
     # print(Al, Ap, tau)
-    # print(trace)
+    print(trace)
     print("Al = ", Al, "Ap = ", Ap, "tau = ", tau)
 
     ham = Al*np.kron(sz,Iz) + Ap*np.kron(sz,Ix) + B*gammaN*np.kron(I,Iz)
@@ -232,7 +217,7 @@ for ccc in range(1):
     #결과들을 저장할 list 생성
     
 
-    tol = 1e-5 #tolerance
+    tol = 1e-4 #tolerance
 
     for p in range(1):
         vari=[tau,9,0.1*tau]  #초기값
@@ -249,7 +234,7 @@ for ccc in range(1):
         #     print(final)
         #     print("count : ", count)
         #     count = count + 1
-        dd.append([Al, Ap, res4['x'][1], res4['x'][0], res4['x'][2], res4['fun'], trace[0], trace[1], trace[2]])
+        dd.append([Al, Ap, res4['x'][1], res4['x'][0], res4['x'][2], res4['fun']])
         end = time.time()
         final = end - start
         print(final)
@@ -261,14 +246,14 @@ for ccc in range(1):
         #     print("count : ", count)
         #     count = count + 1
         #     break
-    # plt.show(block=False)
-    # plt.pause(5)
-    # ax.set_xlabel('X')
-    # ax.set_ylabel('Y')
-    # ax.set_zlabel('Z')
-    # date = dt.now()
-    # printdate = date.strftime('%Y%m%d_%H%M%S')
-    # plt.savefig("C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/figure/Figure_" + printdate + '.png')
+    plt.show(block=False)
+    plt.pause(5)
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Z')
+    date = dt.now()
+    printdate = date.strftime('%Y%m%d_%H%M%S')
+    plt.savefig("C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/figure/Figure_" + printdate + '.png')
     
     
 date = dt.now()
