@@ -158,8 +158,8 @@ def problem(vari):
         # print(xx,yy,zz)
         # ax.plot(xx,yy,zz,'ro')
         # plt.pause(0.001)
-        cost = ((np.abs(0-xx))**2+(np.abs(0-yy))**2+(np.abs(1-zz))**2)**(1/2)
-        
+        # cost = ((np.abs(0-xx))**2+(np.abs(0-yy))**2+(np.abs(1-zz))**2)**(1/2)
+        cost = np.abs(0-xx) + np.abs(0-yy) + np.abs(1-zz)
         if(xx > trace[0]):
             trace[0] = xx
         if(yy > trace[1]):
@@ -168,14 +168,15 @@ def problem(vari):
             trace[2] = zz
         if(cost < trace[3]):
             trace[3] = cost
-            print(partial_trace(rho8,1))
+            # print(partial_trace(rho8,1))
         
         return cost
         
 
 dd= []
 count = 1
-for ccc in range(1):
+for ccc in range(10):
+    trace = [-1, -1, -1, 100]
     # fig = plt.figure(figsize=(9, 6))
     # ax = fig.add_subplot(111, projection='3d')
     start = time.time()
@@ -217,7 +218,7 @@ for ccc in range(1):
     tau=t[index]
     # print(Al, Ap, tau)
     # print(trace)
-    print("Al = ", Al, "Ap = ", Ap, "tau = ", tau)
+    # print("Al = ", Al, "Ap = ", Ap, "tau = ", tau)
 
     ham = Al*np.kron(sz,Iz) + Ap*np.kron(sz,Ix) + B*gammaN*np.kron(I,Iz)
     eigvals = np.linalg.eigh(ham)[0] # diagonalizing the Hamiltonian 
@@ -278,7 +279,7 @@ print(date)
 # 결과들을 list에 저장하여 csv파일로 저장
 df4 = pd.DataFrame(dd)
 df4.rename(columns={0:"Al", 1:"Ap", 2: "N", 3: "x", 4: "z", 5: "fun"}, inplace=True)
-df4.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/file/testingdataset' + printdate + '.csv',index=False)
+df4.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/newdata/dataset' + printdate + '.csv',index=False)
 print('success')
 
 totalend = time.time()
