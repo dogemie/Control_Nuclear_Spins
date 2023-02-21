@@ -166,16 +166,16 @@ def problem(vari):
             trace[1] = yy
         if(zz > trace[2]):
             trace[2] = zz
-        if(cost < trace[3]):
-            trace[3] = cost
+        # if(cost < trace[3]):
+        #     trace[3] = cost
             # print(partial_trace(rho8,1))
         
         return cost
         
-
-dd= []
+aa = []
+dd = []
 count = 1
-for ccc in range(10):
+for ccc in range(200):
     trace = [-1, -1, -1, 100]
     # fig = plt.figure(figsize=(9, 6))
     # ax = fig.add_subplot(111, projection='3d')
@@ -233,35 +233,31 @@ for ccc in range(10):
     #결과들을 저장할 list 생성
     
 
-    tol = 1e-5 #tolerance
+    tol = 1e-7 #tolerance
 
     for p in range(1):
         vari=[tau,9,0.1*tau]  #초기값
         # vari = [0.5,15,0.3]
-        bounds = [(0.85*tau,1.15*tau),(1.0,17.0),(0.15*tau,0.8*tau)] #boundary
+        bounds = [(0.85*tau,1.15*tau),(1.0,17.0),(0.05*tau,0.8*tau)] #boundary
         
         res4 = optimize.shgo(problem,bounds=bounds,iters=4,options={'xtol':tol,'ftol':tol}) #SHGO method
         # res4 = optimize.minimize(problem,vari,method='Nelder-Mead',options={'xtol':tol,'ftol':tol}) #Nelder-Mead method
         res4['x'][1] = round(res4['x'][1])
-        # if(res4['fun']<0.1):
-        #     dd.append([Al, Ap, res4['x'][1], res4['x'][0], res4['x'][2], res4['fun']])
-        #     end = time.time()
-        #     final = end - start
-        #     print(final)
-        #     print("count : ", count)
-        #     count = count + 1
-        dd.append([Al, Ap, res4['x'][1], res4['x'][0], res4['x'][2], res4['fun'], trace[0], trace[1], trace[2]])
-        end = time.time()
-        final = end - start
-        print(final)
-        print("count : ", count)
-        count = count + 1
-        # else:
-        #     end = time.time()
-        #     print("fail")
-        #     print("count : ", count)
-        #     count = count + 1
-        #     break
+        # print(res4)
+        if(res4['fun']<0.05):
+            dd.append([Al, Ap, res4['x'][1], res4['x'][0], res4['x'][2], res4['fun'], trace[0], trace[1], trace[2], res4['nfev']])
+            end = time.time()
+            final = end - start
+            print(final)
+            print("count : ", count)
+            count = count + 1
+        else:
+            aa.append([Al, Ap, res4['x'][1], res4['x'][0], res4['x'][2], res4['fun'], trace[0], trace[1], trace[2], res4['nfev']])
+            end = time.time()
+            print("fail")
+            print("count : ", count)
+            count = count + 1
+            break
     # plt.show(block=False)
     # plt.pause(5)
     # ax.set_xlabel('X')
@@ -278,12 +274,22 @@ print(date)
 
 # 결과들을 list에 저장하여 csv파일로 저장
 df4 = pd.DataFrame(dd)
-df4.rename(columns={0:"Al", 1:"Ap", 2: "N", 3: "x", 4: "z", 5: "fun"}, inplace=True)
+df4.rename(columns={0:"Al", 1:"Ap", 2: "N", 3: "x", 4: "z", 5: "fun", 6: "xx", 7: "yy", 8: "zz", 9: "fev"}, inplace=True)
 df4.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/newdata/dataset' + printdate + '.csv',index=False)
+
+df2 = pd.DataFrame(aa)
+df2.rename(columns={0:"Al", 1:"Ap", 2: "N", 3: "x", 4: "z", 5: "fun", 6: "xx", 7: "yy", 8: "zz", 9: "fev"}, inplace=True)
+df2.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/odedata/dataset' + printdate + '.csv',index=False)
+
 print('success')
 
 totalend = time.time()
 print(totalend - totalstart)
+
+# df3 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/testdata_second.csv')
+
+# df1 = pd.concat([df3, df4], axis=0)
+# df1.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/testdata_second' + printdate + '.csv', index=False)
 # # %%
 # print(U090xp)
 # print(U090yp)
