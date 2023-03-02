@@ -12,5 +12,13 @@ csv6 = pd.concat([csv3, csv4])
 csv7 = pd.concat([csv5, csv6])
 
 
-print(csv7)
-csv7.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/fixed_testdata.csv', index=False)
+csv8 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/newdata/ffd20230302_171625.csv')
+
+csv9 = pd.concat([csv7, csv8])
+
+csv10 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/newdata/ffd20230302_173714.csv')
+
+csv11 = pd.concat([csv9, csv10])
+
+print(csv11)
+csv11.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/fixed_testdata.csv', index=False)
