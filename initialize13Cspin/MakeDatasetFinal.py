@@ -246,7 +246,7 @@ for ccc in tqdm(range(300)):
         # vari = [0.5,15,0.3]
         bounds = [(0.85*tau,1.15*tau),(1.0,17.0),(0.05*tau,0.8*tau),(1.0,17.0)] #boundary
         
-        res4 = optimize.shgo(problem,bounds=bounds,iters=3,options={'xtol':1e-8,'ftol':1e-8}) #SHGO method
+        res4 = optimize.shgo(problem,bounds=bounds,iters=4,options={'xtol':1e-15,'ftol':1e-15}) #SHGO method
         # res4 = optimize.minimize(problem,vari,method='Nelder-Mead',options={'xtol':tol,'ftol':tol}) #Nelder-Mead method
         res4['x'][1] = round(res4['x'][1])
         res4['x'][3] = round(res4['x'][3])
@@ -259,67 +259,12 @@ for ccc in tqdm(range(300)):
             # print("count : ", count)
             count = count + 1
         else:
-            res5 = optimize.shgo(problem,bounds=bounds,iters=4,options={'xtol':1e-10,'ftol':1e-10})
-            res5['x'][1] = round(res5['x'][1])
-            res5['x'][3] = round(res5['x'][3])
-            # aa.append([Al, Ap, res4['x'][0], res4['x'][1], res4['x'][2], res4['x'][3], res4['fun'], trace[0], trace[1], trace[2], res4['nfev']])
-            if(res5['fun'] < 0.05):
-                dd.append([Al, Ap, res5['x'][0], res5['x'][1], res5['x'][2], res5['x'][3], res5['fun'], trace[0], trace[1], trace[2], res5['nfev'], "shgo2"])
-                end = time.time()
-                final = end - start
-                # print(final)
-                # print("count : ", count)
-                count = count + 1
-            else:
-                res6 = optimize.shgo(problem,bounds=bounds,iters=4,options={'xtol':1e-13,'ftol':1e-13})
-                res6['x'][1] = round(res6['x'][1])
-                res6['x'][3] = round(res6['x'][3])
-                if(res6['fun'] < 0.05):
-                    dd.append([Al, Ap, res6['x'][0], res6['x'][1], res6['x'][2], res6['x'][3], res6['fun'], trace[0], trace[1], trace[2], res6['nfev'], "shgo3"])
-                    end = time.time()
-                    final = end - start
-                    # print(final)
-                    # print("count : ", count)
-                    count = count + 1
-                elif(res6['fun'] <= 0.075):
-                    dd.append([Al, Ap, res6['x'][0], res6['x'][1], res6['x'][2], res6['x'][3], res6['fun'], trace[0], trace[1], trace[2], res6['nfev'], "shgo4"])
-                    end = time.time()
-                    final = end - start
-                    # print(final)
-                    # print("count : ", count)
-                    count = count + 1
-                elif(res5['fun'] <= 0.075):
-                    dd.append([Al, Ap, res5['x'][0], res5['x'][1], res5['x'][2], res5['x'][3], res5['fun'], trace[0], trace[1], trace[2], res5['nfev'], "shgo5"])
-                    end = time.time()
-                    final = end - start
-                    # print(final)
-                    # print("count : ", count)
-                    count = count + 1
-                elif(res4['fun'] <= 0.075):
-                    dd.append([Al, Ap, res4['x'][0], res4['x'][1], res4['x'][2], res4['x'][3], res4['fun'], trace[0], trace[1], trace[2], res4['nfev'], "shgo6"])
-                    end = time.time()
-                    final = end - start
-                    # print(final)
-                    # print("count : ", count)
-                    count = count + 1
-                else:
-                    res7 = optimize.shgo(problem,bounds=bounds,iters=4,options={'xtol':1e-15,'ftol':1e-15})
-                    res7['x'][1] = round(res7['x'][1])
-                    res7['x'][3] = round(res7['x'][3])
-                    if(res7['fun'] < 0.075):
-                        dd.append([Al, Ap, res7['x'][0], res7['x'][1], res7['x'][2], res7['x'][3], res7['fun'], trace[0], trace[1], trace[2], res7['nfev'], "shgo7"])
-                        end = time.time()
-                        final = end - start
-                        # print(final)
-                        # print("count : ", count)
-                        count = count + 1
-                    else:
-                        aa.append([Al, Ap, res7['x'][0], res7['x'][1], res7['x'][2], res7['x'][3], res7['fun'], trace[0], trace[1], trace[2], res7['nfev'], "fail"])
-                        end = time.time()
-                        final = end - start
-                        # print(final)
-                        # print("count : ", count)
-                        count = count + 1
+            aa.append([Al, Ap, res4['x'][0], res4['x'][1], res4['x'][2], res4['x'][3], res4['fun'], trace[0], trace[1], trace[2], res7['nfev'], "fail"])
+            end = time.time()
+            final = end - start
+            # print(final)
+            # print("count : ", count)
+            count = count + 1
 stdout.write("\n")
     # plt.show(block=False)
     # plt.pause(5)

@@ -151,9 +151,9 @@ def problem(vari):
         
         # print("rho1 :", partial_trace(rho1,1))
         # print("rho8 :", partial_trace(rho8,1))
-        print(xx,yy,zz)
-        ax.plot(xx,yy,zz,'ro')
-        plt.pause(0.001)
+        # print(xx,yy,zz)
+        # ax.plot(xx,yy,zz,'ro')
+        # plt.pause(0.001)
         cost = ((np.abs(0-xx))**2+(np.abs(0-yy))**2+(np.abs(1-zz))**2)**(1/2)
         return cost
 
@@ -168,8 +168,8 @@ for ccc in range(1):
     gammaN = 2*pi*1.071e-3 #[MHz/G]
     # Al    = 2*pi * random.uniform(0.05, 0.8) #[MHz] # A_|| hyperfine term
     # Ap = 2*pi* random.uniform(0.05, 0.3) #[MHz] # A_per hyperfine term
-    Al = 3.458013203
-    Ap = 0.326799144
+    Al = 4.493041
+    Ap = 0.5427
 
     #Initialization
     rho_0 = (np.kron(U090xp,I))@irho@((np.kron(U090xp,I)).conj().T) # superposition state on NV
@@ -203,7 +203,7 @@ for ccc in range(1):
     index = Sa.index(min(Sa))
     tau=t[index]
     # print(Al, Ap, tau)
-    print(trace)
+    # print(trace)
     print("Al = ", Al, "Ap = ", Ap, "tau = ", tau)
 
     ham = Al*np.kron(sz,Iz) + Ap*np.kron(sz,Ix) + B*gammaN*np.kron(I,Iz)
@@ -219,16 +219,16 @@ for ccc in range(1):
     #결과들을 저장할 list 생성
     
 
-    tol = 1e-10 #tolerance
+    tol = 1e-8 #tolerance
 
     for p in range(1):
         vari=[tau,9,0.1*tau]  #초기값
         # vari = [0.5,15,0.3]
         bounds = [(0.85*tau,1.15*tau),(1.0,17.0),(0.05*tau,0.8*tau)] #boundary
         
-        # res4 = optimize.shgo(problem,bounds=bounds,iters=4,options={'xtol':tol,'ftol':tol}) #SHGO method
+        res4 = optimize.shgo(problem,bounds=bounds,iters=4,options={'xtol':tol,'ftol':tol}) #SHGO method
         # res4 = optimize.minimize(problem,vari,method='Nelder-Mead',options={'xtol':tol,'ftol':tol}) #Nelder-Mead method
-        res4 = optimize.differential_evolution(problem,bounds=bounds,polish=False,disp=True) #differential evolution method
+        # res4 = optimize.differential_evolution(problem,bounds=bounds,polish=False,disp=True) #differential evolution method
         res4['x'][1] = round(res4['x'][1])
         # if(res4['fun']<0.1):
         #     dd.append([Al, Ap, res4['x'][1], res4['x'][0], res4['x'][2], res4['fun']])
@@ -249,14 +249,14 @@ for ccc in range(1):
         #     print("count : ", count)
         #     count = count + 1
         #     break
-    plt.show(block=False)
-    plt.pause(5)
-    ax.set_xlabel('X')
-    ax.set_ylabel('Y')
-    ax.set_zlabel('Z')
+    # plt.show(block=False)
+    # plt.pause(5)
+    # ax.set_xlabel('X')
+    # ax.set_ylabel('Y')
+    # ax.set_zlabel('Z')
     date = dt.now()
     printdate = date.strftime('%Y%m%d_%H%M%S')
-    plt.savefig("C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/figure/Figure_" + printdate + '.png')
+    # plt.savefig("C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/figure/Figure_" + printdate + '.png')
     
     
 date = dt.now()
