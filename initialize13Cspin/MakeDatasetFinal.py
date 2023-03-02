@@ -259,7 +259,7 @@ for ccc in tqdm(range(300)):
             # print("count : ", count)
             count = count + 1
         else:
-            aa.append([Al, Ap, res4['x'][0], res4['x'][1], res4['x'][2], res4['x'][3], res4['fun'], trace[0], trace[1], trace[2], res7['nfev'], "fail"])
+            aa.append([Al, Ap, res4['x'][0], res4['x'][1], res4['x'][2], res4['x'][3], res4['fun'], trace[0], trace[1], trace[2], res4['nfev'], "fail"])
             end = time.time()
             final = end - start
             # print(final)
