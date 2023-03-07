@@ -181,7 +181,7 @@ count = 1
 tot_sum = 0
 
 
-for ccc in tqdm(range(300)):
+for ccc in tqdm(range(1000)):
     trace = [-1, -1, -1, 100]
     # fig = plt.figure(figsize=(9, 6))
     # ax = fig.add_subplot(111, projection='3d')
@@ -244,7 +244,7 @@ for ccc in tqdm(range(300)):
     for p in range(1):
         vari=[tau,9,0.1*tau, 9]  #초기값
         # vari = [0.5,15,0.3]
-        bounds = [(0.85*tau,1.15*tau),(1.0,17.0),(0.05*tau,0.8*tau),(1.0,17.0)] #boundary
+        bounds = [(0.85*tau,1.15*tau),(1.0,17.0),(0.5*tau,0.8*tau),(1.0,17.0)] #boundary
         
         res4 = optimize.shgo(problem,bounds=bounds,iters=4,options={'xtol':1e-15,'ftol':1e-15}) #SHGO method
         # res4 = optimize.minimize(problem,vari,method='Nelder-Mead',options={'xtol':tol,'ftol':tol}) #Nelder-Mead method
@@ -266,16 +266,8 @@ for ccc in tqdm(range(300)):
             # print("count : ", count)
             count = count + 1
 stdout.write("\n")
-    # plt.show(block=False)
-    # plt.pause(5)
-    # ax.set_xlabel('X')
-    # ax.set_ylabel('Y')
-    # ax.set_zlabel('Z')
-    # date = dt.now()
-    # printdate = date.strftime('%Y%m%d_%H%M%S')
-    # plt.savefig("C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/figure/Figure_" + printdate + '.png')
+
     
-# date checker
 date = dt.now()
 printdate = date.strftime('%Y%m%d_%H%M%S')
 print(date)
@@ -283,11 +275,11 @@ print(date)
 # 결과들을 list에 저장하여 csv파일로 저장
 df4 = pd.DataFrame(dd)
 df4.rename(columns={0:"Al", 1:"Ap", 2: "Xtau", 3: "XN", 4: "Ztau", 5: "ZN", 6: "fun", 7: "xx", 8: "yy", 9: "zz", 10: "fev"}, inplace=True)
-df4.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/newdata/ffd' + printdate + '.csv',index=False)
+df4.to_csv('C:/Users/KIST3/Desktop/13C/dataset/newdata/ffd' + printdate + '.csv',index=False)
 
 df2 = pd.DataFrame(aa)
 df2.rename(columns={0:"Al", 1:"Ap", 2: "Xtau", 3: "XN", 4: "Ztau", 5: "ZN", 6: "fun", 7: "xx", 8: "yy", 9: "zz", 10: "fev"}, inplace=True)
-df2.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/odedata/ffd' + printdate + '.csv',index=False)
+df2.to_csv('C:/Users/KIST3/Desktop/13C/dataset/odedata/ffd' + printdate + '.csv',index=False)
 
 print('success')
 
