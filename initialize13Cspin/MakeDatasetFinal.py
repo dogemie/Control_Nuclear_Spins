@@ -275,7 +275,7 @@ stdout.write("\n")
     # printdate = date.strftime('%Y%m%d_%H%M%S')
     # plt.savefig("C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/initialize13Cspin/figure/Figure_" + printdate + '.png')
     
-    
+# date checker
 date = dt.now()
 printdate = date.strftime('%Y%m%d_%H%M%S')
 print(date)
