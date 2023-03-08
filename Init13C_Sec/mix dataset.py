@@ -28,7 +28,20 @@ csv12 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task
 
 csv13 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_133738.csv')
 
-csvfin = pd.concat([csv1, csv2, csv3, csv4, csv5, csv6, csv6_2, csv7, csv8, csv9, csv10, csv11, csv12, csv13], ignore_index=True)
+csv14 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_152610.csv')
+
+csv15 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_152906.csv')
+
+csv16 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_153110.csv')
+
+csv17 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_153228.csv')
+
+csv18 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_154611.csv')
+
+csv19 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_154801.csv')
+
+
+csvfin = pd.concat([csv1, csv2, csv3, csv4, csv5, csv6, csv6_2, csv7, csv8, csv9, csv10, csv11, csv12, csv13, csv14, csv15, csv16, csv17, csv18, csv19], ignore_index=True)
 
 print(csvfin)
 csvfin.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/testdata.csv', index=False)
