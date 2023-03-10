@@ -64,11 +64,35 @@ csv30 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task
 
 csv31 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/sds20230309_061817.csv') #10216 rows
 
+csv32 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230309_131409.csv')
+
+csv33 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230309_132251.csv')
+
+csv34 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230309_132354.csv')
+
+csv35 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230309_132616.csv')
+
+csv36 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230309_133011.csv')
+
+csv37 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230309_133027.csv') #11604 rows
+
+csv38 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/qad20230309_221802.csv')
+
+csv39 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/qad20230309_223028.csv')
+
+csv40 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/qad20230309_223350.csv')
+
+csv41 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/qad20230309_224203.csv') #12519 rows
+
 csvfin1 = pd.concat([csv1, csv2, csv3, csv4, csv5, csv6, csv7, csv8], ignore_index=True)
 
 csvfin2 = pd.concat([csv9, csv10, csv11, csv12, csv13, csv14, csv15, csv16, csv17, csv18, csv19, csv20, csv21, csv22, csv23, csv24, csv25, csv26, csv27, csv28, csv29, csv30, csv31], ignore_index=True)
 
-csvfin = pd.concat([csvfin1, csvfin2], ignore_index=True)
+csvfin3 = pd.concat([csv32, csv33, csv34, csv35, csv36, csv37], ignore_index=True)  
+
+csvfin4 = pd.concat([csv38, csv39, csv40, csv41], ignore_index=True)
+
+csvfin = pd.concat([csvfin1, csvfin2, csvfin3, csvfin4], ignore_index=True)
 
 print(csvfin)
 csvfin.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/testdata.csv', index=False)
