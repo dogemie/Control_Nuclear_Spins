@@ -22,7 +22,7 @@ from mpl_toolkits.mplot3d import Axes3D
 from sys import stdout
 from tqdm import tqdm
 from tqdm import trange
-
+from scipy.linalg import fractional_matrix_power
 
 totalstart = time.time()
 #Generating gate function
@@ -115,6 +115,15 @@ trace = [1, 1, -1, 100]
 
 co = 1
 
+def state_fidelity(rho_1, rho_2):
+        if np.shape(rho_1) != np.shape(rho_2):
+            print("Dimensions of two states do not match.")
+            return 0
+        else:
+            sqrt_rho_1 = fractional_matrix_power(rho_1, 1 / 2)
+            fidelity = np.trace(fractional_matrix_power(sqrt_rho_1 @ rho_2 @ sqrt_rho_1, 1 / 2)) ** 2
+            return np.real(fidelity)
+
 def problem(vari):
         #for e Ry(pi/2)
         rho1 = np.kron(U090yp,I)@irho@(np.kron(U090yp,I).conj().T)                              # Ry 90도
@@ -163,9 +172,9 @@ def problem(vari):
         # plt.pause(0.001)
         # cost = ((np.abs(0-xx))**2+(np.abs(0-yy))**2+(np.abs(1-zz))**2)**(1/2)
         
-        cost = np.abs(0 + xx) + np.abs(0 + yy) + np.abs(1 - zz)
+        # cost = np.abs(0 + xx) + np.abs(0 + yy) + np.abs(1 - zz)
         
-        
+        cost = state_fidelity(irho_Z, partial_trace(rho8, 1))
         
         if(np.abs(xx) < np.abs(trace[0])):
             trace[0] = xx
@@ -185,7 +194,7 @@ count = 1
 tot_sum = 0
 
 
-for ccc in tqdm(range(15)):
+for ccc in tqdm(range(5)):
     trace = [1, 1, -1, 100]
     # fig = plt.figure(figsize=(9, 6))
     # ax = fig.add_subplot(111, projection='3d')
@@ -248,7 +257,7 @@ for ccc in tqdm(range(15)):
     for p in range(1):
         vari=[tau,9,0.1*tau, 9]  #초기값
         # vari = [0.5,15,0.3]
-        bounds = [(0.85*tau,1.15*tau),(1.0,17.0),(0.5*tau,0.8*tau),(1.0,17.0)] #boundary
+        bounds = [(0.85*tau,1.15*tau),(1.0,50.0),(0.5*tau,0.8*tau),(1.0,50.0)] #boundary
         
         res4 = optimize.shgo(problem,bounds=bounds,iters=4,options={'xtol':1e-15,'ftol':1e-15}) #SHGO method
         # res4 = optimize.minimize(problem,vari,method='Nelder-Mead',options={'xtol':tol,'ftol':tol}) #Nelder-Mead method

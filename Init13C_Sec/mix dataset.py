@@ -1,98 +1,126 @@
 import pandas as pd
+import os
 
-csv1 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_104751.csv')
+folder = os.listdir('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata')
 
-csv2 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_105241.csv')
+csv_fin = pd.DataFrame()
 
-csv3 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_105321.csv')
+for files in folder:
+    csv = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/'+files)
+    csv_fin = pd.concat([csv_fin, csv], axis=0)
 
-csv4 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_105415.csv')
+print(csv_fin)
+csv_fin.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/testdata.csv', index=False)
 
-csv5 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_105532.csv')
+# csv1 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_104751.csv')
 
-csv6 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_105650.csv')
+# csv2 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_105241.csv')
 
-csv6_2 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_105706.csv')
+# csv3 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_105321.csv')
 
-csv7 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_132046.csv')
+# csv4 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_105415.csv')
 
-csv8 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_132349.csv')
+# csv5 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_105532.csv')
 
-csv9 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_132511.csv')
+# csv6 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_105650.csv')
 
-csv10 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_132910.csv')
+# csv6_2 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_105706.csv')
 
-csv11 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_133118.csv')
+# csv7 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_132046.csv')
 
-csv12 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_133611.csv')
+# csv8 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_132349.csv')
 
-csv13 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_133738.csv')
+# csv9 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_132511.csv')
 
-csv14 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_152610.csv')
+# csv10 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_132910.csv')
 
-csv15 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_152906.csv')
+# csv11 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_133118.csv')
 
-csv16 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_153110.csv')
+# csv12 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_133611.csv')
 
-csv17 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_153228.csv')
+# csv13 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_133738.csv')
 
-csv18 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_154611.csv')
+# csv14 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_152610.csv')
 
-csv19 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_154801.csv') #1932 rows
+# csv15 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_152906.csv')
 
-csv20 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230309_032627.csv')
+# csv16 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_153110.csv')
 
-csv21 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230309_032807.csv')
+# csv17 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_153228.csv')
 
-csv22 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230309_033255.csv')
+# csv18 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_154611.csv')
 
-csv23 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230309_034303.csv')
+# csv19 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230308_154801.csv') #1932 rows
 
-csv24 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230309_034403.csv')
+# csv20 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230309_032627.csv')
 
-csv25 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230309_034630.csv')
+# csv21 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230309_032807.csv')
 
-csv26 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/sds20230309_054709.csv')
+# csv22 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230309_033255.csv')
 
-csv27 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/sds20230309_055452.csv')
+# csv23 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230309_034303.csv')
 
-csv28 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/sds20230309_060244.csv')
+# csv24 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230309_034403.csv')
 
-csv29 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/sds20230309_060416.csv')
+# csv25 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230309_034630.csv')
 
-csv30 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/sds20230309_060735.csv')
+# csv26 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/sds20230309_054709.csv')
 
-csv31 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/sds20230309_061817.csv') #10216 rows
+# csv27 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/sds20230309_055452.csv')
 
-csv32 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230309_131409.csv')
+# csv28 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/sds20230309_060244.csv')
 
-csv33 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230309_132251.csv')
+# csv29 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/sds20230309_060416.csv')
 
-csv34 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230309_132354.csv')
+# csv30 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/sds20230309_060735.csv')
 
-csv35 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230309_132616.csv')
+# csv31 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/sds20230309_061817.csv') #10216 rows
 
-csv36 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230309_133011.csv')
+# csv32 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230309_131409.csv')
 
-csv37 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230309_133027.csv') #11604 rows
+# csv33 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230309_132251.csv')
 
-csv38 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/qad20230309_221802.csv')
+# csv34 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230309_132354.csv')
 
-csv39 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/qad20230309_223028.csv')
+# csv35 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230309_132616.csv')
 
-csv40 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/qad20230309_223350.csv')
+# csv36 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230309_133011.csv')
 
-csv41 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/qad20230309_224203.csv') #12519 rows
+# csv37 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ffd20230309_133027.csv') #11604 rows
 
-csvfin1 = pd.concat([csv1, csv2, csv3, csv4, csv5, csv6, csv7, csv8], ignore_index=True)
+# csv38 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/qad20230309_221802.csv')
 
-csvfin2 = pd.concat([csv9, csv10, csv11, csv12, csv13, csv14, csv15, csv16, csv17, csv18, csv19, csv20, csv21, csv22, csv23, csv24, csv25, csv26, csv27, csv28, csv29, csv30, csv31], ignore_index=True)
+# csv39 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/qad20230309_223028.csv')
 
-csvfin3 = pd.concat([csv32, csv33, csv34, csv35, csv36, csv37], ignore_index=True)  
+# csv40 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/qad20230309_223350.csv')
 
-csvfin4 = pd.concat([csv38, csv39, csv40, csv41], ignore_index=True)
+# csv41 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/qad20230309_224203.csv') #12519 rows
 
-csvfin = pd.concat([csvfin1, csvfin2, csvfin3, csvfin4], ignore_index=True)
+# csv42 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ndata20230313_063828.csv')
 
-print(csvfin)
-csvfin.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/testdata.csv', index=False)
+# csv43 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ndata20230313_070549.csv')
+
+# csv44 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ndata20230313_070926.csv')
+
+# csv45 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ndata20230313_074520.csv')
+
+# csv46 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ndata20230313_075255.csv')
+
+# csv47 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ndata20230313_085349.csv')
+
+# csv48 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/ndata20230313_092105.csv')
+
+# csv49 = pd.read_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/newdata/sds20230313_092106.csv')
+
+# csvfin1 = pd.concat([csv1, csv2, csv3, csv4, csv5, csv6, csv7, csv8], ignore_index=True)
+
+# csvfin2 = pd.concat([csv9, csv10, csv11, csv12, csv13, csv14, csv15, csv16, csv17, csv18, csv19, csv20, csv21, csv22, csv23, csv24, csv25, csv26, csv27, csv28, csv29, csv30, csv31], ignore_index=True)
+
+# csvfin3 = pd.concat([csv32, csv33, csv34, csv35, csv36, csv37], ignore_index=True)  
+
+# csvfin4 = pd.concat([csv38, csv39, csv40, csv41], ignore_index=True)
+
+# csvfin = pd.concat([csvfin1, csvfin2, csvfin3, csvfin4], ignore_index=True)
+
+# print(csvfin)
+# csvfin.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/testdata.csv', index=False)
