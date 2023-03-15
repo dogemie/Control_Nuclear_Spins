@@ -101,7 +101,7 @@ irho_Z = np.array([[0,0,0],[0,0,0],[0,0,1]]) #target state
 irho_MIX = np.array([[1/2,0,0],[0,0,0],[0,0,1/2]])
 
 irho = np.kron(irho_z,irho_MIX) #initial state
-trace = [1, 1, -1, 100] # trace of the X, Y, Z, and total density matrices
+trace = [1, 1, 0, 100] # trace of the X, Y, Z, and total density matrices
 
 
 
@@ -155,14 +155,16 @@ def problem(vari):
         yy = (np.trace(Iy@partial_trace(rho8,1))).real
         zz = (np.trace(Iz@partial_trace(rho8,1))).real
         
-        cost = state_fidelity(irho_Z, partial_trace(rho8, 1))
+        cost = 1 - state_fidelity(irho_Z, partial_trace(rho8, 1))
         
         if(np.abs(xx) < np.abs(trace[0])):
             trace[0] = xx
         if(np.abs(yy) < np.abs(trace[1])):
             trace[1] = yy
-        if(zz > trace[2]):
+        if(np.abs(zz) > np.abs(trace[2])):
             trace[2] = zz
+            
+        print("cost: " + str(cost) + " x: " + str(xx) + " y: " + str(yy) + " z: " + str(zz) + " min z: " + str(trace[2]))
         return cost
         
 aa = []
@@ -171,8 +173,8 @@ count = 1
 tot_sum = 0
 
 
-for ccc in tqdm(range(5)): # range 번의 실험을 진행한다.
-    trace = [1, 1, -1, 100]
+for ccc in tqdm(range(3)): # range 번의 실험을 진행한다.
+    trace = [1, 1, 0, 100]
     start = time.time()
     #for making 13C nuclear random dataset
     gammaN = 2*pi*1.071e-3 #[MHz/G]
@@ -225,7 +227,7 @@ for ccc in tqdm(range(5)): # range 번의 실험을 진행한다.
 
     for p in range(1): # 1번의 실험을 진행한다.(지역 최적화 알고리즘을 사용할 경우에 수정한다.)
         vari=[tau,9,0.1*tau, 9]  #초기값
-        bounds = [(0.85*tau,1.15*tau),(1.0,50.0),(0.5*tau,0.8*tau),(1.0,50.0)] #boundary
+        bounds = [(0.85*tau,1.15*tau),(1.0,50.0),(0.000000000001*tau,0.5*tau),(1.0,50.0)] #boundary
         
         res4 = optimize.shgo(problem,bounds=bounds,iters=4,options={'xtol':1e-15,'ftol':1e-15}) #SHGO method
         res4['x'][1] = round(res4['x'][1]) #rounding
@@ -251,10 +253,10 @@ print(date)
 # 결과들을 list에 저장하여 csv파일로 저장
 df4 = pd.DataFrame(dd) 
 df4.rename(columns={0:"Al", 1:"Ap", 2: "Xtau", 3: "XN", 4: "Ztau", 5: "ZN", 6: "fun", 7: "xx", 8: "yy", 9: "zz", 10: "fev"}, inplace=True)
-df4.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/for_test/ppd' + printdate + '.csv',index=False)
+df4.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/for_test/pp1d' + printdate + '.csv',index=False)
 df2 = pd.DataFrame(aa) 
 df2.rename(columns={0:"Al", 1:"Ap", 2: "Xtau", 3: "XN", 4: "Ztau", 5: "ZN", 6: "fun", 7: "xx", 8: "yy", 9: "zz", 10: "fev"}, inplace=True)
-df2.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/for_test/ffd' + printdate + '.csv',index=False)
+df2.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/for_test/ff1d' + printdate + '.csv',index=False)
 
 print('success')
 
