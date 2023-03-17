@@ -161,10 +161,10 @@ def problem(vari):
             trace[0] = xx
         if(np.abs(yy) < np.abs(trace[1])):
             trace[1] = yy
-        if(np.abs(zz) > np.abs(trace[2])):
+        if(zz < trace[2]):
             trace[2] = zz
             
-        print("cost: " + str(cost) + " x: " + str(xx) + " y: " + str(yy) + " z: " + str(zz) + " min z: " + str(trace[2]))
+        # print("cost: " + str(cost) + " x: " + str(xx) + " y: " + str(yy) + " z: " + str(zz) + " min z: " + str(trace[2]))
         return cost
         
 aa = []
@@ -173,7 +173,7 @@ count = 1
 tot_sum = 0
 
 
-for ccc in tqdm(range(3)): # range 번의 실험을 진행한다.
+for ccc in tqdm(range(5)): # range 번의 실험을 진행한다.
     trace = [1, 1, 0, 100]
     start = time.time()
     #for making 13C nuclear random dataset
@@ -227,19 +227,19 @@ for ccc in tqdm(range(3)): # range 번의 실험을 진행한다.
 
     for p in range(1): # 1번의 실험을 진행한다.(지역 최적화 알고리즘을 사용할 경우에 수정한다.)
         vari=[tau,9,0.1*tau, 9]  #초기값
-        bounds = [(0.85*tau,1.15*tau),(1.0,50.0),(0.000000000001*tau,0.5*tau),(1.0,50.0)] #boundary
+        bounds = [(0.85*tau,1.15*tau),(1.0,25.0),(0.00000000000000000001*tau,0.5*tau),(1.0,25.0)] #boundary
         
-        res4 = optimize.shgo(problem,bounds=bounds,iters=4,options={'xtol':1e-15,'ftol':1e-15}) #SHGO method
+        res4 = optimize.shgo(problem,bounds=bounds,iters=5,options={'maxfev': 2000, 'xtol':1e-15,'ftol':1e-17}) #SHGO method
         res4['x'][1] = round(res4['x'][1]) #rounding
         res4['x'][3] = round(res4['x'][3]) #rounding
 
         if(np.abs(res4['fun']) < 0.05): #fidelity가 0.05보다 작으면 성공
-            dd.append([Al, Ap, res4['x'][0], res4['x'][1], res4['x'][2], res4['x'][3], res4['fun'], trace[0], trace[1], trace[2], res4['nfev'], "shgo1"])
+            dd.append([Al, Ap, res4['x'][0], res4['x'][1], res4['x'][2], res4['x'][3], res4['fun'], trace[0], trace[1], trace[2], res4['nfev'], tau, "shgo"])
             end = time.time()
             final = end - start
             count = count + 1
         else: #fidelity가 0.05보다 크면 실패
-            aa.append([Al, Ap, res4['x'][0], res4['x'][1], res4['x'][2], res4['x'][3], res4['fun'], trace[0], trace[1], trace[2], res4['nfev'], "fail"])
+            aa.append([Al, Ap, res4['x'][0], res4['x'][1], res4['x'][2], res4['x'][3], res4['fun'], trace[0], trace[1], trace[2], res4['nfev'], tau, "shgo"])
             end = time.time()
             final = end - start
             count = count + 1
