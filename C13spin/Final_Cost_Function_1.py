@@ -269,15 +269,15 @@ for ccc in tqdm(range(10000)): # range 번의 실험을 진행한다.
             count = count + 1
     df4 = pd.DataFrame(dd) 
     df4.rename(columns={0:"Al", 1:"Ap", 2: "cost", 3: "Xtau", 4: "XN", 5: "Ztau", 6: "ZN", 7: "xx", 8: "yy", 9: "zz", 10: "fev"}, inplace=True)
-    df4.to_csv('C:/Users/KIST3/Desktop/13C/second_test/compare/' + printdate + '_compare.csv',index=False)
+    df4.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/second_test/' + printdate + '_compare.csv',index=False)
 
     df3 = pd.DataFrame(cc) 
     df3.rename(columns={0:"Al", 1:"Ap", 2: "cost", 3: "Xtau", 4: "XN", 5: "Ztau", 6: "ZN", 7: "xx", 8: "yy", 9: "zz", 10: "fev"}, inplace=True)
-    df3.to_csv('C:/Users/KIST3/Desktop/13C/second_test/atested/' + printdate + '_atested.csv',index=False)
+    df3.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/second_test/' + printdate + '_atested.csv',index=False)
 
     df2 = pd.DataFrame(aa) 
     df2.rename(columns={0:"Al", 1:"Ap", 2: "cost", 3: "Xtau", 4: "XN", 5: "Ztau", 6: "ZN", 7: "xx", 8: "yy", 9: "zz", 10: "fev"}, inplace=True)
-    df2.to_csv('C:/Users/KIST3/Desktop/13C/second_test/fail/' + printdate + '_fail.csv',index=False)
+    df2.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/second_test/' + printdate + '_fail.csv',index=False)
     
 stdout.write("\n")
 
