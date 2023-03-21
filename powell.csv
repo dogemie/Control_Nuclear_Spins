@@ -1,7 +1,0 @@
-fun,direc,nit,nfev,status,success,message,x
-0.5572359525266017,"[[0.         0.         1.        ]
- [0.         1.         0.        ]
- [0.01224985 0.45094066 0.10176383]]",2,96,0,True,Optimization terminated successfully.,[0.54534696 4.19635707 0.26298713]
-0.5572359525266017,"[[0.         0.         1.        ]
- [0.         1.         0.        ]
- [0.01224985 0.45094066 0.10176383]]",2,96,0,True,Optimization terminated successfully.,[0.54534696 4.19635707 0.26298713]

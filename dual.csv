@@ -1,3 +1,0 @@
-success,status,x,fun,nit,nfev,njev,nhev,message
-True,0,[0.51131493 9.65957551 0.08126677],0.031322257151122995,150,965,16,0,['Maximum number of iteration reached']
-True,0,[0.51131494 9.5460701  0.08126676],0.03132225715106686,150,1065,41,0,['Maximum number of iteration reached']
