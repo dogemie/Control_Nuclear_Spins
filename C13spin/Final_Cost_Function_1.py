@@ -101,8 +101,9 @@ irho_Z = np.array([[0,0,0],[0,0,0],[0,0,1]]) #target state
 irho_MIX = np.array([[1/2,0,0],[0,0,0],[0,0,1/2]])
 
 irho = np.kron(irho_z,irho_MIX) #initial state
-trace = [1, 1, 0, 100, 100, 1000] # trace of the X, Y, Z, and total density matrices
+trace = [1, 1, 0, 100, 100, 1000, 100] # trace of the X, Y, Z, and total density matrices
 vvv = [0, 0, 0, 0] 
+bbb = [0, 0, 0, 0]
 normalxyz = [0, 0, 0]
     
 date = dt.now()
@@ -175,17 +176,22 @@ def problem(vari):
                 trace[0] = xx
                 trace[1] = yy
                 trace[2] = zz
-                # trace[4] = cost
+                trace[4] = cost
                 trace[5] = cost2
                 vvv[0] = vari[0]
                 vvv[1] = vari[1]
                 vvv[2] = vari[2]
                 vvv[3] = vari[3]
-        if(cost < trace[4]):
-            trace[4] = cost
+        if(cost < trace[6] and vari[1] % 1 == 0 and vari[3] % 1 == 0):
+            trace[6] = cost
             normalxyz[0] = xx
             normalxyz[1] = yy
             normalxyz[2] = zz
+            
+            bbb[0] = vari[0]
+            bbb[1] = vari[1]
+            bbb[2] = vari[2]
+            bbb[3] = vari[3]
         return cost
         
 aa = []
@@ -196,8 +202,9 @@ tot_sum = 0
 
 
 for ccc in tqdm(range(10000)): # range 번의 실험을 진행한다.
-    trace = [1, 1, 0, 100, 100, 1000]
+    trace = [1, 1, 0, 100, 100, 1000, 100]
     vvv = [0, 0, 0, 0]
+    bbb = [0, 0, 0, 0]
     normalxyz = [0, 0, 0]
     start = time.time()
     #for making 13C nuclear random dataset
@@ -257,13 +264,13 @@ for ccc in tqdm(range(10000)): # range 번의 실험을 진행한다.
         res4['x'][3] = round(res4['x'][3]) #rounding
 
         if(np.abs(res4['fun']) < 0.01 and trace[0] != 1): #fidelity가 0.05보다 작으면 성공
-            dd.append([Al, Ap, res4['fun'], res4['x'][0], res4['x'][1], res4['x'][2], res4['x'][3], normalxyz[0], normalxyz[1], normalxyz[2], res4['nfev']])
+            dd.append([Al, Ap, trace[6], bbb[0], bbb[1], bbb[2], bbb[3], normalxyz[0], normalxyz[1], normalxyz[2], res4['nfev']])
             cc.append([Al, Ap, trace[4], vvv[0], vvv[1], vvv[2], vvv[3], trace[0], trace[1], trace[2], res4["nfev"]])
             end = time.time()
             final = end - start
             count = count + 1
         else:
-            aa.append([Al, Ap, res4['fun'], res4['x'][0], res4['x'][1], res4['x'][2], res4['x'][3], normalxyz[0], normalxyz[1], normalxyz[2], res4['nfev']])
+            aa.append([Al, Ap, trace[6], bbb[0], bbb[1], bbb[2], bbb[3], normalxyz[0], normalxyz[1], normalxyz[2], res4['nfev']])
             end = time.time()
             final = end - start
             count = count + 1
