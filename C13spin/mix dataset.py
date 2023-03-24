@@ -31,7 +31,7 @@ csv_fin1.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Co
 csv_fin1.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/C13spin/testdata.csv', index=False)
 
 csv_fin2.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/C13spin/test_data/comparedata_' + printdate + '.csv', index=False)
-
+csv_fin2.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/C13spin/test_compare_data.csv', index=False)
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 X = csv_fin1['Al']
