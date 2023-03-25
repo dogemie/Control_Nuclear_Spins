@@ -95,7 +95,7 @@ plt.title('Xtau')
 # plt.zlabel('cost')
 ax.plot_trisurf(X, Y, Z, cmap='viridis', edgecolor='none')
 # plt.show()
-plt.savefig('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/C13spin/figure/' + printdate + '_Xtau_figure.png')
+plt.savefig('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/C13spin/figure/' + printdate + '_Xtau1_figure.png')
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
@@ -108,7 +108,7 @@ plt.title('XN')
 # plt.zlabel('cost')
 ax.plot_trisurf(X, Y, Z, cmap='viridis', edgecolor='none')
 # plt.show()
-plt.savefig('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/C13spin/figure/' + printdate + '_XN_figure.png')
+plt.savefig('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/C13spin/figure/' + printdate + '_XN1_figure.png')
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
@@ -121,7 +121,7 @@ plt.title('Ztau')
 # plt.zlabel('cost')
 ax.plot_trisurf(X, Y, Z, cmap='viridis', edgecolor='none')
 # plt.show()
-plt.savefig('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/C13spin/figure/' + printdate + '_Ztau_figure.png')
+plt.savefig('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/C13spin/figure/' + printdate + '_Ztau1_figure.png')
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
@@ -134,7 +134,7 @@ plt.title('ZN')
 # plt.zlabel('cost')
 ax.plot_trisurf(X, Y, Z, cmap='viridis', edgecolor='none')
 # plt.show()
-plt.savefig('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/C13spin/figure/' + printdate + '_ZN_figure.png')
+plt.savefig('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/C13spin/figure/' + printdate + '_ZN1_figure.png')
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
@@ -147,7 +147,7 @@ plt.title('Xtau')
 # plt.zlabel('cost')
 ax.plot_trisurf(X, Y, Z, cmap='viridis', edgecolor='none')
 # plt.show()
-plt.savefig('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/C13spin/figure/' + printdate + '_Xtau_figure.png')
+plt.savefig('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/C13spin/figure/' + printdate + '_Xtau2_figure.png')
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
@@ -160,7 +160,8 @@ plt.title('XN')
 # plt.zlabel('cost')
 ax.plot_trisurf(X, Y, Z, cmap='viridis', edgecolor='none')
 # plt.show()
-plt.savefig('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/C13spin/figure/' + printdate + '_XN_figure.png')
+plt.savefig('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/C13spin/figure/' + printdate + '_XN2_figure.png')
+
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
@@ -173,7 +174,7 @@ plt.title('Ztau')
 # plt.zlabel('cost')
 ax.plot_trisurf(X, Y, Z, cmap='viridis', edgecolor='none')
 # plt.show()
-plt.savefig('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/C13spin/figure/' + printdate + '_Ztau_figure.png')
+plt.savefig('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/C13spin/figure/' + printdate + '_Ztau2_figure.png')
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
@@ -186,4 +187,60 @@ plt.title('ZN')
 # plt.zlabel('cost')
 ax.plot_trisurf(X, Y, Z, cmap='viridis', edgecolor='none')
 # plt.show()
-plt.savefig('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/C13spin/figure/' + printdate + '_ZN_figure.png')
+plt.savefig('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/C13spin/figure/' + printdate + '_ZN2_figure.png')
+
+
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+X = csv_fin1['Al']
+Y = csv_fin1['Ap']
+Z = csv_fin1['XN'] * csv_fin1['Xtau']
+plt.xlabel('Al')
+plt.ylabel('Ap')
+plt.title('XN * Xtau')
+# plt.zlabel('cost')
+ax.plot_trisurf(X, Y, Z, cmap='viridis', edgecolor='none')
+# plt.show()
+plt.savefig('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/C13spin/figure/' + printdate + '_Xtime1_figure.png')
+
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+X = csv_fin1['Al']
+Y = csv_fin1['Ap']
+Z = csv_fin1['ZN'] * csv_fin1['Ztau']
+plt.xlabel('Al')
+plt.ylabel('Ap')
+plt.title('ZN * Ztau')
+# plt.zlabel('cost')
+ax.plot_trisurf(X, Y, Z, cmap='viridis', edgecolor='none')
+# plt.show()
+plt.savefig('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/C13spin/figure/' + printdate + '_Ztime1_figure.png')
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+X = csv_fin2['Al']
+Y = csv_fin2['Ap']
+Z = csv_fin2['XN'] * csv_fin2['Xtau']
+plt.xlabel('Al')
+plt.ylabel('Ap')
+plt.title('XN * Xtau')
+# plt.zlabel('cost')
+ax.plot_trisurf(X, Y, Z, cmap='viridis', edgecolor='none')
+# plt.show()
+plt.savefig('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/C13spin/figure/' + printdate + '_Xtime2_figure.png')
+
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+X = csv_fin2['Al']
+Y = csv_fin2['Ap']
+Z = csv_fin2['ZN'] * csv_fin2['Ztau']
+plt.xlabel('Al')
+plt.ylabel('Ap')
+plt.title('ZN * Ztau')
+# plt.zlabel('cost')
+ax.plot_trisurf(X, Y, Z, cmap='viridis', edgecolor='none')
+# plt.show()
+plt.savefig('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/C13spin/figure/' + printdate + '_Ztime2_figure.png')
