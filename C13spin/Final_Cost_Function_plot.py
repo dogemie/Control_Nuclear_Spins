@@ -112,8 +112,11 @@ date = dt.now()
 printdate = date.strftime('%Y%m%d_%H%M%S')
 print(date)
 
-fig = plt.figure(figsize=(10, 10))
-# ax = fig.add_subplot(111, projection='3d')
+# fig = plt.figure(figsize=(10, 10))
+# # ax = fig.add_subplot(111, projection='3d')
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
 
 iterate = []
 cot = 0
@@ -181,6 +184,11 @@ def problem(vari):
         # cot = cot + 1
         iterate.append(temp)
         cost2 = 2 * vari[0] * vari[1] + vari[2] * vari[3]
+        
+        ax.plot(vari[0],vari[1],cost,'ro')
+        # ax.tricontour(deg[0],deg[1],cost,c=color[0])
+        plt.pause(0.001)
+        
         print("vari : ", vari, "cost : ", cost, "cost2 : ", cost2)
         # print("xx : ", xx, "yy : ", yy, "zz : ", zz, "cost : ", cost, "cost2 : ", cost2)
         if cost < 0.01:
@@ -213,6 +221,7 @@ count = 1
 tot_sum = 0
 
 
+
 for ccc in tqdm(range(1)): # range 번의 실험을 진행한다.
     trace = [1, 1, 0, 100, 100, 1000, 100]
     vvv = [0, 0, 0, 0]
@@ -224,8 +233,8 @@ for ccc in tqdm(range(1)): # range 번의 실험을 진행한다.
     # Al    = 2*pi * random.uniform(0.05, 0.8) #[MHz] # A_|| hyperfine term
     # Ap = 2*pi* random.uniform(0.05, 0.3) #[MHz] # A_per hyperfine term
 
-    Al = 1.37428129247373
-    Ap = 1.45275739001672
+    Al = 4.53292833446451
+    Ap = 1.0836066181305164
 
     #Initialization
     rho_0 = (np.kron(U090xp,I))@irho@((np.kron(U090xp,I)).conj().T) # superposition state on NV
@@ -271,15 +280,15 @@ for ccc in tqdm(range(1)): # range 번의 실험을 진행한다.
     tol = 1e-8 #tolerance
 
     for p in range(1): # 1번의 실험을 진행한다.(지역 최적화 알고리즘을 사용할 경우에 수정한다.)
-        vari= [1.4,	10.124	,0.1,	13]
+        vari= [0.499163,  10.141086,  0.085619,  2.008855]
         
-        # bounds = [(0.85*tau,1.15*tau),(1,25),(0.00000000000000000001*tau,0.5*tau),(1,25)] #boundary
-        bounds = Bounds([0.85*tau,1,0.00000000000000000001*tau,1],[1.15*tau,25,0.5*tau,25])
-        # res4 = optimize.shgo(problem,bounds=bounds,iters=5) #SHGO method
+        bounds = [(0.85*tau,1.15*tau),(1,25),(0.00000000000000000001*tau,0.5*tau),(1,25)] #boundary
+        # bounds = Bounds([0.85*tau,1,0.00000000000000000001*tau,1],[1.15*tau,25,0.5*tau,25])
+        res4 = optimize.shgo(problem,bounds=bounds,iters=4) #SHGO method
         # res4 = optimize.differential_evolution(problem,bounds=bounds, tol=tol) #differential evolution method
         # res4 = optimize.dual_annealing(problem,bounds=bounds) #dual annealing method
         print(tau)
-        res4 = minimize(problem,vari, bounds = bounds, method='Nelder-Mead', options={'xatol': tol, 'fatol': tol}) #Nelder-Mead method
+        # res4 = minimize(problem,vari, bounds = bounds, method='Nelder-Mead', options={'xatol': tol, 'fatol': tol}) #Nelder-Mead method
         # res4['x'][1] = round(res4['x'][1]) #rounding
         # res4['x'][3] = round(res4['x'][3]) #rounding
         dd.append([Al, Ap, trace[6], bbb[0], bbb[1], bbb[2], bbb[3], normalxyz[0], normalxyz[1], normalxyz[2], res4['nfev']])
@@ -308,11 +317,20 @@ for ccc in tqdm(range(1)): # range 번의 실험을 진행한다.
     # df2.to_csv('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/Init13C_Sec/second_test/' + printdate + '_fail.csv',index=False)
 
 
-ran = np.arange(0, res4['nfev'], 1)
-plt.plot(ran, iterate, 'ro', markersize=1)
+
+
+# ran = np.arange(0, res4['nfev'], 1)
+# plt.plot(ran, iterate, 'ro', markersize=1)
+
+
+
+
+
+
 print(dd)
 print(cc)
 stdout.write("\n")
+ax.plot_trisurf(cmap='viridis', edgecolor='none')
 plt.show()
     
 
