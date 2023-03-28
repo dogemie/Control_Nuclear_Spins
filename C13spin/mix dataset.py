@@ -149,17 +149,17 @@ fig = plt.figure()
 # # plt.show()
 # plt.savefig('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/C13spin/figure/' + printdate + '_Xtau2_figure.png')
 
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
-X = csv_fin2['Al']
-Y = csv_fin2['Ap']
-Z = csv_fin2['XN']
-plt.xlabel('Al')
-plt.ylabel('Ap')
-plt.title('XN')
-# plt.zlabel('cost')
-ax.plot_trisurf(X, Y, Z, cmap='viridis', edgecolor='none')
-plt.show()
+# fig = plt.figure()
+# ax = fig.add_subplot(111, projection='3d')
+# X = csv_fin2['Al']
+# Y = csv_fin2['Ap']
+# Z = csv_fin2['XN']
+# plt.xlabel('Al')
+# plt.ylabel('Ap')
+# plt.title('XN')
+# # plt.zlabel('cost')
+# ax.plot_trisurf(X, Y, Z, cmap='viridis', edgecolor='none')
+# plt.show()
 # plt.savefig('C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/C13spin/figure/' + printdate + '_XN2_figure.png')
 
 
