@@ -103,20 +103,20 @@ idden = []
 
 # ns = (1 + random.uniform(-10/100,10/100))
 
-def noise(rho_measure, ns):
-    xyz_m = []
-    x_m = np.trace(rho_measure*Sx())                            # Sigma X projection
-    y_m = np.trace(rho_measure*Sy())                            # Sigma Y projection
-    z_m = np.trace(rho_measure*Sz())                            # Sigma Z projection
-    i_m = np.trace(rho_measure*I())                          # Identity projection
+def noise(rho, ns):
+    xyz_m = np.zeros(3)
+    x_m = np.trace(rho*Sx())                            # Sigma X projection
+    y_m = np.trace(rho*Sy())                            # Sigma Y projection
+    z_m = np.trace(rho*Sz())                            # Sigma Z projection
+    # i_m = np.trace(rho_measure*I())                          # Identity projection
     x_m = x_m * ns
     x_m2 = x_m ** 2
     y_m2 = y_m ** 2
     z_m2 = z_m ** 2
     rate = (x_m2 + y_m2 + z_m2)
-    xyz_m.append(x_m/rate)
-    xyz_m.append(y_m/rate)
-    xyz_m.append(z_m/rate)
+    xyz_m[0] = x_m2/rate
+    xyz_m[1] = y_m2/rate
+    xyz_m[2] = z_m2/rate
     
     return xyz_m
 
@@ -131,22 +131,23 @@ def problem(deg):
     # timeErr = timeCost * 0.1
     #rho_measure는 계산값(측정값)
     rho_measure = gates*mc*gates.getH()                         # Gate|vector><vector|Gate
-    arr = noise(idden, ns)
+    
     #x_id,y_id,z_id는 주어진 target state를 계산해낸 값(이론값)
     # x_id = np.trace(idden*Sx())                                 # target state의 Sigma X projection
     # y_id = np.trace(idden*Sy())                                 # target state의 Sigma Y projection
     # z_id = np.trace(idden*Sz())                                 # target state의 Sigma Z projection
     # i_id = np.trace(idden*I())                               # target state의 Identity projection
-    x_id = arr[0]
-    y_id = arr[1]
-    z_id = arr[2]
+    # x_id = arr[0]
+    # y_id = arr[1]
+    # z_id = arr[2]
     
     # 실험값과 이론값의 비교 costfunction 반환
     
     x_m = np.trace(rho_measure*Sx())                            # Sigma X projection
     y_m = np.trace(rho_measure*Sy())                            # Sigma Y projection
     z_m = np.trace(rho_measure*Sz())                            # Sigma Z projection
-    cost = np.abs(x_m-x_id) + np.abs(y_m-y_id) + np.abs(z_m-z_id)
+    # cost = np.abs(x_m-x_id) + np.abs(y_m-y_id) + np.abs(z_m-z_id)
+    cost = np.abs(arr[0] - x_m) + np.abs(arr[1] - y_m) + np.abs(arr[2] - z_m)
     return cost
 
 
@@ -198,8 +199,9 @@ for x in tqdm(range(count)):                                         #반복 횟
     # print(dat[0][1])
     # print(dat[1][0])
     # print(dat[1][1])
-    # ns = (1 + random.uniform(-10/100,10/100))
-    ns = 1.1
+    ns = (1 + random.uniform(-0.1, 0.1))
+    arr = noise(idden, ns)
+    # ns = 1.1
     # for y in range(0, seccount):                                #측정 횟수 지정 같은 작업을 여러번 진행할 경우를 대비하여 반복문 사용
     repeat = repeat + 1
     deg = [(np.pi/180)*random.uniform(0,180),(np.pi/180)*random.uniform(0,360), 0]
@@ -218,7 +220,7 @@ for x in tqdm(range(count)):                                         #반복 횟
     end = time.time()                                   #시간 측정 종료
     final = end - start                                 #측정 시간 저장
     # output1.append(["Case" + str(x + 1), "Powell", result1['x'], ideal, deftl1, var1])                                #측정 값 저장
-    output1.append(["Case" + str(x + 1), result1['x'][0], result1['x'][1], 'ct1', ideal, deftl1, result1['fun']])                                #측정 값 저장
+    output1.append(["Case" + str(x + 1), result1['x'][0], result1['x'][1], 'ct1', ideal, deftl1, arr, result1['fun']])                                #측정 값 저장
     success = success + 1
         # break
     # print("Case" + str(x + 1) + " clear")                       #측정이 끝난 경우 출력
@@ -228,7 +230,7 @@ print("Success : " + str(success) + "/" + str(count))                           
 print("repeat : " + str(repeat))                                                                     #측정 반복한 경우 출력
 print("Time : " + str(allend - allstart))                                                            #측정 시간 출력
 fin1 = pd.DataFrame(output1)
-fin1.rename(columns={0:"Case", 1:'Theta', 2: 'Phi', 3: 'timeErr', 4: 'init', 5: 'trace', 6: 'cost'}, inplace=True)
+fin1.rename(columns={0:"Case", 1:'Theta', 2: 'Phi', 3: 'timeErr', 4: 'init', 5: 'trace', 6: 'arr', 7: 'cost'}, inplace=True)
 # fin1.rename(columns={0:"Case", 1:"Used Algorithm", 2:'Theta, Phi', 3: 'time', 4: 'matrix', 5: "degree", 6: "Density Matrix", 7: "Projection", 8: "Projection"}, inplace=True)
 fin1.to_csv("C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/NVspin_Time/researchData/Result_" + printdate + '.csv', index=false)
 print(date)                                                      #측정이 끝난 시간 출력
