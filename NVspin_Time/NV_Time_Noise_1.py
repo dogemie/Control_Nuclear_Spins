@@ -137,7 +137,7 @@ def problem(deg):
     return cost
 
 
-bounds = [(0, pi),(0,2*pi)]                                     #theta와 phi의 범위
+bounds = [(0, pi),(0,2*pi)]                                     # theta와 phi의 범위
 deg = [(np.pi/180)*random.uniform(0,180),(np.pi/180)*random.uniform(0,360)]
 
 
@@ -174,7 +174,7 @@ repeat = 0                                                     #최적화 정도
 tol = 1*e-13
 allstart = time.time()                                         #시간 측정 시작
 for x in tqdm(range(count)):                                         #반복 횟수 지정
-    trace_time = [0, 5]
+    
     idden = rand_dm_ginibre(2, rank=1)
     ideal = []
     ideal = [np.trace(idden*Sx()),np.trace(idden*Sy()),np.trace(idden*Sz())] #target state의 x,y,z projection을 저장
@@ -183,8 +183,10 @@ for x in tqdm(range(count)):                                         #반복 횟
     noise_data = np.zeros((seccount, 3), dtype='complex_')
     finP = np.zeros(seccount, dtype='complex_')
     measureState = np.zeros((seccount, 3), dtype='complex_')
+    result = []
     for y in range(0, seccount):                                #측정 횟수 지정 같은 작업을 여러번 진행할 경우를 대비하여 반복문 사용
         # repeat = repeat + 1
+        trace_time = [0, 5]
         ns = (1 + random.uniform(-0.1, 0.1))
         ide = ideal
         ide[0] = (ideal[0] * ns)
@@ -200,13 +202,15 @@ for x in tqdm(range(count)):                                         #반복 횟
         noise_data[y] = ide
         deg = [(np.pi/180)*random.uniform(0,180),(np.pi/180)*random.uniform(0,360)]
         result1 = optimize.shgo(problem, bounds = bounds, iters = 5, options={'ftol': tol, 'xtol' : tol})
-        # print(result1)
+        print(result1['x'])
         finP[y] = result1['x'][1] + trace_time[0]
         deft1 = degree(result1['x'][0], finP[y])        #최적화된 값으로 density matrix를 생성
         measureState[y] = [np.trace(deft1*Sx()),np.trace(deft1*Sy()),np.trace(deft1*Sz())]
         output1.append(["Case" + str(x + 1), result1['x'][0], result1['x'][1], trace_time[0], ideal, measureState[y].tolist(), noise_data[y].tolist(), result1['fun']])                                #측정 값 저장
         success = success + 1
-
+        #TODO y 배열 크기가 안맞아서 마지막 값에 noise가 적용되지 않음
+        #TODO 어떤거 기준으로 최적화 하는건지 모르겠음
+        
     # print("Case" + str(x + 1) + " clear")                       #측정이 끝난 경우 출력
 
 allend = time.time()                                           #시간 측정 종료
