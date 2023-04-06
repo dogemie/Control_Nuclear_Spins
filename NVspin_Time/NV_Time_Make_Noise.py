@@ -103,8 +103,18 @@ idden = []
 
 change_weight = 0.5
 
-ido = np.zeros(3, dtype='complex_')
-ide = np.zeros(3, dtype='complex_')
+def makeNoise(array):
+    arral = [np.trace(array*Sx()), np.trace(array*Sy()), np.trace(array*Sz())]
+    ns = (1 + random.uniform(-0.1, 0.1))
+    arre = np.zeros(3, dtype = 'complex_')
+    arre[0] = arral[0] * ns
+    sumarr = ((arre[0]) **2 + (arral[1]) **2 + (arral[2]) **2) ** (1/2)
+    arre[0] = arre[0] / sumarr
+    arre[1] = arral[1] / sumarr
+    arre[2] = arral[2] / sumarr
+    
+    return arre
+
 
 trace_time = [0, 5]
 def problem(deg):
@@ -121,23 +131,24 @@ def problem(deg):
     x_m = np.trace(rho_measure*Sx())                            # Sigma X projection
     y_m = np.trace(rho_measure*Sy())                            # Sigma Y projection
     z_m = np.trace(rho_measure*Sz())                            # Sigma Z projection
-    i_m = np.trace(rho_measure*I())                          # Identity projection
+    # i_m = np.trace(rho_measure*I())                          # Identity projection
     #x_id,y_id,z_id는 주어진 target state를 계산해낸 값(이론값)
-    tt = noise_data
-    x_id = tt[0]                                 # target state의 Sigma X projection
-    y_id = tt[1]                                 # target state의 Sigma Y projection
-    z_id = tt[2]                                 # target state의 Sigma Z projection
-    i_id = np.trace(idden*I())                               # target state의 Identity projection
+    # x_id = np.trace(idden*Sx())                                 # target state의 Sigma X projection
+    # y_id = np.trace(idden*Sy())                                 # target state의 Sigma Y projection
+    # z_id = np.trace(idden*Sz())                                 # target state의 Sigma Z projection
+    x_id = noisy[0]
+    y_id = noisy[1]
+    z_id = noisy[2]
+    # i_id = np.trace(idden*I())                               # target state의 Identity projection
     # 실험값과 이론값의 비교 costfunction 반환
     cost = np.abs(x_m-x_id) + np.abs(y_m-y_id) + np.abs(z_m-z_id)
-    # print(x_m, x_id, y_m, y_id, z_m, z_id)
     if(cost < trace_time[1]):
         trace_time[1] = cost
         trace_time[0] = timeErr
     return cost
 
 
-bounds = [(0, pi),(0,2*pi)]                                     # theta와 phi의 범위
+bounds = [(0, pi),(0,2*pi)]                                     #theta와 phi의 범위
 deg = [(np.pi/180)*random.uniform(0,180),(np.pi/180)*random.uniform(0,360)]
 
 
@@ -167,59 +178,58 @@ success = 0                                                    #최적화 성공
 
 standard = 0.2                                                 #최적화 정도의 기준 설정
 min_stad = 1*e-10                                              #최적화 정도의 최소값 설정
-count = 5                                                 #반복 횟수 지정
-seccount = 5                                                  #측정 횟수 지정
+count = 10                                                 #반복 횟수 지정
+seccount = 20                                                  #측정 횟수 지정
 vastand = 1*e-2                                                #최적화 정도의 기준 설정
 repeat = 0                                                     #최적화 정도의 편차가 큰 경우 반복 횟수 지정
-tol = 1*e-13
 allstart = time.time()                                         #시간 측정 시작
-noise_data = np.zeros((seccount, 3), dtype='complex_')
 for x in tqdm(range(count)):                                         #반복 횟수 지정
-    
+    trace_time = [0, 5]
     idden = rand_dm_ginibre(2, rank=1)
+    
     ideal = []
     ideal = [np.trace(idden*Sx()),np.trace(idden*Sy()),np.trace(idden*Sz())] #target state의 x,y,z projection을 저장
-    # print(ideal)
+    tol = 1*e-13
+    start = time.time()                                         #시간 측정 시작  
     dat = idden.data.todense().tolist()                         #target state의 density matrix를 리스트로 변환
-    noise_data = np.zeros((seccount, 3), dtype='complex_')
-    finP = np.zeros(seccount, dtype='complex_')
-    measureState = np.zeros((seccount, 3), dtype='complex_')
-    result = []
+    tempx = 0
+    tempy = 0
+    tempz = 0
     for y in range(0, seccount):                                #측정 횟수 지정 같은 작업을 여러번 진행할 경우를 대비하여 반복문 사용
-        # repeat = repeat + 1
         trace_time = [0, 5]
-        ns = (1 + random.uniform(-0.1, 0.1))
-        ide = ideal
-        ide[0] = (ideal[0] * ns)
-        ido[0] = (ideal[0] * ns) ** 2
-        ido[1] = ideal[1] ** 2
-        ido[2] = ideal[2] ** 2
-        temp = np.sum(ido)
-        tem2 = temp ** (1/2)
-        ide[0] = ide[0] / tem2
-        ide[1] = ide[1] / tem2
-        ide[2] = ide[2] / tem2
-        # print(ide)
-        noise_data[y] = ide
+        repeat = repeat + 1
         deg = [(np.pi/180)*random.uniform(0,180),(np.pi/180)*random.uniform(0,360)]
-        result1 = optimize.shgo(problem, bounds = bounds, iters = 5, options={'ftol': tol, 'xtol' : tol})
-        print(result1['x'])
-        finP[y] = result1['x'][1] + trace_time[0]
-        deft1 = degree(result1['x'][0], finP[y])        #최적화된 값으로 density matrix를 생성
-        measureState[y] = [np.trace(deft1*Sx()),np.trace(deft1*Sy()),np.trace(deft1*Sz())]
-        output1.append(["Case" + str(x + 1), result1['x'][0], result1['x'][1], trace_time[0], ideal, measureState[y].tolist(), noise_data[y].tolist(), result1['fun']])                                #측정 값 저장
-        success = success + 1
-        #TODO y 배열 크기가 안맞아서 마지막 값에 noise가 적용되지 않음
-        #TODO 어떤거 기준으로 최적화 하는건지 모르겠음
+                                                                #초기값을 넣는 랜덤변수
+        noisy = makeNoise(idden).tolist()
+        # result1 = scipy.optimize.minimize(problem,deg,bounds=bounds,method="Powell", options = {'xtol' : tol, 'ftol' : tol })        #Powell 최적화
+        result1 = optimize.shgo(problem, bounds = bounds, iters = 8, options={'ftol': tol, 'xtol' : tol})
+        fin_phi = result1['x'][1] + trace_time[0]
+        deft1 = degree(result1['x'][0], fin_phi)        #최적화된 값으로 density matrix를 생성
+        deftl1 = [np.trace(deft1*Sx()),np.trace(deft1*Sy()),np.trace(deft1*Sz())]
+                                                                #최적화된 density matrix의 x,y,z projection을 저장
+        tempx = tempx + deftl1[0]
+        tempy = tempy + deftl1[1]
+        tempz = tempz + deftl1[2]
         
+        var1 = ((ideal[0] - deftl1[0])**2 + (ideal[1] - deftl1[1])**2 + (ideal[2] - deftl1[2])**2)**(1/2)
+
+        end = time.time()                                   #시간 측정 종료
+        final = end - start                                 #측정 시간 저장
+        # output1.append(["Case" + str(x + 1), "Powell", result1['x'], ideal, deftl1, var1])                                #측정 값 저장
+        temx = tempx / (y+1)
+        temy = tempy / (y+1)
+        temz = tempz / (y+1)
+        err = np.abs(ideal[0] - temx) + np.abs(ideal[1] - temy) + np.abs(ideal[2] - temz)
+        output1.append(["Case" + str(x + 1), result1['x'][0], result1['x'][1], trace_time[0], ideal[0], ideal[1], ideal[2], deftl1[0], deftl1[1], deftl1[2], noisy[0], noisy[1], noisy[2], temx , temy, temz, err , result1['fun']])                                #측정 값 저장
+        success = success + 1
     # print("Case" + str(x + 1) + " clear")                       #측정이 끝난 경우 출력
 
 allend = time.time()                                           #시간 측정 종료
 print("Success : " + str(success) + "/" + str(count))                                                #측정 성공한 경우 출력
-# print("repeat : " + str(repeat))                                                                     #측정 반복한 경우 출력
+print("repeat : " + str(repeat))                                                                     #측정 반복한 경우 출력
 print("Time : " + str(allend - allstart))                                                            #측정 시간 출력
 fin1 = pd.DataFrame(output1)
-fin1.rename(columns={0:"Case", 1:'Theta', 2: 'Phi', 3: 'timeErr', 4: 'init', 5: 'trace', 6: 'noise', 7: 'cost'}, inplace=True)
+fin1.rename(columns={0:"Case", 1:'Theta', 2: 'Phi', 3: 'timeErr', 4: 'initX', 5: 'initY', 6: 'initZ', 7: 'traceX', 8: 'traceY', 9: 'traceZ', 10: 'noiseX', 11: 'noiseY', 12: 'noiseZ'}, inplace=True)
 # fin1.rename(columns={0:"Case", 1:"Used Algorithm", 2:'Theta, Phi', 3: 'time', 4: 'matrix', 5: "degree", 6: "Density Matrix", 7: "Projection", 8: "Projection"}, inplace=True)
 fin1.to_csv("C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/NVspin_Time/researchData/Result_" + printdate + '.csv', index=false)
 print(date)                                                      #측정이 끝난 시간 출력
