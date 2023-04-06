@@ -6,7 +6,7 @@
 # 모든 변수들은 함수선언(def)으로 되어있는데 이는 여러가지 알고리즘을 실험하기 위함입니다.
 # count 횟수만큼 무작위 Pure density matrix를 생성하여 cost function을 계산합니다.
 # idden 변수를 수정하여 target state를 변경할 수 있습니다.
-# Powell 최적화 알고리즘을 통해 cost function을 최소화하는 theta와 phi를 구합니다.
+# Nelder-Mead 최적화 알고리즘을 통해 cost function을 최소화하는 theta와 phi를 구합니다.
 # Problem 함수를 수정하여 cost function을 변경할 수 있습니다.
 
 
