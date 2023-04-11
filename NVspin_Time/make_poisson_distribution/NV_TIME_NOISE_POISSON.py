@@ -107,7 +107,7 @@ def makeNoise(array):
     arral = [np.trace(array*Sx()), np.trace(array*Sy()), np.trace(array*Sz())]
     # ns = (1 + random.uniform(-0.1, 0.1))
     # np.random.seed(seed=100)
-    ns = np.random.poisson(lam=100, size=1)/100
+    ns = np.random.poisson(lam=10, size=1)/10
     print(ns)
     arre = np.zeros(3, dtype = 'complex_')
     arre[0] = arral[0] * ns
@@ -181,8 +181,8 @@ success = 0                                                    #최적화 성공
 
 standard = 0.2                                                 #최적화 정도의 기준 설정
 min_stad = 1*e-10                                              #최적화 정도의 최소값 설정
-count = 10                                                 #반복 횟수 지정
-seccount = 20                                                  #측정 횟수 지정
+count = 1                                                 #반복 횟수 지정
+seccount = 150                                                  #측정 횟수 지정
 vastand = 1*e-2                                                #최적화 정도의 기준 설정
 repeat = 0                                                     #최적화 정도의 편차가 큰 경우 반복 횟수 지정
 allstart = time.time()                                         #시간 측정 시작
@@ -237,6 +237,7 @@ fin1.rename(columns={0:"Case", 1:'Theta', 2: 'Phi', 3: 'timeErr', 4: 'initX', 5:
 fin1.to_csv("C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/NVspin_Time/researchData/Result_" + printdate + '.csv', index=false)
 print(date)                                                      #측정이 끝난 시간 출력
 
+# %%
 ###6 결과 분석
 
 #direc = 출발 지점에서의 방향
