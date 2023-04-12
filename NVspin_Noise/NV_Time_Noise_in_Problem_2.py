@@ -138,12 +138,7 @@ def problem(deg):
     z_m = np.trace(rho_measure*Sz())                            # Sigma Z projection
     i_m = np.trace(rho_measure*I())                          # Identity projection
     
-    ns = np.random.poisson(lam=10, size=1)/10
-    x_e = x_m * ns
-    sum = ((x_e) **2 + (y_m) **2 + (z_m) **2) ** (1/2)
-    x_e = x_e / sum
-    y_e = y_m / sum
-    z_e = z_m / sum
+    
     
     #x_id,y_id,z_id는 주어진 target state를 계산해낸 값(이론값)
     x_id = np.trace(idden*Sx())                                 # target state의 Sigma X projection
@@ -152,7 +147,15 @@ def problem(deg):
     i_id = np.trace(idden*I())                               # target state의 Identity projection
     # 실험값과 이론값의 비교 costfunction 반환
     
-    cost = np.abs(x_e-x_id) + np.abs(y_e-y_id) + np.abs(z_e-z_id)
+    ns = np.random.poisson(lam=10, size=1)/10
+    x_e = x_id * ns
+    sum = ((x_e) **2 + (y_id) **2 + (z_id) **2) ** (1/2)
+    x_e = x_e / sum
+    y_e = y_id / sum
+    z_e = z_id / sum
+    
+    
+    cost = np.abs(x_e-x_m) + np.abs(y_e-y_m) + np.abs(z_e-z_m)
     if(cost < trace_time[1]):
         trace_time[1] = cost
         trace_time[0] = timeErr
@@ -220,14 +223,14 @@ for x in tqdm(range(count)):                                         #반복 횟
         deft1 = degree(result1['x'][0], fin_phi)        #최적화된 값으로 density matrix를 생성
         deftl1 = [np.trace(deft1*Sx()),np.trace(deft1*Sy()),np.trace(deft1*Sz())]
                                                                 #최적화된 density matrix의 x,y,z projection을 저장
-        print(result1)
+        # print(result1)
         
         var1 = ((ideal[0] - deftl1[0])**2 + (ideal[1] - deftl1[1])**2 + (ideal[2] - deftl1[2])**2)**(1/2)
 
         end = time.time()                                   #시간 측정 종료
         final = end - start                                 #측정 시간 저장
         # output1.append(["Case" + str(x + 1), "Powell", result1['x'], ideal, deftl1, var1])                                #측정 값 저장
-        output1.append(["Case" + str(x + 1), result1['x'][0], result1['x'][1], trace_time[0], ideal, deftl1, result1['fun']])                                #측정 값 저장
+        output1.append(["Case" + str(x + 1), result1['x'][0], result1['x'][1], trace_time[0], ideal[0], ideal[1], ideal[2], trace_noise[0]/trace_noise[3], trace_noise[1]/trace_noise[3], trace_noise[2]/trace_noise[3], str(trace_noise[3]) + ' / ' + str(result1['nfev']) , result1['fun']])                                #측정 값 저장
         success = success + 1
     # print("Case" + str(x + 1) + " clear")                       #측정이 끝난 경우 출력
 
