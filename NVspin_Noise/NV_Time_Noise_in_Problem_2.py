@@ -101,7 +101,7 @@ idden = []
 #     return cost
 # %%
 
-change_weight = 0.5
+change_weight = 0.1
 
 trace_time = [0, 5]
 
@@ -198,12 +198,13 @@ success = 0                                                    #최적화 성공
 
 standard = 0.2                                                 #최적화 정도의 기준 설정
 min_stad = 1*e-10                                              #최적화 정도의 최소값 설정
-count = 1                                                 #반복 횟수 지정
+count = 5                                                 #반복 횟수 지정
 seccount = 1                                                  #측정 횟수 지정
 vastand = 1*e-2                                                #최적화 정도의 기준 설정
 repeat = 0                                                     #최적화 정도의 편차가 큰 경우 반복 횟수 지정
 allstart = time.time()                                         #시간 측정 시작
 for x in tqdm(range(count)):                                         #반복 횟수 지정
+    trace_noise = [0, 0, 0, 0]
     trace_time = [0, 5]
     idden = rand_dm_ginibre(2, rank=1)
     

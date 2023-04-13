@@ -254,7 +254,7 @@ print("Time : " + str(allend - allstart))                                       
 fin1 = pd.DataFrame(output1)
 fin1.rename(columns={0:"Case", 1:'Theta', 2: 'Phi', 3: 'timeErr', 4: 'initX', 5: 'initY', 6: 'initZ', 7: 'traceX', 8: 'traceY', 9: 'traceZ', 10: 'noiseX', 11: 'noiseY', 12: 'noiseZ'}, inplace=True)
 # fin1.rename(columns={0:"Case", 1:"Used Algorithm", 2:'Theta, Phi', 3: 'time', 4: 'matrix', 5: "degree", 6: "Density Matrix", 7: "Projection", 8: "Projection"}, inplace=True)
-fin1.to_csv("C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/NVspin_Time/researchData/Result_" + printdate + '.csv', index=false)
+fin1.to_csv("C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/NVspin_Noise/reData/Result_" + printdate + '.csv', index=false)
 print(date)                                                      #측정이 끝난 시간 출력
 
 # %%

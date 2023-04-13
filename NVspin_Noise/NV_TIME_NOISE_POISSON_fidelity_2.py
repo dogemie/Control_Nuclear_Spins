@@ -8,7 +8,7 @@
 # idden 변수를 수정하여 target state를 변경할 수 있습니다.
 # Powell 최적화 알고리즘을 통해 cost function을 최소화하는 theta와 phi를 구합니다.
 # Problem 함수를 수정하여 cost function을 변경할 수 있습니다.
-
+# 본 코드는 시간과 노이즈에 따른 보정을 테스트하기 위해 작성되었습니다. By Dogyeom 2023.04.12
 
 import numpy as np
 from qutip import *
@@ -26,6 +26,8 @@ import time
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 from tqdm import trange
+from scipy.linalg import fractional_matrix_power
+
 # %%
 ###1 Pauli Matrices(2X2 matrices)               
 
@@ -103,9 +105,24 @@ idden = []
 
 change_weight = 0.5
 
+
+def state_fidelity(rho_1, rho_2): #fidelity
+        if np.shape(rho_1) != np.shape(rho_2):
+            print("Dimensions of two states do not match.")
+            return 0
+        else:
+            sqrt_rho_1 = fractional_matrix_power(rho_1, 1 / 2)
+            fidelity = np.trace(fractional_matrix_power(sqrt_rho_1 @ rho_2 @ sqrt_rho_1, 1 / 2)) ** 2
+            return np.real(fidelity)
+
+
 def makeNoise(array):
     arral = [np.trace(array*Sx()), np.trace(array*Sy()), np.trace(array*Sz())]
-    ns = (1 + random.uniform(-0.1, 0.1))
+    # ns = (1 + random.uniform(-0.1, 0.1))
+    # np.random.seed(seed=100)
+    # ns = np.random.poisson(lam=25, size=1)/25
+    ns = (1 + random.uniform(-0.4, 0.4))
+    # print(ns)
     arre = np.zeros(3, dtype = 'complex_')
     arre[0] = arral[0] * ns
     sumarr = ((arre[0]) **2 + (arral[1]) **2 + (arral[2]) **2) ** (1/2)
@@ -172,18 +189,18 @@ date = dt.now()
 printdate = date.strftime('%Y%m%d_%H%M%S')
 output1 = []
 datapack = []
-
+output2 = []
 fail = 0                                                       #최적화 실패 횟수
 success = 0                                                    #최적화 성공 횟수
 
 standard = 0.2                                                 #최적화 정도의 기준 설정
 min_stad = 1*e-10                                              #최적화 정도의 최소값 설정
-count = 1                                                 #반복 횟수 지정
-seccount = 20                                                  #측정 횟수 지정
+count = 4                                                 #반복 횟수 지정
+seccount = 25                                                  #측정 횟수 지정
 vastand = 1*e-2                                                #최적화 정도의 기준 설정
 repeat = 0                                                     #최적화 정도의 편차가 큰 경우 반복 횟수 지정
 allstart = time.time()                                         #시간 측정 시작
-for x in tqdm(range(count)):                                         #반복 횟수 지정
+for x in range(count):                                       #반복 횟수 지정
     trace_time = [0, 5]
     idden = rand_dm_ginibre(2, rank=1)
     
@@ -195,7 +212,9 @@ for x in tqdm(range(count)):                                         #반복 횟
     tempx = 0
     tempy = 0
     tempz = 0
-    for y in range(0, seccount):                                #측정 횟수 지정 같은 작업을 여러번 진행할 경우를 대비하여 반복문 사용
+    tempTheta = 0
+    tempPhi = 0
+    for y in tqdm(range(seccount)):                                 #측정 횟수 지정 같은 작업을 여러번 진행할 경우를 대비하여 반복문 사용
         trace_time = [0, 5]
         repeat = repeat + 1
         deg = [(np.pi/180)*random.uniform(0,180),(np.pi/180)*random.uniform(0,360)]
@@ -210,7 +229,11 @@ for x in tqdm(range(count)):                                         #반복 횟
         tempx = tempx + deftl1[0]
         tempy = tempy + deftl1[1]
         tempz = tempz + deftl1[2]
-        
+        tempTheta = tempTheta + result1['x'][0]
+        if(fin_phi > 2*pi):
+            tempPhi = tempPhi + fin_phi - 2*pi
+        else:
+            tempPhi = tempPhi + fin_phi
         var1 = ((ideal[0] - deftl1[0])**2 + (ideal[1] - deftl1[1])**2 + (ideal[2] - deftl1[2])**2)**(1/2)
 
         end = time.time()                                   #시간 측정 종료
@@ -219,10 +242,22 @@ for x in tqdm(range(count)):                                         #반복 횟
         temx = tempx / (y+1)
         temy = tempy / (y+1)
         temz = tempz / (y+1)
+        temTh = tempTheta / (y+1)
+        temPh = tempPhi / (y+1)
         err = np.abs(ideal[0] - temx) + np.abs(ideal[1] - temy) + np.abs(ideal[2] - temz)
-        output1.append(["Case" + str(x + 1), result1['x'][0], result1['x'][1], trace_time[0], ideal[0], ideal[1], ideal[2], deftl1[0], deftl1[1], deftl1[2], noisy[0], noisy[1], noisy[2], temx , temy, temz, err , result1['fun']])                                #측정 값 저장
+        desit = degree(result1['x'][0], fin_phi)
+        cost = state_fidelity(idden, desit)
+        output1.append(["Case" + str(x + 1), result1['x'][0], result1['x'][1], trace_time[0], ideal[0], ideal[1], ideal[2], deftl1[0], deftl1[1], deftl1[2], noisy[0], noisy[1], noisy[2], temx , temy, temz, err , result1['fun'], temTh, temPh, cost])                                #측정 값 저장
         success = success + 1
+    noisy = [temx, temy, temz]
+    desit = degree(temTh, temPh)
+    cost = state_fidelity(idden, desit)
+    result = optimize.shgo(problem, bounds = bounds, iters = 8, options={'ftol': tol, 'xtol' : tol})
+    output1.append(["Case" + str(x + 1) + "Fin", result['x'][0], result['x'][1], trace_time[0], ideal[0], ideal[1], ideal[2], deftl1[0], deftl1[1], deftl1[2], noisy[0], noisy[1], noisy[2], temx , temy, temz, err , result['fun'], temTh, temPh, cost]) 
     # print("Case" + str(x + 1) + " clear")                       #측정이 끝난 경우 출력
+    
+    print(cost)
+    # print(1 - cost)
 
 allend = time.time()                                           #시간 측정 종료
 print("Success : " + str(success) + "/" + str(count))                                                #측정 성공한 경우 출력
@@ -231,9 +266,10 @@ print("Time : " + str(allend - allstart))                                       
 fin1 = pd.DataFrame(output1)
 fin1.rename(columns={0:"Case", 1:'Theta', 2: 'Phi', 3: 'timeErr', 4: 'initX', 5: 'initY', 6: 'initZ', 7: 'traceX', 8: 'traceY', 9: 'traceZ', 10: 'noiseX', 11: 'noiseY', 12: 'noiseZ'}, inplace=True)
 # fin1.rename(columns={0:"Case", 1:"Used Algorithm", 2:'Theta, Phi', 3: 'time', 4: 'matrix', 5: "degree", 6: "Density Matrix", 7: "Projection", 8: "Projection"}, inplace=True)
-fin1.to_csv("C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/NVspin_Time/researchData/Result_" + printdate + '.csv', index=false)
+fin1.to_csv("C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/NVspin_Noise/reData/Result_" + printdate + '.csv', index=false)
 print(date)                                                      #측정이 끝난 시간 출력
 
+# %%
 ###6 결과 분석
 
 #direc = 출발 지점에서의 방향
