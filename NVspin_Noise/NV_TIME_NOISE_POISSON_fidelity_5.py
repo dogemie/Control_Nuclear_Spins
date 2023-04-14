@@ -134,6 +134,8 @@ def problem(deg):
     # print("x_id : ", x_id, "y_id : ", y_id, "z_id : ", z_id)
     cost = np.abs(x_m-x_id) + np.abs(y_m-y_id) + np.abs(z_m-z_id)
     if(cost < trace_time[1]):
+        print("deg : ", deg)
+        print("x_m : ", x_m, "y_m : ", y_m, "z_m : ", z_m)
         print("x_id : ", x_id, "y_id : ", y_id, "z_id : ", z_id)
         trace_time[1] = cost
         trace_time[0] = timeErr
@@ -213,6 +215,8 @@ for x in range(count):                                       #반복 횟수 지�
         else:
             tempPhi = tempPhi + fin_phi
         var1 = ((ideal[0] - deftl1[0])**2 + (ideal[1] - deftl1[1])**2 + (ideal[2] - deftl1[2])**2)**(1/2)
+        print("fun : ", result1["fun"])
+        print("return x : ", result1['x'])
         print("deftl1 : ", deftl1)
         end = time.time()                                   #시간 측정 종료
         final = end - start                                 #측정 시간 저장
