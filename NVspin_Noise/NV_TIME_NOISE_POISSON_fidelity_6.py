@@ -29,6 +29,7 @@ from tqdm import trange
 from scipy.linalg import fractional_matrix_power
 from qutip import *
 
+
 # import mayavi
 
 
@@ -107,7 +108,7 @@ def state_fidelity(rho_1, rho_2): #fidelity
         return np.real(fidelity)
 
 bloch = qutip.Bloch()
-# b3d = qutip.Bloch3d()
+b3d = qutip.Bloch3d()
 bloch.make_sphere()
 
 def problem(deg):
@@ -131,8 +132,7 @@ def problem(deg):
     # print("x_id : ", x_id, "y_id : ", y_id, "z_id : ", z_id)
     # print("x_m : ", x_m, "y_m : ", y_m, "z_m : ", z_m)
     # print("cost : ", cost)
-    bloch.add_vectors([x_m, y_m, z_m])
-    bloch.render()
+    
     return cost
 
 
@@ -220,6 +220,8 @@ for x in range(count):                                       #반복 횟수 지�
         print("cost" + str(costf))
         output1.append(["Case" + str(x + 1), result1['x'][0], result1['x'][1], trace_time[0], ideal[0], ideal[1], ideal[2], deftl1[0], deftl1[1], deftl1[2], costf])                                #측정 값 저장
         success = success + 1
+        bloch.add_vectors(ideal[0], ideal[1], ideal[2])
+        bloch.render()
     noisy = [temx, temy, temz]
     desit = degree(temTh, temPh)
     costf = state_fidelity(idden, desit)

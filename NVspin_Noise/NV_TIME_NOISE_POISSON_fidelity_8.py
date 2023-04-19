@@ -27,6 +27,7 @@ import matplotlib.pyplot as plt
 from tqdm import tqdm
 from tqdm import trange
 from scipy.linalg import fractional_matrix_power
+from qutip import *
 
 # %%
 ###1 Pauli Matrices(2X2 matrices)               
@@ -235,6 +236,12 @@ seccount = 5                                                  #측정 횟수 지
 vastand = 1*e-2                                                #최적화 정도의 기준 설정
 repeat = 0                                                     #최적화 정도의 편차가 큰 경우 반복 횟수 지정
 allstart = time.time()                                         #시간 측정 시작
+
+
+bloch = qutip.Bloch()
+bloch.make_sphere()
+
+
 for x in range(count):                                       #반복 횟수 지정
     trace_time = [0, 5]
     idden = rand_dm_ginibre(2, rank=1)
@@ -294,6 +301,7 @@ for x in range(count):                                       #반복 횟수 지�
         cost = state_fidelity(real, desit)
         output1.append(["Case" + str(x + 1), result1['x'][0], result1['x'][1], trace_time[0], ideal[0], ideal[1], ideal[2], deftl1[0], deftl1[1], deftl1[2], noisy[0], noisy[1], noisy[2], temx , temy, temz, err , temTh, temPh, cost])                                #측정 값 저장
         success = success + 1
+        # bloch.add_points([ideal[0], ideal[1], ideal[2]])
     noisy = [temx, temy, temz]
     desit = degree(temTh, temPh)
     cost = state_fidelity(real, desit)
@@ -303,7 +311,7 @@ for x in range(count):                                       #반복 횟수 지�
     
     print(cost)
     # print(1 - cost)
-
+# bloch.show()
 allend = time.time()                                           #시간 측정 종료
 print("Success : " + str(success) + "/" + str(count))                                                #측정 성공한 경우 출력
 print("repeat : " + str(repeat))                                                                     #측정 반복한 경우 출력
