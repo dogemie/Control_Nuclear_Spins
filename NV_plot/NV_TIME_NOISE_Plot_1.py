@@ -162,7 +162,7 @@ def problem2(deg):
     cost = np.abs(x_m-x_id) + np.abs(y_m-y_id) + np.abs(z_m-z_id)
     return cost
 
-trace_time = [0, 5]
+trace_time = [0, 5, 0]
 def problem(deg):
     mc = init()*init().T                                        # |vector><vector|
     timeErr = (deg[0] + deg[1]) * change_weight
@@ -197,6 +197,15 @@ def problem(deg):
     # if(cost < trace_time[1]):
     #     trace_time[1] = cost
     #     trace_time[0] = timeErr
+    trace_time[2] = trace_time[2] + 1
+    thetadata.append([trace_time[2], deg[0]])
+    phidata.append([trace_time[2], deg[1]])
+    # plt.figure(1)
+    # plt.plot(trace_time[2], deg[0], 'r.')
+    # plt.pause(0.0001)
+    # plt.figure(2)
+    # plt.plot(trace_time[2], deg[1], 'b.')
+    # plt.pause(0.0001)
     return cost
 
 
@@ -250,8 +259,9 @@ for zz in range(1, 10):
     output1 = []
     
     for x in range(count):                                       #반복 횟수 지정
+        newfig = plt.figure()
         databas = []
-        trace_time = [0, 5]
+        trace_time = [0, 5, 0]
         idden = rand_dm_ginibre(2, rank=1)
         real = idden
         ideal = []
@@ -269,10 +279,12 @@ for zz in range(1, 10):
         noise_weight = sigma
         s = sigma # shape parameter of the log-normal distribution
         for y in tqdm(range(seccount)):                                 #측정 횟수 지정 같은 작업을 여러번 진행할 경우를 대비하여 반복문 사용
-            trace_time = [0, 5]
+            trace_time = [0, 5, 0]
             repeat = repeat + 1
             deg = [(np.pi/180)*random.uniform(0,180),(np.pi/180)*random.uniform(0,360)]
                                                                     #초기값을 넣는 랜덤변수
+            thetadata = []
+            phidata = []
             # noisy = makeNoise(idden).tolist()
             # noisy = np.zeros(3)
             # noisy[0] = (1 + random.uniform(-0.8, 1.4))
@@ -340,18 +352,28 @@ for zz in range(1, 10):
     print(date)                                                      #측정이 끝난 시간 출력
     print(databas)
     
-    x1 = [i[0] for i in databas]
-    x2 = [i[1] for i in databas]
-    y = [i[2] for i in databas]
-    newfig = plt.figure()
-    ax = plt.axes(projection='3d')
-    ax.set_xlabel('theta')
-    ax.set_ylabel('phi')
-    ax.set_zlabel('Fidelity')
-    ax.dist = 11 
-    ax.scatter(x1, x2, y)
-    # plt.show()
-    plt.savefig("C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/NVspin_Noise/Test_Result_" + str(round(zz * 0.1, 1)) + "_" + printdate + '.png')
+    # x1 = [i[0] for i in databas]
+    # x2 = [i[1] for i in databas]
+    # y = [i[2] for i in databas]
+    
+    x1 = [i[0] for i in thetadata]
+    y1 = [i[1] for i in thetadata]
+    x2 = [i[0] for i in phidata]
+    y2 = [i[1] for i in phidata]
+    plt.figure(1)
+    plt.scatter(x1, y1)
+    plt.figure(2)
+    plt.scatter(x2, y2)
+    plt.show()
+    
+    # ax = plt.axes(projection='3d')
+    # ax.set_xlabel('theta')
+    # ax.set_ylabel('phi')
+    # ax.set_zlabel('Fidelity')
+    # ax.dist = 11 
+    # ax.scatter(x1, x2, y)
+    plt.show()
+    # plt.savefig("C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/NVspin_Noise/Test_Result_" + str(round(zz * 0.1, 1)) + "_" + printdate + '.png')
 # %%
 ###6 결과 분석
 

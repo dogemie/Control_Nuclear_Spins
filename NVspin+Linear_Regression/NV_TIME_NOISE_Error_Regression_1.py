@@ -9,8 +9,7 @@
 # Powell 최적화 알고리즘을 통해 cost function을 최소화하는 theta와 phi를 구합니다.
 # Problem 함수를 수정하여 cost function을 변경할 수 있습니다.
 # 본 코드는 시간과 노이즈에 따른 보정을 테스트하기 위해 작성되었습니다. By Dogyeom 2023.04.12
-# 본 코드는 노이즈를 Linear Regression을 통해 해결할 수 있는지 테스트하기 위해 작성되었습니다. By Dogyeom 2023.04.24
-
+# 본 코드는 optimizer의 theta, phi 값의 변화에 따른 Fidelity 변화를 측정하기 위해서 작성되었습니다. By Dogyeom 2023.04.24
 import numpy as np
 from qutip import *
 from sympy import *
@@ -129,14 +128,14 @@ def makeNoise(array, noiseSet):
     # print(ns)
     arre = np.zeros(3, dtype = 'complex_')
     # ns = (1 + random.uniform(-0.8, 1.4))
-    # arre[0] = arral[0] * noiseSet[0]
+    arre[0] = arral[0] * noiseSet[0]
     # # ns = (1 + random.uniform(-0.8, 1.4))
-    # arre[1] = arral[1] * noiseSet[1]
+    arre[1] = arral[1] * noiseSet[1]
     # # ns = (1 + random.uniform(-0.8, 1.4))
-    # arre[2] = arral[2] * noiseSet[2]
-    arre[0] = arral[0] + random.uniform(-1 * noise_weight, noise_weight)
-    arre[1] = arral[1] + random.uniform(-1 * noise_weight, noise_weight)
-    arre[2] = arral[2] + random.uniform(-1 * noise_weight, noise_weight)
+    arre[2] = arral[2] * noiseSet[2]
+    # arre[0] = arral[0] + random.uniform(-1 * noise_weight, noise_weight)
+    # arre[1] = arral[1] + random.uniform(-1 * noise_weight, noise_weight)
+    # arre[2] = arral[2] + random.uniform(-1 * noise_weight, noise_weight)
     # sumarr = ((arre[0]) **2 + (arre[1]) **2 + (arre[2]) **2) ** (1/2)
     # arre[0] = arre[0] / sumarr
     # arre[1] = arre[1] / sumarr
@@ -282,9 +281,9 @@ for zz in range(1, 10):
             # noisy[0] = np.random.poisson(lam=10, size=1)/10
             # noisy[1] = np.random.poisson(lam=10, size=1)/10
             # noisy[2] = np.random.poisson(lam=10, size=1)/10
-            # noisy[0] = lognorm(s, scale=np.exp(mu)).rvs(1)
-            # noisy[1] = lognorm(s, scale=np.exp(mu)).rvs(1)
-            # noisy[2] = lognorm(s, scale=np.exp(mu)).rvs(1)
+            noisy[0] = lognorm(s, scale=np.exp(mu)).rvs(1)
+            noisy[1] = lognorm(s, scale=np.exp(mu)).rvs(1)
+            noisy[2] = lognorm(s, scale=np.exp(mu)).rvs(1)
             # result1 = scipy.optimize.minimize(problem,deg,bounds=bounds,method="Powell", options = {'xtol' : tol, 'ftol' : tol })        #Powell 최적화
             result1 = optimize.shgo(problem, bounds = bounds, iters = 8, options={'ftol': tol, 'xtol' : tol})
             fin_phi = result1['x'][1] + trace_time[0]
@@ -352,7 +351,7 @@ for zz in range(1, 10):
     ax.dist = 11 
     ax.scatter(x1, x2, y)
     # plt.show()
-    plt.savefig("C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/NVspin_Noise/Test_Result_" + str(round(zz * 0.1, 1)) + "_" + printdate + '.png')
+    plt.savefig("C:/Users/Administrator/Dogyeom(2023.01.01)/KIST_intern/Task1/Control_Nuclear_Spins/NVspin_Noise/plot/Test_Result_" + str(round(zz * 0.1, 1)) + "_" + printdate + '.png')
 # %%
 ###6 결과 분석
 
