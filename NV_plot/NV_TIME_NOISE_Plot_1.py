@@ -9,8 +9,7 @@
 # Powell 최적화 알고리즘을 통해 cost function을 최소화하는 theta와 phi를 구합니다.
 # Problem 함수를 수정하여 cost function을 변경할 수 있습니다.
 # 본 코드는 시간과 노이즈에 따른 보정을 테스트하기 위해 작성되었습니다. By Dogyeom 2023.04.12
-# 본 코드는 노이즈를 Linear Regression을 통해 해결할 수 있는지 테스트하기 위해 작성되었습니다. By Dogyeom 2023.04.24
-
+# 본 코드는 optimizer의 theta, phi 값의 변화에 따른 Fidelity 변화를 측정하기 위해서 작성되었습니다. By Dogyeom 2023.04.24
 import numpy as np
 from qutip import *
 from sympy import *
