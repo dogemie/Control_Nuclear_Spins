@@ -236,7 +236,7 @@ success = 0                                                    #최적화 성공
 standard = 0.2                                                 #최적화 정도의 기준 설정
 min_stad = 1*e-10                                              #최적화 정도의 최소값 설정
 count = 1                                                 #반복 횟수 지정
-seccount = 50                                                  #측정 횟수 지정
+seccount = 250                                                  #측정 횟수 지정
 vastand = 1*e-2                                                #최적화 정도의 기준 설정
 repeat = 0                                                     #최적화 정도의 편차가 큰 경우 반복 횟수 지정
 allstart = time.time()                                         #시간 측정 시작
@@ -316,14 +316,14 @@ for zz in range(1, 10):
             # desit = [[1/2, 1/2],[1/2, 1/2]]
             cost = state_fidelity(real, desit)
             databas.append([result1['x'][0], fin_phi, cost])
-            output1.append(["Case" + str(x + 1), result1['x'][0], result1['x'][1], temx , temy, temz, err , temTh, temPh, cost, result1['nfev']])                                #측정 값 저장
+            output1.append(["Case" + str(x + 1), result1['x'][0], result1['x'][1], temx , temy, temz, err , cost, result1['nfev'], temTh, temPh,])                                #측정 값 저장
             success = success + 1
             # bloch.add_points([ideal[0], ideal[1], ideal[2]])
         noisy = [temx, temy, temz]
         desit = degree(temTh, temPh)
         cost = state_fidelity(real, desit)
         result = optimize.shgo(problem2, bounds = bounds, iters = 8, options={'ftol': tol, 'xtol' : tol})
-        output1.append(["Case" + str(x + 1) + "Fin", result['x'][0], result['x'][1], temx , temy, temz, err , temTh, temPh, cost, result['nfev']]) 
+        output1.append(["Case" + str(x + 1) + "Fin", result['x'][0], result['x'][1], temx , temy, temz, err ,cost, result['nfev'], idden, ideal]) 
         # print("Case" + str(x + 1) + " clear")                       #측정이 끝난 경우 출력
         
         print(cost)
