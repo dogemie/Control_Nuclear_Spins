@@ -79,12 +79,12 @@ def angles_to_density_matrix(theta, phi):
     return density_matrix
 
 # Example usage
-theta = 1.69351478982574
-phi = 2.11075756413064
+theta = 1.30081570812702
+phi = 5.05600067687107
 rho1 = degree(theta, phi)
 print(rho1)
-rho2 = np.array([[0.44132036-2.85127216e-18j, 0.42795445-2.51816784e-01j],
- [0.42795445+2.51816784e-01j, 0.55867964+2.85127216e-18j]])
+rho2 = np.array([[ 0.8519004 +4.25331715e-18j, -0.19932957+2.93996311e-01j],
+ [-0.19932957-2.93996311e-01j,  0.1480996 -4.25331715e-18j]])
 
 f = state_fidelity(rho1, rho2)
 print(f)
