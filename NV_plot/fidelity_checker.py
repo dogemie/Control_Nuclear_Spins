@@ -54,15 +54,20 @@ def fidelity2(rho1, rho2):
 
 
 def state_fidelity(rho_1, rho_2): #fidelity
-        if np.shape(rho_1) != np.shape(rho_2):
-            print("Dimensions of two states do not match.")
-            return 0
-        else:
-            sqrt_rho_1 = fractional_matrix_power(rho_1, 1 / 2)
-            fidelity = np.trace(fractional_matrix_power(sqrt_rho_1 @ rho_2 @ sqrt_rho_1, 1 / 2)) ** 2
-            return np.real(fidelity)
+    if np.shape(rho_1) != np.shape(rho_2):
+        print("Dimensions of two states do not match.")
+        return 0
+    else:
+        sqrt_rho_1 = fractional_matrix_power(rho_1, 1 / 2)
+        fidelity = np.trace(fractional_matrix_power(sqrt_rho_1 @ rho_2 @ sqrt_rho_1, 1 / 2)) ** 2
+        return np.real(fidelity)
         
         
+def fidelity(rho1, rho2):
+    rho12 = rho1.conj().T
+    fid = np.trace(rho12 @ rho2)
+    return fid
+
 # # Example usage
 # rho1 = np.array([[0.20215035+0.j ,        0.28397675-0.28397675j], [0.28397675+0.28397675j, 0.79784965+0.j        ]])
 # rho2 = np.array([[0.20551251-4.85353471e-18j, 0.28075492+2.90609348e-01j],[0.28075492-2.90609348e-01j, 0.79448749+4.85353471e-18j]])
@@ -78,13 +83,31 @@ def angles_to_density_matrix(theta, phi):
     density_matrix = np.outer(state_vector, np.conj(state_vector))
     return density_matrix
 
+#Hilbert-Schmidt norm
+
+# def fidelity(rho1, rho2):
+#     hs_norm = np.linalg.norm(rho1 - rho2, ord='fro') # Calculate Frobenius norm of the difference between rho1 and rho2
+#     fid = np.trace(np.dot(rho1, rho2)) + hs_norm ** 2 / 2
+#     fid = fid**2
+#     return fid
+
+
+
+
 # Example usage
-theta = 1.30081570812702
-phi = 5.05600067687107
-rho1 = degree(theta, phi)
+theta1 = 1.30081570812702
+phi1 = 5.05600067687107
+rho1 = degree(theta1 , phi1)
 print(rho1)
-rho2 = np.array([[ 0.8519004 +4.25331715e-18j, -0.19932957+2.93996311e-01j],
- [-0.19932957-2.93996311e-01j,  0.1480996 -4.25331715e-18j]])
+
+theta2 = 1.60081570812702
+phi2 = 5.05600067687107
+rho2 = degree(theta2 , phi2)
+print(rho2)
+# rho2 = np.array([[ 0.8519004 +4.25331715e-18j, -0.19932957+2.93996311e-01j],
+#  [-0.19932957-2.93996311e-01j,  0.1480996 -4.25331715e-18j]])
 
 f = state_fidelity(rho1, rho2)
+print(f)
+f = fidelity(rho1, rho2)
 print(f)
