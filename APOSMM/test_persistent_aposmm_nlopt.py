@@ -89,7 +89,7 @@ if __name__ == "__main__":
     if is_manager:
         print("[Manager]:", H[np.where(H["local_min"])]["x"])
         print("[Manager]: Time taken =", time() - start_time, flush=True)
-
+ 
         tol = 1e-5
         for m in minima:
             # The minima are known on this test problem.
