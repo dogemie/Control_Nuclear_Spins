@@ -1,13 +1,13 @@
-[0]  2023-05-09 14:34:57,821 libensemble.libE (INFO): Logger initializing: [workerID] precedes each line. [0] = Manager
-[0]  2023-05-09 14:34:57,821 libensemble.libE (INFO): libE version v0.9.3
-[0]  2023-05-09 14:34:57,821 libensemble.manager (INFO): Manager initiated on node Razer_Blazer
-[0]  2023-05-09 14:34:57,821 libensemble.manager (INFO): Manager exit_criteria: {'sim_max': 2000}
-[1]  2023-05-09 14:34:57,821 libensemble.worker (INFO): Worker 1 initiated on node Razer_Blazer
-[2]  2023-05-09 14:34:57,821 libensemble.worker (INFO): Worker 2 initiated on node Razer_Blazer
-[3]  2023-05-09 14:34:57,822 libensemble.worker (INFO): Worker 3 initiated on node Razer_Blazer
-[0]  2023-05-09 14:35:14,824 libensemble.manager (INFO): Term test tripped: sim_max
-[0]  2023-05-09 14:35:14,825 libensemble.manager (INFO): Term test tripped: sim_max
-[0]  2023-05-09 14:35:14,917 libensemble.manager (INFO): 
+[0]  2023-05-09 15:37:51,081 libensemble.libE (INFO): Logger initializing: [workerID] precedes each line. [0] = Manager
+[0]  2023-05-09 15:37:51,081 libensemble.libE (INFO): libE version v0.9.3
+[0]  2023-05-09 15:37:51,082 libensemble.manager (INFO): Manager initiated on node Razer_Blazer
+[0]  2023-05-09 15:37:51,082 libensemble.manager (INFO): Manager exit_criteria: {'sim_max': 3000}
+[1]  2023-05-09 15:37:54,275 libensemble.worker (INFO): Worker 1 initiated on node Razer_Blazer
+[2]  2023-05-09 15:37:54,331 libensemble.worker (INFO): Worker 2 initiated on node Razer_Blazer
+[3]  2023-05-09 15:37:54,394 libensemble.worker (INFO): Worker 3 initiated on node Razer_Blazer
+[0]  2023-05-09 15:40:30,834 libensemble.manager (INFO): Term test tripped: sim_max
+[0]  2023-05-09 15:40:30,834 libensemble.manager (INFO): Term test tripped: sim_max
+[0]  2023-05-09 15:40:30,951 libensemble.manager (INFO): 
 *******************************************************************************
 A persistent worker has returned history data on shutdown. This data is
 not currently added to the manager's history to avoid possibly overwriting, but
@@ -17,4 +17,4 @@ or ``use_persis_return_sim``
 *******************************************************************************
 
 
-[0]  2023-05-09 14:35:14,917 libensemble.libE (INFO): Manager total time: 17.096
+[0]  2023-05-09 15:40:30,951 libensemble.libE (INFO): Manager total time: 159.869

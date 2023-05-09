@@ -131,8 +131,8 @@ success = 0                                                    #최적화 성공
 
 standard = 0.2                                                 #최적화 정도의 기준 설정
 min_stad = 1*e-10                                              #최적화 정도의 최소값 설정
-count = 22000                                                 #반복 횟수 지정
-seccount = 15                                                  #측정 횟수 지정
+count = 1                                                 #반복 횟수 지정
+seccount = 1                                                  #측정 횟수 지정
 vastand = 1*e-2                                                #최적화 정도의 기준 설정
 repeat = 0                                                     #최적화 정도의 편차가 큰 경우 반복 횟수 지정
 allstart = time.time()                                         #시간 측정 시작
@@ -155,7 +155,8 @@ for x in tqdm(range(count)):                                         #반복 횟
                                                                 #초기값을 넣는 랜덤변수
         
         # result1 = scipy.optimize.minimize(problem,deg,bounds=bounds,method="Powell", options = {'xtol' : tol, 'ftol' : tol })        #Powell 최적화
-        result1 = scipy.optimize.minimize(problem,deg,bounds=bounds,method="Nelder-Mead", options = {'xatol' : tol, 'fatol' : tol }) #Nelder-Mead 최적화
+        # result1 = scipy.optimize.minimize(problem,deg,bounds=bounds,method="Nelder-Mead", options = {'xatol' : tol, 'fatol' : tol }) #Nelder-Mead 최적화
+        result1 = optimize.shgo(problem, bounds = bounds, iters = 8, options={'ftol': tol, 'xtol' : tol})
         deft1 = degree(result1['x'][0], result1['x'][1])        #최적화된 값으로 density matrix를 생성
         deftl1 = [np.trace(deft1*Sx()),np.trace(deft1*Sy()),np.trace(deft1*Sz())]
                                                                 #최적화된 density matrix의 x,y,z projection을 저장
