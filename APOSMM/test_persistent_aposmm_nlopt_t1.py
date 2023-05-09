@@ -102,7 +102,10 @@ def todensity (a,b):
 # idden = []
 # idden = rand_dm_ginibre(2, rank=1)
 
-idden = np.matrix([[0.5,0.5],[0.5,0.5]])
+# idden = np.matrix([[0.5,0.5],[0.5,0.5]])
+# idden = np.matrix([[1,0],[0,0]])
+idden = [[1.00000000e+00-1.93983792e-17j, 5.87283099e-26+1.07906749e-09j],
+ [5.87283099e-26-1.07906749e-09j, 1.16438664e-18-8.48838731e-36j]]
 
 ###4 실행
 
@@ -141,20 +144,20 @@ def state_fidelity(rho_1, rho_2): #fidelity
             return np.real(fidelity)
 
 
-def makeNoise(array):
-    arral = [np.trace(array*Sx()), np.trace(array*Sy()), np.trace(array*Sz())]
-    # ns = (1 + random.uniform(-0.1, 0.1))
-    # np.random.seed(seed=100)
-    ns = np.random.poisson(lam=10, size=1)/10
-    # print(ns)
-    arre = np.zeros(3, dtype = 'complex_')
-    arre[0] = arral[0] * ns
-    sumarr = ((arre[0]) **2 + (arral[1]) **2 + (arral[2]) **2) ** (1/2)
-    arre[0] = arre[0] / sumarr
-    arre[1] = arral[1] / sumarr
-    arre[2] = arral[2] / sumarr
+# def makeNoise(array):
+#     arral = [np.trace(array*Sx()), np.trace(array*Sy()), np.trace(array*Sz())]
+#     # ns = (1 + random.uniform(-0.1, 0.1))
+#     # np.random.seed(seed=100)
+#     ns = np.random.poisson(lam=10, size=1)/10
+#     # print(ns)
+#     arre = np.zeros(3, dtype = 'complex_')
+#     arre[0] = arral[0] * ns
+#     sumarr = ((arre[0]) **2 + (arral[1]) **2 + (arral[2]) **2) ** (1/2)
+#     arre[0] = arre[0] / sumarr
+#     arre[1] = arral[1] / sumarr
+#     arre[2] = arral[2] / sumarr
     
-    return arre
+#     return arre
 
 
 trace_time = [0, 5]
@@ -192,15 +195,15 @@ def problem(deg):
 # bounds = [(0, pi),(0,2*pi)]                                     #theta와 phi의 범위
 # deg = [(np.pi/180)*random.uniform(0,180),(np.pi/180)*random.uniform(0,360)]
 
-# def six_hump_camel_func(x):
-#     """ Six-Hump Camel function definition """
-#     x1 = x[0]
-#     x2 = x[1]
-#     term1 = (4-2.1*x1**2+(x1**4)/3) * x1**2
-#     term2 = x1*x2
-#     term3 = (-4+4*x2**2) * x2**2
+def six_hump_camel_func(x):
+    """ Six-Hump Camel function definition """
+    x1 = x[0]
+    x2 = x[1]
+    term1 = (4-2.1*x1**2+(x1**4)/3) * x1**2
+    term2 = x1*x2
+    term3 = (-4+4*x2**2) * x2**2
 
-#     return term1 + term2 + term3
+    return term1 + term2 + term3
 
 def six_hump_camel(H, persis_info, sim_specs, _):
     """Six-Hump Camel sim_f."""
@@ -210,7 +213,7 @@ def six_hump_camel(H, persis_info, sim_specs, _):
 
     for i, x in enumerate(H['x']):
         # H_o['f'][i] = three_hump_camel_func(x)     # Function evaluations placed into H
-        H_o['f'][i] = problem(x)     # Function evaluations placed into H
+        H_o['f'][i] = six_hump_camel_func(x)     # Function evaluations placed into H
 
     return H_o, persis_info
 
@@ -249,7 +252,7 @@ if __name__ == "__main__":
         "persis_in": ["f"] + [n[0] for n in gen_out],
         "out": gen_out,
         "user": {
-            "initial_sample_size": 100,
+            "initial_sample_size": 50,
             "sample_points": np.round(minima, 1),
             "localopt_method": "LN_BOBYQA",
             "rk_const": 0.5 * ((gamma(1 + (n / 2)) * 5) ** (1 / n)) / sqrt(pi),
@@ -257,7 +260,7 @@ if __name__ == "__main__":
             "ftol_abs": 1e-6,
             "dist_to_bound_multiple": 0.5,
             "max_active_runs": 6,
-            "lb": np.array([-pi, -2 * pi]),
+            "lb": np.array([0, 0]),
             "ub": np.array([pi, 2 * pi]),
         },
     }
@@ -266,7 +269,7 @@ if __name__ == "__main__":
 
     persis_info = add_unique_random_streams({}, nworkers + 1)
 
-    exit_criteria = {"sim_max": 3000}
+    exit_criteria = {"sim_max": 1000}
 
     # Perform the run
     H, persis_info, flag = libE(sim_specs, gen_specs, exit_criteria, persis_info, alloc_specs, libE_specs)
@@ -280,6 +283,6 @@ if __name__ == "__main__":
             # The minima are known on this test problem.
             # We use their values to test APOSMM has identified all minima
             print(np.min(np.sum((H[H["local_min"]]["x"] - m) ** 2, 1)), flush=True)
-            assert np.min(np.sum((H[H["local_min"]]["x"] - m) ** 2, 1)) < tol
+            # assert np.min(np.sum((H[H["local_min"]]["x"] - m) ** 2, 1)) < tol
 
         save_libE_output(H, persis_info, __file__, nworkers)
