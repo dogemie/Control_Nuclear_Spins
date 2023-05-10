@@ -1,20 +1,28 @@
-[0]  2023-05-09 17:34:58,855 libensemble.libE (INFO): Logger initializing: [workerID] precedes each line. [0] = Manager
-[0]  2023-05-09 17:34:58,856 libensemble.libE (INFO): libE version v0.9.3
-[0]  2023-05-09 17:34:58,858 libensemble.manager (INFO): Manager initiated on node Razer_Blazer
-[0]  2023-05-09 17:34:58,858 libensemble.manager (INFO): Manager exit_criteria: {'sim_max': 1000}
-[1]  2023-05-09 17:35:02,366 libensemble.worker (INFO): Worker 1 initiated on node Razer_Blazer
-[2]  2023-05-09 17:35:02,370 libensemble.worker (INFO): Worker 2 initiated on node Razer_Blazer
-[3]  2023-05-09 17:35:02,424 libensemble.worker (INFO): Worker 3 initiated on node Razer_Blazer
-[0]  2023-05-09 17:36:01,057 libensemble.manager (INFO): Term test tripped: sim_max
-[0]  2023-05-09 17:36:01,057 libensemble.manager (INFO): Term test tripped: sim_max
-[0]  2023-05-09 17:36:01,118 libensemble.manager (INFO): 
-*******************************************************************************
-A persistent worker has returned history data on shutdown. This data is
-not currently added to the manager's history to avoid possibly overwriting, but
-will be added to the manager's history in a future release. If you want to
-overwrite/append, you can set the libE_specs option ``use_persis_return_gen``
-or ``use_persis_return_sim``
-*******************************************************************************
+[0]  2023-05-10 13:34:15,538 libensemble.libE (INFO): Logger initializing: [workerID] precedes each line. [0] = Manager
+[0]  2023-05-10 13:34:15,538 libensemble.libE (INFO): libE version v0.9.3
+[0]  2023-05-10 13:34:15,541 libensemble.manager (INFO): Manager initiated on node Razer_Blazer
+[0]  2023-05-10 13:34:15,541 libensemble.manager (INFO): Manager exit_criteria: {'sim_max': 2000}
+[1]  2023-05-10 13:34:20,493 libensemble.worker (INFO): Worker 1 initiated on node Razer_Blazer
+[2]  2023-05-10 13:34:20,608 libensemble.worker (INFO): Worker 2 initiated on node Razer_Blazer
+[3]  2023-05-10 13:34:20,720 libensemble.worker (INFO): Worker 3 initiated on node Razer_Blazer
+[0]  2023-05-10 13:35:14,989 libensemble.manager (ERROR): ---- Received error message from worker 1 ----
+[0]  2023-05-10 13:35:14,989 libensemble.manager (ERROR): Message: libensemble.gen_funcs.aposmm_localopt_support.APOSMMException: NLopt roundoff-limited
+[0]  2023-05-10 13:35:14,989 libensemble.manager (ERROR): Traceback (most recent call last):
+  File "C:\Users\Administrator\anaconda3\lib\site-packages\libensemble\worker.py", line 347, in run
+    response = self._handle(Work)
+  File "C:\Users\Administrator\anaconda3\lib\site-packages\libensemble\worker.py", line 302, in _handle
+    calc_out, persis_info, calc_status = self._handle_calc(Work, calc_in)
+  File "C:\Users\Administrator\anaconda3\lib\site-packages\libensemble\worker.py", line 228, in _handle_calc
+    out = calc(calc_in, Work["persis_info"], Work["libE_info"])
+  File "C:\Users\Administrator\anaconda3\lib\site-packages\libensemble\utils\runners.py", line 56, in run_gen
+    return result(calc_in, persis_info, self.gen_specs, libE_info, self.gen_f)
+  File "C:\Users\Administrator\anaconda3\lib\site-packages\libensemble\utils\runners.py", line 65, in _normal_result
+    return user_f(calc_in, persis_info, specs, libE_info)
+  File "C:\Users\Administrator\anaconda3\lib\site-packages\libensemble\gen_funcs\persistent_aposmm.py", line 187, in aposmm
+    x_new = local_opters[child_idx].iterate(row[fields_to_pass])
+  File "C:\Users\Administrator\anaconda3\lib\site-packages\libensemble\gen_funcs\aposmm_localopt_support.py", line 152, in iterate
+    raise APOSMMException(x_new.x)
+libensemble.gen_funcs.aposmm_localopt_support.APOSMMException: NLopt roundoff-limited
 
-
-[0]  2023-05-09 17:36:01,119 libensemble.libE (INFO): Manager total time: 62.262
+[0]  2023-05-10 13:35:14,991 libensemble.libE (ERROR): Manager exception raised .. aborting ensemble:
+[0]  2023-05-10 13:35:14,991 libensemble.libE (ERROR): Dumping ensemble history with 601 sims evaluated:
