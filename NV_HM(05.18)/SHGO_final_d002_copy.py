@@ -34,7 +34,7 @@ sz = np.array([[1, 0], [0, -1]])
 s0 = np.array([[1, 0], [0, 1]])
 
 # Detunning Factor
-d0 = 0.15
+d0 = 0.02
 v0 = 0.02
 
 def Rx(theta):
@@ -87,7 +87,7 @@ irho_init = np.kron(init_wave,init_wave.conj().T)
 # 직전 step의 내적값 저장위한 배열
 past_inner_product = np.zeros(5)
 # trace = [cost,[gate combination],dt]
-trace = [1,[],0]
+trace = [1,[],0,50000]
 
 # problem 함수
 def make_combination(dt) :
@@ -143,18 +143,20 @@ def make_combination(dt) :
         iter+=1  
         past_inner_product = inner_product.copy()
 
-    if trace[0] > F :
-        trace[0] = F
-        trace[1] = combination.copy()
-        trace[2] = dt
+    if 0.01 > F :
+        if len(combination)*dt < trace[3]:
+            trace[0] = F
+            trace[1] = combination.copy()
+            trace[2] = dt
+            trace[3] = len(combination)*dt
     return F
 
 a,b=0,0
 output = []
 count = 100
 for t in range(count) : 
-    #target_theta,target_phi = (pi/180)*random.uniform(0,180), (pi/180)*random.uniform(0,360)
-    #target_theta,target_phi = pi,0
+    # target_theta,target_phi = (pi/180)*random.uniform(0,180), (pi/180)*random.uniform(0,360)
+    # target_theta,target_phi = pi/2,0
     target_theta_list = np.linspace(pi/10,pi,10)
     target_phi_list = np.linspace(0,2*pi,10)
     target_theta, target_phi = target_theta_list[a], target_phi_list[b]
@@ -168,11 +170,11 @@ for t in range(count) :
     lenn = 1
     action = True
     while action == True:
-        trace = [1,[],0]
+        trace = [1,[],0,50000]
         vari = [10]
         bounds = [(1,15)]
         rlt = optimize.shgo(make_combination,bounds=bounds,iters=6, options={'xtol':1e-15,'ftol':1e-15})
-        output.append(['CASE'+str(t+1),len(trace[1]),target_theta,target_phi,trace[2],trace[1],rlt['fun'], rlt['nfev'],len(trace[1])*trace[2][0]])
+        output.append(['CASE'+str(t+1),len(trace[1]),target_theta,target_phi,trace[2],trace[1],rlt['fun'], rlt['nfev'],trace[3],d0])
         print(rlt['nfev'], trace[0], trace[1],lenn, 'dt : ',trace[2])
         if rlt['fun'] < 0.01 or lenn==1 : 
             action = False
@@ -183,8 +185,8 @@ date = datetime.now()
 printdate = date.strftime('%Y%m%d_%H%M%S')
 print(date)
 fin1 = pd.DataFrame(output)
-fin1.rename(columns={0:"Case", 1:'gate lenght', 2:'Theta', 3: 'Phi', 4: 'dt', 5: 'combination', 6: 'cost', 7:'nfev', 8: 'Time'}, inplace=True)
-fin1.to_csv("/Users/qwon/Documents/DataSetForNVSpin/BySHGO_Final_d015" + printdate + '.csv', index=False)   
+fin1.rename(columns={0:"Case", 1:'gate lenght', 2:'Theta', 3: 'Phi', 4: 'dt', 5: 'combination', 6: 'cost', 7:'nfev', 8: 'Time', 9: 'd0'}, inplace=True)
+fin1.to_csv("C:/Users/Administrator/git_zorocrit/Control_Nuclear_Spins/NV_HM(05.18)/BySHGO_Final_d002" + printdate + '.csv', index=False)   
 
 
 time_end = time.time()
