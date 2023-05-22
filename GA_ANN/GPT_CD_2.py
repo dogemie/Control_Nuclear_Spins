@@ -114,8 +114,8 @@ class GeneticAlgorithm:
 X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
 y = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
 
-population_size = 100
-mutation_rate = 0.01
+population_size = 1000
+mutation_rate = 0.05
 
 neural_network = NeuralNetwork(2, [4, 4], 2)  # Create the neural network with input size 2, 2 hidden layers of size 4 each, and output size 2
 genetic_algorithm = GeneticAlgorithm(population_size, mutation_rate)
