@@ -5,6 +5,7 @@
 # 모든 변수들은 함수선언(def)으로 되어있는데 이는 여러가지 알고리즘을 실험하기 위함입니다.
 # 아래의 주석처리에 따라 target state를 superposition과 random한 state중 한가지를 고를 수 있습니다.
 
+
 import numpy as np
 from qutip import *
 from sympy import *
