@@ -1,5 +1,5 @@
 #%%
-# initialization system
+# initialization system By Dogyeom
 # 이 코드는 13C의 nuclear spin을 초기화 시키는 코드입니다.
 # 각 gate의 파라미터를 찾아서 초기화 시킵니다.
 # initial:mixed state, target : up state
