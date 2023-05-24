@@ -30,7 +30,7 @@ from numpy import ndarray
 import pandas as pd
 from datetime import datetime as dt                         # 시간을 출력하기 위한 라이브러리  
 # import math
-# import time
+import time
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 from tqdm import trange
