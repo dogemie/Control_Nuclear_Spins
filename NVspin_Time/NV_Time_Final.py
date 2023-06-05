@@ -180,7 +180,7 @@ for x in tqdm(range(count)):                                         #반복 횟
         repeat = repeat + 1
         deg = [(np.pi/180)*random.uniform(0,180),(np.pi/180)*random.uniform(0,360)]
                                                                 #초기값을 넣는 랜덤변수
-        
+                    
         # result1 = scipy.optimize.minimize(problem,deg,bounds=bounds,method="Powell", options = {'xtol' : tol, 'ftol' : tol })        #Powell 최적화
         result1 = optimize.shgo(problem, bounds = bounds, iters = 8, options={'ftol': tol, 'xtol' : tol})
         fin_phi = result1['x'][1] + trace_time[0]
